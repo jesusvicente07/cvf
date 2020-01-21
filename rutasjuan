@@ -1,0 +1,4 @@
+Route::get('/trajectories', 'TrajectorieController@index')->name('trajectories');
+Route::get('/addtrajectories', 'TrajectorieController@create')->name('addtrajectories');
+
+
