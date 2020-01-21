@@ -1,0 +1,3 @@
+Route::get('/estudiantes', 'StudentController@students')->name('students');
+
+Route::get('/competencias', 'CompetitionController@competitions')->name('competitions');
