@@ -1,3 +1,9 @@
 Route::get('/estudiantes', 'StudentController@students')->name('students');
 
 Route::get('/competencias', 'CompetitionController@competitions')->name('competitions');
+
+Route::get('/nueva/competencia', 'CompetitionController@addcompetitions')->name('addcompetitions');
+
+Route::get('/carreras', 'CareerController@careers')->name('careers');
+
+Route::get('/nueva/carrera', 'CareerController@addcareers')->name('addcareers');
