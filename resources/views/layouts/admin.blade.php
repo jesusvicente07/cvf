@@ -268,7 +268,7 @@
 								<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
 									<ul class="m-menu__subnav">
 										<li class="m-menu__item " aria-haspopup="true"><a href="{{	route('trajectories')	}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Administrar</span></a></li>
-										<li class="m-menu__item " aria-haspopup="true"><a href="{{	route('addtrajectories')	}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Nuevo</span></a></li>
+										<li class="m-menu__item " aria-haspopup="true"><a href="{{	route('createTrajectories')	}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Nuevo</span></a></li>
 									</ul>
 								</div>
 							</li>

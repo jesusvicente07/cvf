@@ -1,4 +1,4 @@
-Route::get('/trajectories', 'TrajectorieController@index')->name('trajectories');
-Route::get('/addtrajectories', 'TrajectorieController@create')->name('addtrajectories');
-
+Route::get('/trayectorias', 'TrajectorieController@index')->name('trajectories');
+Route::get('/nuevatrayectoria', 'TrajectorieController@create')->name('createTrajectories');
+Route::post('/nuevatrayectoria', 'TrajectorieController@store')->name('storeTrajectories');
 
