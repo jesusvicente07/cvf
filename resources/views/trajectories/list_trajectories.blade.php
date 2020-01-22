@@ -22,7 +22,7 @@
                             </div>
                         </div>
                     </div> 
-                        <form action="{{ route('trayectorias') }}" class="m-form m-form--fit m-form--label-align-right" method="get" >
+                        <form action="{{ route('trajectories') }}" class="m-form m-form--fit m-form--label-align-right" method="get" >
                         @csrf
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group">
