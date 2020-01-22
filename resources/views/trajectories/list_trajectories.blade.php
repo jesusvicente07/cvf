@@ -21,13 +21,13 @@
                                     </h3>
                             </div>
                         </div>
-                    </div>
-                        
-                        <form class="m-form m-form--fit m-form--label-align-right">
+                    </div> 
+                        <form action="{{ route('trayectorias') }}" class="m-form m-form--fit m-form--label-align-right" method="get" >
                         @csrf
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group">
-                                    <input type="text" class="form-control m-input" style="width:50%" placeholder="Filtar ..">      
+                                    <a class="btn btn-primary" href="{{ route('createTrajectories') }}"><i class="fa fa-plus"></i>Agregar trayectoria</a>
+                                    <input type="text" name="search" class="form-control m-input" style="width:50%" placeholder="Filtar ..">      
                                 </div>
                             </div>
                         </form>
@@ -44,14 +44,20 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                @if($trajectories)
+                                                   @foreach($trajectories as $trajectorie)  
                                                     <tr>
-                                                        <td>Otto</td>
-                                                        <td>@mdo</td>
+                                                        <td>{{$trajectorie->name}}</td>
+                                                        <td>{{$trajectorie->careers->name}}</td>
                                                         <td>
                                                             <a href="#" class="text-body"><i class="fa fa-eye" style="font-size:150%"></i></a>
                                                             <a href="#" class="text-body"><i class="fa fa-trash" style="font-size:150%"></i></a>
                                                         </td>
                                                     </tr>
+                                                    @endforeach
+                                                    @else
+                                                        No hay registros
+                                                @endif
                                                 </tbody>
                                             </table>    
                                         </div>

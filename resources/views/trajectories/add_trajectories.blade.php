@@ -23,13 +23,40 @@
                         </div>
                     </div>
                         
-                        <form class="m-form m-form--fit m-form--label-align-left">
+                        <form action="{{ route('storeTrajectories') }}" method="post" class="m-form m-form--fit m-form--label-align-left" style="text-align:left">
                         @csrf
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group">
-                                <label for="">Hola</label>
-                                    <input type="text" class="form-control m-input"  placeholder="Filtar ..">      
+                                <label for="">Nombre</label>
+                                    <input type="text" name="name" class="form-control m-input"  placeholder="Psicología educativa">      
                                 </div>
+                                <div class="form-group m-form__group">
+                                    <label for="">Competencias de la trayectoria</label>
+                                    <div class="form-inline">
+                                        <select name="competition" class="form-control m-input">
+                                            @foreach($competitions as $competition)
+                                                <option value="{{$competition->id}}">
+                                                    {{$competition->name}}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <div id="addcompetition" class="btn btn-primary mr-4" ><i class="fa fa-plus"></i></div>
+                                    </div>
+                                </div>
+
+                                <div class="m-form__group">
+                                    <table class="table table-hover ">
+                                        <thead>
+                                        </thead>
+                                        <tbody >
+                                        </tbody>
+                                    </table>    
+                                </div>
+
+                                <div class="m-form__group" style="text-align: right;">
+                                    <input type="submit"  class="btn btn-primary "  value="Guardar">
+                                </div>
+                                
                             </div>
                         </form>
                 </div>
@@ -40,4 +67,15 @@
 
 @section('customScripts')
 
+<script>
+$('#addcompetition').click(function(){
+    var value = $("select[name='competition']").val();
+    var name = $("option:selected").text();
+    var tbody = "<tr><td><input hidden  name='competitions[]' value='"+ value +"'> " + name + "</td><td><a id='deletecompetition' class='delete' class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td></tr>";
+    $("table tbody").append(tbody);
+});
+$("table tbody").on("click", "#deletecompetition", function() {
+   $(this).closest("tr").remove();
+});
+</script>
 @endsection
