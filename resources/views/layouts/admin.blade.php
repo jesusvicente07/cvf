@@ -259,7 +259,7 @@
 								<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
 									<ul class="m-menu__subnav">
 										<li class="m-menu__item " aria-haspopup="true"><a href="{{route('competitions')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Administrar</span></a></li>
-										<li class="m-menu__item " aria-haspopup="true"><a href="/posts" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Nueva</span></a></li>
+										<li class="m-menu__item " aria-haspopup="true"><a href="{{route('addcompetitions')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Nueva</span></a></li>
 									</ul>
 								</div>
 							</li>
@@ -276,8 +276,8 @@
 									 class="m-menu__ver-arrow la la-angle-right"></i></a>
 								<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
 									<ul class="m-menu__subnav">
-										<li class="m-menu__item " aria-haspopup="true"><a href="/posts" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Aspirantes</span></a></li>
-										<li class="m-menu__item " aria-haspopup="true"><a href="/posts" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Estudiantes</span></a></li>
+										<li class="m-menu__item " aria-haspopup="true"><a href="{{route('careers')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Administrar</span></a></li>
+										<li class="m-menu__item " aria-haspopup="true"><a href="{{route('addcareers')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Nuevo</span></a></li>
 									</ul>
 								</div>
 							</li>
