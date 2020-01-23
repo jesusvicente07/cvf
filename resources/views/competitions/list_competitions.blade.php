@@ -39,12 +39,14 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @foreach($competitions as $competition)
                                             <tr>
-                                                <th scope="row">1</th>
+                                                <th scope="row">{{$competition->name}}</th>
                                                 <td><a href="#" class="text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a> &nbsp;&nbsp;
                                                 <a href="#" class="text-body"><i class="fa fa-trash" style="font-size:150%"></i></a>
                                                 </td>
                                             </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>   
                                 </div>

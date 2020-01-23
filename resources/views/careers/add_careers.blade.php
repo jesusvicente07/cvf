@@ -33,7 +33,7 @@
                                 <div class="m-form__group"> <label>Trayectorias profesionales</label>
                                     <div class="form-inline">
                                         <input type="text" class="form-control m-input"  placeholder="Psicología educativa"> 
-                                        <a class="btn btn-primary mr-5"><i class="fa fa-plus"></i></a>
+                                        <div class="btn btn-primary mr-4" ><i class="fa fa-plus"></i></div>
                                     </div>
                                 </div>
                                 <div class="m-form__group">

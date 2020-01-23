@@ -26,7 +26,6 @@ class TrajectorieController extends Controller
     }
 
     public function store(Request $request){
-
         Validator::make($request->all(),$this->Rules())
                 ->setAttributeNames($this->Attributes())
                 ->validate();
