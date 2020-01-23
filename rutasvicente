@@ -4,6 +4,8 @@ Route::get('/competencias', 'CompetitionController@competitions')->name('competi
 
 Route::get('/nueva/competencia', 'CompetitionController@addcompetitions')->name('addcompetitions');
 
+Route::post('/nueva/competencia', 'CompetitionController@store')->name('storecompetitions');
+
 Route::get('/carreras', 'CareerController@careers')->name('careers');
 
 Route::get('/nueva/carrera', 'CareerController@addcareers')->name('addcareers');
