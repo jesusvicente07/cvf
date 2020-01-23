@@ -28,11 +28,20 @@
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group">
                                     <label>Nombre</label>
-                                    <input type="text" class="form-control m-input"  placeholder="e.g. Licenciatura en Psicología"> 
+                                    <input type="text" class="form-control m-input"  placeholder="e.g. Licenciatura en Psicología" autocomplete="off"> 
                                 </div>
                                 <div class="m-form__group"> <label>Trayectorias profesionales</label>
                                     <div class="form-inline">
-                                        <input type="text" class="form-control m-input"  placeholder="Psicología educativa"> 
+                                        <select name="trajectorie" class="form-control m-input {{ $errors->has('trajectories') ? 'is-danger' : '' }} ">
+                                            @foreach($trajectories as $trajectorie)
+                                                <option value="{{$trajectorie->id}}">
+                                                    {{$trajectorie->name}}
+                                                </option>
+                                            @endforeach
+                                            @error('trajectories')
+                                                <div class="text-red">{{ $errors->first('trajectories') }}</div>
+                                            @enderror 
+                                        </select> 
                                         <div class="btn btn-primary mr-4" ><i class="fa fa-plus"></i></div>
                                     </div>
                                 </div>

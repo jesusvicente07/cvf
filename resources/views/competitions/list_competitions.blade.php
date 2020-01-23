@@ -27,8 +27,13 @@
                         @csrf
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group">
+                                    @if(session('message'))
+                                        <div class="alert alert-success alert-dismissible">
+                                            {{session('message')}}                                        
+                                        </div>
+                                    @endif
                                     <a class="btn btn-primary" href="{{route('addcompetitions')}}"><i class="fa fa-plus"></i>Agregar competencia</a>
-                                    <input type="text" class="form-control m-input" style="width:50%" placeholder="Filtar ..">      
+                                    <input type="text" class="form-control m-input" style="width:50%" placeholder="Filtar .." autocomplete="off">      
                                 </div>
                                 <div class="m-form__group">
                                     <table class="table table-hover text-center">
@@ -59,5 +64,11 @@
 @endsection
 
 @section('customScripts')
+<script>
+@if(session('message'))
+    $('.alert-success').fadeIn();
+    $('.alert-success').fadeOut(5000);
 
+@endif
+</script>
 @endsection

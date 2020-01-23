@@ -28,7 +28,7 @@
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group">
                                 <label for="">Nombre:</label>
-                                    <input type="text" name="name" class="form-control m-input {{ $errors->has('name') ? 'is-danger' : '' }} " value="{{ old('name') }}"  placeholder="Psicología educativa">
+                                    <input type="text" name="name" class="form-control m-input {{ $errors->has('name') ? 'is-danger' : '' }} " value="{{ old('name') }}"  placeholder="Psicología educativa" autocomplete="off">
                                     @error('name')
                                       <div class="text-red">{{ $errors->first('name') }}</div>
                                     @enderror      

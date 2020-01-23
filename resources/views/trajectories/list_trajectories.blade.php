@@ -32,7 +32,7 @@
                                         </div>
                                     @endif
                                     <a class="btn btn-primary" href="{{ route('createTrajectories') }}"><i class="fa fa-plus"></i>Agregar trayectoria</a>
-                                    <input type="text" name="search" class="form-control m-input" style="width:50%" placeholder="Filtar ..">      
+                                    <input type="text" name="search" class="form-control m-input" style="width:50%" placeholder="Filtar .." autocomplete="off">      
                                 </div>
                             </div>
                         </form>
@@ -55,7 +55,7 @@
                                                         <td>{{ $trajectorie->name}}</td>
                                                         <td>{{isset($trajectorie->careers->name) ? $trajectorie->careers->name : ''}}</td>
                                                         <td>
-                                                            <a href="#" class="text-body"><i class="fa fa-eye" style="font-size:150%"></i></a>
+                                                            <a href="#" class="text-body"><i class="fa fa-eye" style="font-size:150%"></i></a> &nbsp;&nbsp;
                                                             <a href="#" class="text-body"><i class="fa fa-trash" style="font-size:150%"></i></a>
                                                         </td>
                                                     </tr>

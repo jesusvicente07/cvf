@@ -27,7 +27,7 @@
                         @csrf
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group">
-                                    <input type="text" class="form-control m-input" style="width:50%" placeholder="Filtar ..">      
+                                    <input type="text" class="form-control m-input" style="width:50%" placeholder="Filtar .." autocomplete="off">      
                                 </div>
                                 <div class="m-form__group">
                                     <table class="table table-hover text-center">

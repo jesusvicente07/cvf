@@ -12,7 +12,8 @@ class CompetitionController extends Controller
         $competitions="";
 
         if(request('search')){
-            $competitions=App\Competition::search(request('search'))->paginate(5);
+            $search=request('search');
+            $competitions=App\Competition::where('name','LIKE',"%{$search}%")->paginate(5);
         }else{
             $competitions=App\Competition::paginate(5);;
         }
@@ -35,7 +36,7 @@ class CompetitionController extends Controller
         $addCompetition->save();
         $addCompetition->courses()->createMany($request->courses);
 
-        return redirect('/nueva/competencia')->with('mensaje', "La competencia ha sido agregado exitosamente!");
+        return redirect('competencias')->with('message', "La competencia ha sido agregado exitosamente!");
 
     }
 

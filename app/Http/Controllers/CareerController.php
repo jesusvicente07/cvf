@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App;
 
 class CareerController extends Controller
 {
@@ -13,6 +14,7 @@ class CareerController extends Controller
 
     public function addcareers(){
         $career="";
-        return view('careers.add_careers', compact('carrer'));
+        $trajectories=App\Trajectorie::all();
+        return view('careers.add_careers', compact('carrer', 'trajectories'));
     }
 }
