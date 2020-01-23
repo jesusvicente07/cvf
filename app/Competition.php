@@ -12,4 +12,8 @@ class Competition extends Model
     public function courses(){
         return $this->hasMany(Course::class);
     }
+
+    public function trajectories(){
+        return $this->belongsToMany(Trajectorie::class);
+    }
 }

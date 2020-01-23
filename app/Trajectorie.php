@@ -10,6 +10,6 @@ class Trajectorie extends Model
         'name'
     ];
     public function competitions(){
-        return $this->belongsToMany(Competition::class);
+        return $this->belongsToMany(Competition::class,'trajectorie_competition');
     }
 }

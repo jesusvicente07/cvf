@@ -26,6 +26,11 @@
                         @csrf
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group">
+                                   @if(session('message'))
+                                        <div class="alert alert-success alert-dismissible">
+                                            {{session('message')}}                                        
+                                        </div>
+                                    @endif
                                     <a class="btn btn-primary" href="{{ route('createTrajectories') }}"><i class="fa fa-plus"></i>Agregar trayectoria</a>
                                     <input type="text" name="search" class="form-control m-input" style="width:50%" placeholder="Filtar ..">      
                                 </div>
@@ -47,8 +52,8 @@
                                                 @if($trajectories)
                                                    @foreach($trajectories as $trajectorie)  
                                                     <tr>
-                                                        <td>{{$trajectorie->name}}</td>
-                                                        <td>{{$trajectorie->careers->name}}</td>
+                                                        <td>{{ $trajectorie->name}}</td>
+                                                        <td>{{isset($trajectorie->careers->name) ? $trajectorie->careers->name : ''}}</td>
                                                         <td>
                                                             <a href="#" class="text-body"><i class="fa fa-eye" style="font-size:150%"></i></a>
                                                             <a href="#" class="text-body"><i class="fa fa-trash" style="font-size:150%"></i></a>
@@ -71,5 +76,11 @@
 @endsection
 
 @section('customScripts')
+<script>
+@if(session('message'))
+    $('.alert-success').fadeIn();
+    $('.alert-success').fadeOut(5000);
 
+@endif
+</script>
 @endsection

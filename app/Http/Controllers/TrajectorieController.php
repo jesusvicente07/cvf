@@ -12,11 +12,11 @@ class TrajectorieController extends Controller
     public function index(){
         $trajectories="";
         if(request('search')){
-            $trajectories=App\Trajectorie::search(request('search'))->paginate(5);
+            $search=request('search');
+            $trajectories=App\Trajectorie::where('name','LIKE',"%{$search}%")->paginate(5);
         }else{
             $trajectories=App\Trajectorie::paginate(5);;
         }
-
         return view('trajectories.list_trajectories', compact('trajectories'));
     }
 
@@ -29,19 +29,19 @@ class TrajectorieController extends Controller
         Validator::make($request->all(),$this->Rules())
                 ->setAttributeNames($this->Attributes())
                 ->validate();
-        $addTrajectorie = new Trajectorie;
+        $addTrajectorie = new App\Trajectorie;
         $addTrajectorie->name = $request->name;
         $addTrajectorie->save();
         $addTrajectorie->competitions()->attach($request->competitions);
 
-        return redirect('trayectorias')->with('mensaje', "La trayectoria ha sido agregado exitosamente!");
+        return redirect('trayectorias')->with('message', "La trayectoria ha sido agregado exitosamente!");
 
     }
 
     public function Rules(){
         return [
             'name' => 'required|unique:trajectories',
-            'competitions'=>'required|exists:competitions'
+            'competitions'=>'required'
         ];
     }
 
