@@ -73,11 +73,8 @@
 
 @section('customScripts')
 <script>
-var cursos=[];
 $('#addcompetition').click(function(){
     let value = $("select[name='competition']").val();
-     cursos+=['hola': 1,'link' : 2];
-    console.log(cursos);
     if(value){
         let name = $("option:selected").text();
         let tbody = "<tr><td><input hidden  name='competitions[]' value='"+ value +"'> " + name + "</td><td><a  class='delete' class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td></tr>";
