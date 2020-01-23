@@ -39220,3 +39220,11 @@ body.m-content--skin-light2 {
       margin: 0 auto; }
       .m-footer .m-footer__nav .m-nav__item {
         padding: 0 0 0 5px; } }
+
+.is-danger{
+  border-color: #dc3545 !important;
+  padding-right: calc(1.5em + .75rem) !important;}
+
+.text-red{
+  color:red;
+}

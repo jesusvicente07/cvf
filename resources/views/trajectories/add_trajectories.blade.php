@@ -27,18 +27,24 @@
                         @csrf
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group">
-                                <label for="">Nombre</label>
-                                    <input type="text" name="name" class="form-control m-input"  placeholder="Psicología educativa">      
+                                <label for="">Nombre:</label>
+                                    <input type="text" name="name" class="form-control m-input {{ $errors->has('name') ? 'is-danger' : '' }} " value="{{ old('name') }}"  placeholder="Psicología educativa">
+                                    @error('name')
+                                      <div class="text-red">{{ $errors->first('name') }}</div>
+                                    @enderror      
                                 </div>
                                 <div class="form-group m-form__group">
                                     <label for="">Competencias de la trayectoria</label>
                                     <div class="form-inline">
-                                        <select name="competition" class="form-control m-input">
+                                        <select name="competition" class="form-control m-input {{ $errors->has('competitions') ? 'is-danger' : '' }} ">
                                             @foreach($competitions as $competition)
                                                 <option value="{{$competition->id}}">
                                                     {{$competition->name}}
                                                 </option>
                                             @endforeach
+                                            @error('competitions')
+                                                <div class="text-red">{{ $errors->first('competitions') }}</div>
+                                            @enderror 
                                         </select>
                                         <div id="addcompetition" class="btn btn-primary mr-4" ><i class="fa fa-plus"></i></div>
                                     </div>
@@ -66,15 +72,19 @@
 @endsection
 
 @section('customScripts')
-
 <script>
+var cursos=[];
 $('#addcompetition').click(function(){
-    var value = $("select[name='competition']").val();
-    var name = $("option:selected").text();
-    var tbody = "<tr><td><input hidden  name='competitions[]' value='"+ value +"'> " + name + "</td><td><a id='deletecompetition' class='delete' class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td></tr>";
-    $("table tbody").append(tbody);
+    let value = $("select[name='competition']").val();
+     cursos+=['hola': 1,'link' : 2];
+    console.log(cursos);
+    if(value){
+        let name = $("option:selected").text();
+        let tbody = "<tr><td><input hidden  name='competitions[]' value='"+ value +"'> " + name + "</td><td><a  class='delete' class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td></tr>";
+        $("table tbody").append(tbody);
+    }
 });
-$("table tbody").on("click", "#deletecompetition", function() {
+$("table tbody").on("click", ".delete", function() {
    $(this).closest("tr").remove();
 });
 </script>

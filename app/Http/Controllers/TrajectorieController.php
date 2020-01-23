@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App;
 
 class TrajectorieController extends Controller
@@ -25,12 +26,10 @@ class TrajectorieController extends Controller
     }
 
     public function store(Request $request){
-        var_dump($request->all());
-        exit;
-        $request->validate([
-            'name' => 'required|unique:trajectories',
-            'competitions'=>'required|exists:competitions'
-        ]);
+
+        Validator::make($request->all(),$this->Rules())
+                ->setAttributeNames($this->Attributes())
+                ->validate();
         $addTrajectorie = new Trajectorie;
         $addTrajectorie->name = $request->name;
         $addTrajectorie->save();
@@ -39,4 +38,19 @@ class TrajectorieController extends Controller
         return redirect('trayectorias')->with('mensaje', "La trayectoria ha sido agregado exitosamente!");
 
     }
+
+    public function Rules(){
+        return [
+            'name' => 'required|unique:trajectories',
+            'competitions'=>'required|exists:competitions'
+        ];
+    }
+
+    public function Attributes(){
+        return [
+            'name' => 'nombre',
+            'competitions'=>'competencias '
+        ];
+    }
+    
 }
