@@ -23,12 +23,15 @@
                         </div>
                     </div>
                         
-                        <form class="m-form m-form--fit m-form--label-align-left" style="text-align:left">
+                        <form action="{{ route('storecareers') }}" method="post" class="m-form m-form--fit m-form--label-align-left" style="text-align:left">
                         @csrf
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group">
                                     <label>Nombre</label>
-                                    <input type="text" class="form-control m-input"  placeholder="e.g. Licenciatura en Psicología" autocomplete="off"> 
+                                    <input type="text" name="name" class="form-control m-input {{ $errors->has('name') ? 'is-danger' : '' }} " value="{{ old('name') }}" placeholder="e.g. Licenciatura en Psicología" autocomplete="off"> 
+                                        @error('name')
+                                            <div class="text-red">{{ $errors->first('name') }}</div>
+                                        @enderror   
                                 </div>
                                 <div class="m-form__group"> <label>Trayectorias profesionales</label>
                                     <div class="form-inline">
@@ -42,25 +45,17 @@
                                                 <div class="text-red">{{ $errors->first('trajectories') }}</div>
                                             @enderror 
                                         </select> 
-                                        <div class="btn btn-primary mr-4" ><i class="fa fa-plus"></i></div>
+                                        <div id="addtrajectories" class="btn btn-primary mr-4" ><i class="fa fa-plus"></i></div>
                                     </div>
                                 </div>
                                 <div class="m-form__group">
                                     <table class="table table-hover">
                                         <tbody>
-                                            <tr>
-                                                <th scope="row">Psicología educativa</th>
-                                                <td><a href="#" class="text-body"><i class="fa fa-trash" style="font-size:150%"></i></a></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Psicologia del adolecente</th>
-                                                <td><a href="#" class="text-body"><i class="fa fa-trash" style="font-size:150%"></i></a></td>
-                                            </tr>
                                         </tbody>
                                     </table> 
                                 </div>
                                     <div class="form-group m-form__group" style="text-align:right;">
-                                        <a class="btn btn-primary" href="">Guardar</a>     
+                                        <input type="submit" class="btn btn-primary"  value="Guardar">    
                                     </div>
                             </div>
                         </form>        
@@ -71,5 +66,17 @@
 @endsection
 
 @section('customScripts')
-
+<script>
+$('#addtrajectories').click(function(){
+    let value = $("select[name='trajectorie']").val();
+    if(value){
+        let name = $("option:selected").text();
+        let tbody = "<tr><td><input hidden  name='trajectories[]' value='"+ value +"'> " + name + "</td><td><a class='text-body'><i class='fa fa-book' style='font-size:150%'></i></a> &nbsp;&nbsp;<a  class='delete' class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td></tr>";
+        $("table tbody").append(tbody);
+    }
+});
+$("table tbody").on("click", ".delete", function() {
+   $(this).closest("tr").remove();
+});
+</script>
 @endsection

@@ -27,6 +27,11 @@
                         @csrf
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group">
+                                    @if(session('message'))
+                                        <div class="alert alert-success alert-dismissible">
+                                            {{session('message')}}                                        
+                                        </div>
+                                    @endif
                                     <a class="btn btn-primary" href="{{route('addcareers')}}"><i class="fa fa-plus"></i>Agregar carrera</a>     
                                 </div>
                                 <div class="m-form__group">
@@ -38,13 +43,15 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <th scope="row">Licenciatura en psicología</th>
-                                                <td>
-                                                    <a href="#" class="text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a> &nbsp;&nbsp;
-                                                    <a href="#" class="text-body"><i class="fa fa-trash" style="font-size:150%"></i></a>
-                                                </td>
-                                            </tr>
+                                            @foreach($careers as $career)
+                                                <tr>
+                                                    <th scope="row">{{$career->name}}</th>
+                                                    <td>
+                                                        <a href="#" class="text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a> &nbsp;&nbsp;
+                                                        <a href="#" class="text-body"><i class="fa fa-trash" style="font-size:150%"></i></a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>    
                                 </div>
@@ -57,5 +64,11 @@
 @endsection
 
 @section('customScripts')
+<script>
+@if(session('message'))
+    $('.alert-success').fadeIn();
+    $('.alert-success').fadeOut(5000);
 
+@endif
+</script>
 @endsection

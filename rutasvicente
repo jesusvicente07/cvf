@@ -9,3 +9,5 @@ Route::post('/nueva/competencia', 'CompetitionController@store')->name('storecom
 Route::get('/carreras', 'CareerController@careers')->name('careers');
 
 Route::get('/nueva/carrera', 'CareerController@addcareers')->name('addcareers');
+
+Route::post('/nueva/carrera', 'CareerController@store')->name('storecareers');
