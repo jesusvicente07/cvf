@@ -53,9 +53,13 @@
                                                    @foreach($trajectories as $trajectorie)  
                                                     <tr>
                                                         <td>{{ $trajectorie->name}}</td>
-                                                        <td>{{isset($trajectorie->careers->name) ? $trajectorie->careers->name : ''}}</td>
                                                         <td>
-                                                            <a href="#" class="text-body"><i class="fa fa-eye" style="font-size:150%"></i></a> &nbsp;&nbsp;
+                                                        @foreach($trajectorie->careers as $careers )
+                                                             {{$careers->name}} <br>
+                                                        @endforeach
+                                                        </td>
+                                                        <td>
+                                                            <a href="#" class="text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a> &nbsp;&nbsp;
                                                             <a href="#" class="text-body"><i class="fa fa-trash" style="font-size:150%"></i></a>
                                                         </td>
                                                     </tr>

@@ -8,7 +8,6 @@ use App;
 
 class TrajectorieController extends Controller
 {
-    //
     public function index(){
         $trajectories="";
         if(request('search')){

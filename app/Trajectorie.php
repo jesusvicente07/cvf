@@ -12,4 +12,8 @@ class Trajectorie extends Model
     public function competitions(){
         return $this->belongsToMany(Competition::class,'trajectorie_competition');
     }
+
+    public function careers(){
+        return $this->belongsToMany(Career::class,'career_trajectorie');
+    }
 }
