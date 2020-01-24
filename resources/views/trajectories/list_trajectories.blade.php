@@ -59,8 +59,8 @@
                                                         @endforeach
                                                         </td>
                                                         <td>
-                                                            <a href="#" class="text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a> &nbsp;&nbsp;
-                                                            <a href="#" class="text-body"><i class="fa fa-trash" style="font-size:150%"></i></a>
+                                                            <a href="#" class="btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
+                                                            <button class=" btn text-body"><i class="fa fa-trash" onclick="showModal({{$trajectorie}})" style="font-size:150%"></i></button>
                                                         </td>
                                                     </tr>
                                                     @endforeach
@@ -77,6 +77,37 @@
             </div>
         </div>
     </div>
+<div class="modal" id="deleteModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal body -->
+      <div class="modal-body" style="text-align: left;">
+        <strong>Seguro que desea eliminar la trayectoria:</strong>
+        <p class="ml-5" id="text"></p>
+      </div>
+
+         <!-- Modal footer -->
+      <div class="modal-footer">
+      <div class="form-inline">
+      <div class="col-md-6">
+        <form action="#" id="formModal" method="POST" class="d-inline col-md-10">
+        @method('DELETE')
+        @csrf
+        <input type="submit" class="btn btn-default" value="Eliminar" >
+        </form>
+        </div>
+        <div class="col-md-6">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div> 
+      </div>
+     
+      </div>
+
+    </div>
+  </div>
+</div>
+    
 @endsection
 
 @section('customScripts')
@@ -86,5 +117,10 @@
     $('.alert-success').fadeOut(5000);
 
 @endif
+function showModal(trajectorie){
+    $('#text').html(trajectorie.name);
+    $('#formModal').attr('action', '/eliminar/trayectoria/'+trajectorie.id);
+    $('#deleteModal').modal();
+}
 </script>
 @endsection

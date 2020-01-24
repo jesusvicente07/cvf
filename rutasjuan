@@ -1,3 +1,4 @@
 Route::get('/trayectorias', 'TrajectorieController@index')->name('trajectories');
 Route::get('/nueva/trayectoria', 'TrajectorieController@create')->name('createTrajectories');
 Route::post('/nueva/trayectoria', 'TrajectorieController@store')->name('storeTrajectories');
+Route::delete('/eliminar/trayectoria/{trajectorie}', 'TrajectorieController@delete')->name('deleteTrajectories');

@@ -37,6 +37,13 @@ class TrajectorieController extends Controller
 
     }
 
+    public function delete($id){
+        $trajectorie = App\Trajectorie::findOrFail($id);
+        $nameTrajectorie = $trajectorie->email;
+        $trajectorie->delete();
+        return redirect('trayectorias')->with('message', "La trayectoria $nameTrajectorie ha sido eliminado exitosamente!");
+    }
+
     public function Rules(){
         return [
             'name' => 'required|unique:trajectories',
