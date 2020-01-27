@@ -37,7 +37,7 @@
                                     <div class="form-inline">
                                         <select name="trajectorie" class="form-control m-input {{ $errors->has('trajectories') ? 'is-danger' : '' }} ">
                                             @foreach($trajectories as $trajectorie)
-                                                <option value="{{$trajectorie->id}}">
+                                                <option value="{{$trajectorie->competitions}}">
                                                     {{$trajectorie->name}}
                                                 </option>
                                             @endforeach
@@ -63,20 +63,47 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="competitionModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="text-align:center">
+                    <strong>Competencias:</strong>
+                    <p class="ml-5" id="text">
+                        <ul style="text-align:left" id="competitions"> 
+                        </ul>
+                    </p>
+                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+            </div> 
+        </div>
+    </div>
+
+
 @endsection
 
 @section('customScripts')
 <script>
 $('#addtrajectories').click(function(){
-    let value = $("select[name='trajectorie']").val();
+    let value = JSON.parse($("select[name='trajectorie']").val());
     if(value){
         let name = $("option:selected").text();
-        let tbody = "<tr><td><input hidden  name='trajectories[]' value='"+ value +"'> " + name + "</td><td><a class='text-body'><i class='fa fa-book' style='font-size:150%'></i></a> &nbsp;&nbsp;<a  class='delete' class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td></tr>";
+        let tbody = "<tr><td><input hidden  name='trajectories[]' value='"+ value[0].pivot.trajectorie_id +"'> " + name + "</td><td><a class='text-body' onclick='showModal("+JSON.stringify(value)+")'><i class='fa fa-book' style='font-size:150%'></i></a> &nbsp;&nbsp; <a  class='delete' class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td></tr>";
         $("table tbody").append(tbody);
     }
 });
 $("table tbody").on("click", ".delete", function() {
    $(this).closest("tr").remove();
 });
+
+function showModal(competition){
+    $('#competitions').html('');
+    $.each(competition, function(index, value){
+        $('#competitions').append('<li>'+value.name+'</li>');
+    });
+    $('#competitionModal').modal();
+}
 </script>
 @endsection

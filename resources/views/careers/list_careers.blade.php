@@ -23,8 +23,7 @@
                         </div>
                     </div>
                         
-                        <form class="m-form m-form--fit m-form--label-align-right">
-                        @csrf
+                        <div class="m-form m-form--fit m-form--label-align-right">
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group">
                                     @if(session('message'))
@@ -45,10 +44,10 @@
                                         <tbody>
                                             @foreach($careers as $career)
                                                 <tr>
-                                                    <th scope="row">{{$career->name}}</th>
+                                                    <td>{{$career->name}}</td>
                                                     <td>
-                                                        <a href="#" class="text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a> &nbsp;&nbsp;
-                                                        <a href="#" class="text-body"><i class="fa fa-trash" style="font-size:150%"></i></a>
+                                                        <a href="#" class="btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
+                                                        <button class="btn text-body" onclick="Mymodal({{$career}})"><i class="fa fa-trash" style="font-size:150%"></i></button>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -56,19 +55,44 @@
                                     </table>    
                                 </div>
                             </div>
-                        </form>
+                        </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="text-align:center">
+                    <strong>Seguro que desea eliminar la carrera:</strong>
+                    <p id="text"></p>
+                </div>
+                <div class="modal-footer">
+                    <form action="#" id="formModal" method="POST">
+                    @method('DELETE')
+                    @csrf
+                        <button type="submit "class="btn btn-default">Eliminar</button>
+                    </form>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div> 
+        </div>
+    </div>
+
 @endsection
 
 @section('customScripts')
 <script>
-@if(session('message'))
-    $('.alert-success').fadeIn();
-    $('.alert-success').fadeOut(5000);
+  function Mymodal(career){
+      $('#text').html(career.name);
+      $('#formModal').attr('action', '/eliminar/carrera/'+career.id);
+      $('#myModal').modal();
+    }
 
-@endif
+    @if(session('message'))
+        $('.alert-success').fadeIn();
+        $('.alert-success').fadeOut(5000);
+
+    @endif
 </script>
 @endsection

@@ -10,12 +10,7 @@ class CareerController extends Controller
 {
     public function careers(){
         $careers="";
-        if(request('search')){
-            $search=request('search');
-            $career=App\Career::where('name','LIKE',"%{$search}%")->paginate(5);
-        }else{
-            $careers=App\Career::paginate(5);;
-        }
+        $careers=App\Career::all();
         return view('careers.list_careers', compact('careers'));
     }
 
@@ -34,9 +29,18 @@ class CareerController extends Controller
         $addcareer->save();
         $addcareer->trajectories()->attach($request->trajectories);
 
-        return redirect('carreras')->with('message', "La carrera ha sido agregado exitosamente!");
+        return redirect('carreras')->with('message', "La carrera $request->name ha sido agregado exitosamente!");
 
     }
+
+    public function deletecareers($id){
+        $deleteCareers = App\Career::findOrFail($id);
+        $namecareer = $deleteCareers->name;
+        $deleteCareers->delete();
+
+        return redirect('carreras')->with('message', "La carrera $namecareer ha sido eliminada exitosamente!");
+    }
+
 
     public function Rules(){
         return [
