@@ -82,25 +82,19 @@
     <div class="modal-content">
 
       <!-- Modal body -->
-      <div class="modal-body" style="text-align: left;">
+      <div class="modal-body" style="text-align: center;">
         <strong>Seguro que desea eliminar la trayectoria:</strong>
         <p class="ml-5" id="text"></p>
       </div>
 
          <!-- Modal footer -->
       <div class="modal-footer">
-      <div class="form-inline">
-      <div class="col-md-6">
-        <form action="#" id="formModal" method="POST" class="d-inline col-md-10">
+        <form action="#" id="formModal" method="POST">
         @method('DELETE')
         @csrf
         <input type="submit" class="btn btn-default" value="Eliminar" >
         </form>
-        </div>
-        <div class="col-md-6">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-        </div> 
-      </div>
      
       </div>
 

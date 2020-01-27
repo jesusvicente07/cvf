@@ -38,7 +38,7 @@
                                     <div class="form-inline">
                                         <select name="competition" class="form-control m-input {{ $errors->has('competitions') ? 'is-danger' : '' }} ">
                                             @foreach($competitions as $competition)
-                                                <option value="{{$competition->id}}">
+                                                <option value="{{$competition->courses}}">
                                                     {{$competition->name}}
                                                 </option>
                                             @endforeach
@@ -69,20 +69,52 @@
             </div>
         </div>
     </div>
+
+    <div class="modal" id="courseModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal body -->
+      <div class="modal-body" style="text-align: center;">
+        <strong>Cursos de la competencia:</strong>
+        <p class="ml-5" id="text">
+            <ul style="text-align:left" id="courses"> 
+            </ul>
+        </p>
+      </div>
+
+         <!-- Modal footer -->
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+     
+      </div>
+
+    </div>
+  </div>
+</div>
 @endsection
 
 @section('customScripts')
 <script>
 $('#addcompetition').click(function(){
-    let value = $("select[name='competition']").val();
+    let value =JSON.parse($("select[name='competition']").val());
     if(value){
         let name = $("option:selected").text();
-        let tbody = "<tr><td><input hidden  name='competitions[]' value='"+ value +"'> " + name + "</td><td><a class='text-body'><i class='fa fa-book' style='font-size:150%'></i></a> &nbsp;&nbsp; <a  class='delete' class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td></tr>";
+        let tbody = "<tr><td><input hidden  name='competitions[]' value='"+ value[0].competition_id +"'> " + name + "</td><td><a onclick='showModal("+JSON.stringify(value)+")' class='text-body'><i class='fa fa-book' style='font-size:150%'></i></a> &nbsp;&nbsp; <a  class='delete' class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td></tr>";
         $("table tbody").append(tbody);
     }
 });
 $("table tbody").on("click", ".delete", function() {
    $(this).closest("tr").remove();
 });
+
+function showModal(course){
+    $('#courses').html('');
+    $.each(course, function(index, value){
+        $('#courses').append('<li>'+value.name+'</li>');
+    });
+    $('#courseModal').modal();
+}
 </script>
 @endsection
