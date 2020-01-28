@@ -1,13 +1,11 @@
 Route::get('/estudiantes', 'StudentController@students')->name('students');
 
 Route::get('/competencias', 'CompetitionController@competitions')->name('competitions');
-
 Route::get('/nueva/competencia', 'CompetitionController@addcompetitions')->name('addcompetitions');
-
 Route::post('/nueva/competencia', 'CompetitionController@store')->name('storecompetitions');
+Route::delete('eliminar/competencia/{id}', 'CompetitionController@deletecompetitions')->name('deletecompetitions');
 
 Route::get('/carreras', 'CareerController@careers')->name('careers');
-
 Route::get('/nueva/carrera', 'CareerController@addcareers')->name('addcareers');
-
 Route::post('/nueva/carrera', 'CareerController@store')->name('storecareers');
+Route::delete('eliminar/carrera/{id}', 'CareerController@deletecareers')->name('deletecareers');

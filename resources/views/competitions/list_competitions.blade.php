@@ -23,7 +23,7 @@
                         </div>
                     </div>
                         
-                        <form class="m-form m-form--fit m-form--label-align-right">
+                        <form action="{{ route('competitions') }}" method="get" class="m-form m-form--fit m-form--label-align-right">
                         @csrf
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group">
@@ -33,9 +33,12 @@
                                         </div>
                                     @endif
                                     <a class="btn btn-primary" href="{{route('addcompetitions')}}"><i class="fa fa-plus"></i>Agregar competencia</a>
-                                    <input type="text" class="form-control m-input" style="width:50%" placeholder="Filtar .." autocomplete="off">      
+                                    <input type="text" name="search" class="form-control m-input" style="width:50%" placeholder="Filtar .." autocomplete="off">      
                                 </div>
-                                <div class="m-form__group">
+                            </div>
+                        </form>
+                            <div class="m-form__group">
+                                <div class="m-portlet__body">
                                     <table class="table table-hover text-center">
                                         <thead class="thead-dark">
                                             <tr>
@@ -46,9 +49,10 @@
                                         <tbody>
                                         @foreach($competitions as $competition)
                                             <tr>
-                                                <th scope="row">{{$competition->name}}</th>
-                                                <td><a href="#" class="text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a> &nbsp;&nbsp;
-                                                <a href="#" class="text-body"><i class="fa fa-trash" style="font-size:150%"></i></a>
+                                                <td>{{$competition->name}}</td>
+                                                <td>
+                                                    <a href="#" class=" btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
+                                                    <button class="btn text-body" onclick="Mymodal({{$competition}})"><i class="fa fa-trash" style="font-size:150%"></i></button>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -56,19 +60,44 @@
                                     </table>   
                                 </div>
                             </div>
-                        </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="text-align:center">
+                    <strong>Seguro que desea eliminar la competencia:</strong>
+                    <p id="text"></p>
+                </div>
+                <div class="modal-footer">
+                    <form action="#" id="formModal" method="POST">
+                    @method('DELETE')
+                    @csrf
+                        <button type="submit "class="btn btn-default">Eliminar</button>
+                    </form>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div> 
+        </div>
+    </div>
+
 @endsection
 
 @section('customScripts')
 <script>
-@if(session('message'))
-    $('.alert-success').fadeIn();
-    $('.alert-success').fadeOut(5000);
+    function Mymodal(competition){
+      $('#text').html(competition.name);
+      $('#formModal').attr('action', '/eliminar/competencia/'+competition.id);
+      $('#myModal').modal();
+    }
 
-@endif
+    @if(session('message'))
+        $('.alert-success').fadeIn();
+        $('.alert-success').fadeOut(5000);
+
+    @endif
 </script>
 @endsection
