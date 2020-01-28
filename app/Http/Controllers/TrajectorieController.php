@@ -37,6 +37,21 @@ class TrajectorieController extends Controller
 
     }
 
+    public function edit(App\Trajectorie $trajectorie){
+        $competitions=App\Competition::all();
+        return view('trajectories.edit_trajectories', compact('trajectorie','competitions'));
+    }
+
+    public function update(App\Trajectorie $trajectorie){
+        Validator::make(request()->all(),$this->Rules())
+        ->setAttributeNames($this->Attributes())
+        ->validate();
+        $trajectorie->name = request('name');
+        $trajectorie->save();
+        $trajectorie->competitions()->attach(request('competitions'));
+        return redirect('editar/trayectoria/'.$trajectorie->id)->with('message', "La trayectoria  $trajectorie->name ha sido actualizado exitosamente!");
+    }
+
     public function delete($id){
         $trajectorie = App\Trajectorie::findOrFail($id);
         $nameTrajectorie = $trajectorie->email;
@@ -46,7 +61,7 @@ class TrajectorieController extends Controller
 
     public function Rules(){
         return [
-            'name' => 'required|unique:trajectories',
+            'name' => 'required',
             'competitions'=>'required'
         ];
     }

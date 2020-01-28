@@ -59,7 +59,7 @@
                                                         @endforeach
                                                         </td>
                                                         <td>
-                                                            <a href="#" class="btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
+                                                            <a href="{{ route('editTrajectories',$trajectorie) }}" class="btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
                                                             <button class=" btn text-body"><i class="fa fa-trash" onclick="showModal({{$trajectorie}})" style="font-size:150%"></i></button>
                                                         </td>
                                                     </tr>
