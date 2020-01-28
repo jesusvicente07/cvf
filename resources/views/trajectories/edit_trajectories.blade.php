@@ -27,6 +27,14 @@
                         @method('PUT')
                         @csrf
                             <div class="m-portlet__body">
+                                @if(session('message'))
+                                <div class="form-group m-form__group" id="message">
+                                    <div class="alert alert-success alert-dismissible">
+                                        {{session('message')}}                                        
+                                    </div>
+                                </div>
+                                @endif
+
                                 <div class="form-group m-form__group">
                                 <label for="">Nombre:</label>
                                     <input type="text" name="name" class="form-control m-input {{ $errors->has('name') ? 'is-danger' : '' }} " value="{{ $trajectorie->name }}"  placeholder="Psicología educativa" autocomplete="off">
@@ -53,7 +61,11 @@
 
                                 <div class="m-form__group">
                                     <table class="table table-hover ">
-                                        <thead>
+                                        <thead class="thead-dark">
+                                            <tr>
+                                            <th>Nuevas competencias</th>
+                                            <th></th>
+                                            </tr>
                                         </thead>
                                         <tbody id="newcompetitions" >
                                         </tbody>
@@ -62,12 +74,17 @@
 
                                 <div class="m-form__group">
                                     <table class="table table-hover ">
-                                        <thead>
+                                        <thead class="thead-dark">
+                                            <tr>
+                                            <th>Competencias existentes</th>
+                                            <th></th>
+                                            </tr>
                                         </thead>
                                         <tbody>
                                         @foreach($trajectorie->competitions as $trajectorieCompetition )
                                         <tr>
                                             <td>{{$trajectorieCompetition->name}}</td>
+                                            <td><a onclick='showModal({{$trajectorieCompetition->courses}})' class='text-body'><i class='fa fa-book' style='font-size:150%'></i></a> &nbsp;&nbsp; <a  class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td>
                                         </tr>
                                         @endforeach
                                         </tbody>
@@ -132,5 +149,11 @@ function showModal(course){
     });
     $('#courseModal').modal();
 }
+
+@if(session('message'))
+    $('#message').fadeIn();
+    $('#message').fadeOut(5000);
+
+@endif
 </script>
 @endsection

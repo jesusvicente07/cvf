@@ -43,7 +43,11 @@ class TrajectorieController extends Controller
     }
 
     public function update(App\Trajectorie $trajectorie){
-        Validator::make(request()->all(),$this->Rules())
+        $rules['name']='required';
+        if(!$trajectorie->competitions){
+            $rules['competitions']='required';
+        }
+        Validator::make(request()->all(),$rules)
         ->setAttributeNames($this->Attributes())
         ->validate();
         $trajectorie->name = request('name');
