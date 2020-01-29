@@ -78,7 +78,10 @@
                                         @foreach($career->trajectories as $trajectorie)
                                         <tr>
                                             <td>{{$trajectorie->name}}</td>
-                                            <td><a onclick='showModal({{$trajectorie->competitions}})' class='text-body'><i class='fa fa-book' style='font-size:150%'></i></a> &nbsp;&nbsp; <a  class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td>
+                                            <td>
+                                                <a onclick='showModal({{$trajectorie->competitions}})' class='text-body'><i class='fa fa-book' style='font-size:150%'></i></a> &nbsp;&nbsp;
+                                                <a class="text-body" onclick="Mymodal({{$trajectorie}})"><i class="fa fa-trash" style="font-size:150%"></i></a>
+                                            </td>
                                         </tr>
                                         @endforeach
                                         </tbody>
@@ -107,6 +110,25 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                     </div>
+            </div> 
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="text-align:center">
+                    <strong>Seguro que desea eliminar la trayectoria:</strong>
+                    <p id="text1"></p>
+                </div>
+                <div class="modal-footer">
+                    <form action="#" id="formModal" method="POST">
+                    @method('DELETE')
+                    @csrf
+                        <button type="submit "class="btn btn-default">Eliminar</button>
+                    </form>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
             </div> 
         </div>
     </div>
@@ -141,5 +163,11 @@ function showModal(competition){
         $('.alert-success').fadeOut(5000);
 
 @endif
+
+function Mymodal(trajectorie){
+      $('#text1').html(trajectorie.name);
+      $('#formModal').attr('action', '/eliminar/carrera/'+trajectorie.id);
+      $('#myModal').modal();
+    }
 </script>
 @endsection

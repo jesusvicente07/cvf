@@ -62,6 +62,13 @@ class CareerController extends Controller
         return redirect('carreras')->with('message', "La carrera $namecareer ha sido eliminada exitosamente!");
     }
 
+    public function deletetrajectories($id){
+        $deleteTrajectories = App\Trajectorie::findOrFail($id);
+        $deleteTrajectories->careers()->detach();
+
+        return back();
+    }
+
 
     public function Rules(){
         return [
