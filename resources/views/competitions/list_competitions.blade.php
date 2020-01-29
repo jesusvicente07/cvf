@@ -51,7 +51,7 @@
                                             <tr>
                                                 <td>{{$competition->name}}</td>
                                                 <td>
-                                                    <a href="#" class=" btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
+                                                    <a href="{{route('editcompetitions',$competition)}}" class=" btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
                                                     <button class="btn text-body" onclick="Mymodal({{$competition}})"><i class="fa fa-trash" style="font-size:150%"></i></button>
                                                 </td>
                                             </tr>
