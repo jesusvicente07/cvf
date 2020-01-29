@@ -54,7 +54,8 @@
                                     <table class="table table-hover">
                                         <thead class="thead-dark">
                                             <tr>
-                                            <th colspan="2">Nuevos cursos</th>
+                                            <th>Nuevos cursos</th>
+                                            <th></th>
                                             <th></th>
                                             </tr>
                                         </thead>
@@ -68,6 +69,7 @@
                                             <tr>
                                             <th>Cursos existentes</th>
                                             <th></th>
+                                            <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -75,6 +77,7 @@
                                         <tr>
                                             <td>{{$course_name->name}}</td>
                                             <td>{{$course_name->link}}</td>
+                                            <td><a class="btn text-body" onclick="Mymodal({{$course_name}})"><i class="fa fa-trash" style="font-size:150%"></i></a></td>
                                         </tr>
                                         @endforeach
                                         </tbody>
@@ -90,6 +93,28 @@
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="text-align:center">
+                    <strong>Seguro que desea eliminar el curso:</strong>
+                    <p id="text"></p>
+                </div>
+                <div class="modal-footer">
+                    <form action="#" id="formModal" method="POST">
+                    @method('DELETE')
+                    @csrf
+                        <button type="submit "class="btn btn-default">Eliminar</button>
+                    </form>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div> 
+        </div>
+    </div>
+
+
 @endsection
 
 @section('customScripts')
@@ -114,5 +139,11 @@ $('#newcourses').on("click", ".delete", function() {
         $('.alert-success').fadeOut(5000);
 
 @endif
+
+function Mymodal(course_name){
+      $('#text').html(course_name.name);
+      $('#formModal').attr('action', '/eliminar/competencia/'+course_name.id);
+      $('#myModal').modal();
+    }
 </script>
 @endsection
