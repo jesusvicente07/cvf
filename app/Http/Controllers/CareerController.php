@@ -33,6 +33,27 @@ class CareerController extends Controller
 
     }
 
+    public function editcareers(App\Career  $career){
+        $trajectories=App\Trajectorie::all();
+        return view('careers.edit_careers', compact('career', 'trajectories'));
+    }
+
+    public function update(App\Career  $career){
+        $rules['name']='required';
+        if(!$career->trajectories){
+            $rules['trajectories']='required';
+        }
+        Validator::make(request()->all(), $rules)
+        ->setAttributeNames($this->Attributes())
+        ->validate();
+        $career->name = request('name');
+        $career->save();
+        if(request('trajectories')){
+            $career->trajectories()->attach(request('trajectories'));
+        }
+        return redirect('editar/carrera/'.$career->id)->with('message', "La carrra $career->name ha sido actualizada exitosamente!");
+    }
+
     public function deletecareers($id){
         $deleteCareers = App\Career::findOrFail($id);
         $namecareer = $deleteCareers->name;
@@ -44,7 +65,7 @@ class CareerController extends Controller
 
     public function Rules(){
         return [
-            'name' => 'required|unique:careers',
+            'name' => 'required',
             'trajectories'=>'required'
         ];
     }

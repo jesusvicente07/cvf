@@ -39,6 +39,26 @@ class CompetitionController extends Controller
 
     }
 
+    public function editcompetitions(App\Competition  $competition){
+        return view('competitions.edit_competitions', compact('competition'));
+    }
+
+    public function update(App\Competition  $competition){
+        $rules['name']='required';
+        if(!$competition->courses){
+            $rules['courses']='required';
+        }
+        Validator::make(request()->all(), $rules)
+        ->setAttributeNames($this->Attributes())
+        ->validate();
+        $competition->name = request('name');
+        $competition->save();
+        if(request('courses')){
+            $competition->courses()->createMany(request('courses'));
+        }
+        return redirect('editar/competencia/'.$competition->id)->with('message', "La competencia $competition->name ha sido actualizada exitosamente!");
+    }
+
     public function deletecompetitions($id){
         $deleteCompetition = App\Competition::findOrFail($id);
         $namecompetition = $deleteCompetition->name;
@@ -49,7 +69,7 @@ class CompetitionController extends Controller
 
     public function Rules(){
         return [
-            'name' => 'required|unique:competitions',
+            'name' => 'required',
             'courses'=>'required'
         ];
     }

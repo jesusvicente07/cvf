@@ -46,7 +46,7 @@
                                                 <tr>
                                                     <td>{{$career->name}}</td>
                                                     <td>
-                                                        <a href="#" class="btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
+                                                        <a href="{{route('editcareers',$career)}}" class="btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
                                                         <button class="btn text-body" onclick="Mymodal({{$career}})"><i class="fa fa-trash" style="font-size:150%"></i></button>
                                                     </td>
                                                 </tr>
