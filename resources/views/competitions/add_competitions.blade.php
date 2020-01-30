@@ -45,7 +45,14 @@
                                     @enderror   
                                 </div>
                                 <div class="m-form__group">
-                                    <table class="table table-hover text-center">
+                                    <table class="table table-bordered" style="text-align:left">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th scope="col">Cursos</th>
+                                                <th scope="col">Enlaces</th>
+                                                <th scope="col">Acciones</th>
+                                            </tr>
+                                        </thead>
                                         <tbody>
                                         </tbody>
                                     </table>  

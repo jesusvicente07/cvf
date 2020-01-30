@@ -51,12 +51,10 @@
                                     @enderror   
                                 </div>
                                 <div class="m-form__group">
-                                    <table class="table table-hover">
+                                    <table class="table table-bordered" style="text-align:left">
                                         <thead class="thead-dark">
                                             <tr>
-                                            <th>Nuevos cursos</th>
-                                            <th></th>
-                                            <th></th>
+                                            <th colspan="3" style="text-align:center">Nuevos cursos</th>
                                             </tr>
                                         </thead>
                                         <tbody id="newcourses">
@@ -64,12 +62,10 @@
                                     </table>  
                                 </div>
                                 <div class="m-form__group">
-                                    <table class="table table-hover">
+                                    <table class="table table-bordered" style="text-align:left">
                                         <thead class="thead-dark">
                                             <tr>
-                                            <th>Cursos existentes</th>
-                                            <th></th>
-                                            <th></th>
+                                            <th colspan="3" style="text-align:center">Cursos existentes</th>
                                             </tr>
                                         </thead>
                                         <tbody>

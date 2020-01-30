@@ -39,10 +39,10 @@
                         </form>
                             <div class="m-form__group">
                                 <div class="m-portlet__body">
-                                    <table class="table table-hover text-center">
+                                    <table class="table table-bordered" style="text-align:left">
                                         <thead class="thead-dark">
                                             <tr>
-                                                <th scope="col">Competencia</th>
+                                                <th scope="col">Competencias</th>
                                                 <th scope="col">Acciones</th>
                                             </tr>
                                         </thead>

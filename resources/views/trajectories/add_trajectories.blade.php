@@ -58,8 +58,12 @@
                                 </div>
 
                                 <div class="m-form__group">
-                                    <table class="table table-hover ">
-                                        <thead>
+                                    <table class="table table-bordered" style="text-align:left">
+                                        <thead class="thead-dark"> 
+                                        <tr>
+                                            <th scope="col">Competencias</th>
+                                            <th scope="col">Acciones</th>
+                                        </tr>
                                         </thead>
                                         <tbody >
                                         </tbody>
