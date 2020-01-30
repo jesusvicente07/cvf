@@ -84,8 +84,10 @@ class TrajectorieController extends Controller
         return redirect('trayectorias')->with('message', "La trayectoria $nameTrajectorie ha sido eliminado exitosamente!");
     }
 
-    public function deleteDetailTTrajectorie($id){
-        $trajectorie = App\Trajectorie::findOrFail($id);  
+    public function deleteDetailTrajectorieCompetition($id){
+        $trajectorie = App\Trajectorie::findOrFail($id);
+        $trajectorie->competitions()->detach(request('competition_id'));
+        return back();
     }
 
     public function Rules(){

@@ -98,7 +98,7 @@
                                         @foreach($trajectorie->competitions as $trajectorieCompetition )
                                         <tr>
                                             <td>{{$trajectorieCompetition->name}}</td>
-                                            <td><a onclick='showModal({{$trajectorieCompetition->courses}})' class='text-body'><i class='fa fa-book' style='font-size:150%'></i></a> &nbsp;&nbsp; <a class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td>
+                                            <td><a onclick='showModal({{$trajectorieCompetition->courses}})' class='text-body'><i class='fa fa-book' style='font-size:150%'></i></a> &nbsp;&nbsp; <a onClick='showModalDelete({{ $trajectorieCompetition }})' class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td>
                                         </tr>
                                         @endforeach
                                         </tbody>
@@ -116,12 +116,10 @@
             </div>
         </div>
     </div>
-
+    <!-- Modal mostrar Cursos de  competencias-->
     <div class="modal" id="courseModal">
         <div class="modal-dialog">
             <div class="modal-content">
-
-                <!-- Modal body -->
                 <div class="modal-body" style="text-align: center;">
                     <strong>Cursos de la competencia:</strong>
                     <p class="ml-5" id="text">
@@ -129,13 +127,29 @@
                         </ul>
                     </p>
                 </div>
-
-                    <!-- Modal footer -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
-
             </div>
+        </div>
+    </div>
+     <!-- Modal eliminar  relacion con competencias-->
+    <div class="modal fade" id="myModalDelete" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="text-align:center">
+                    <strong>Seguro que desea eliminar la competencia:</strong>
+                    <p id="text1"></p>
+                </div>
+                <div class="modal-footer">
+                    <form action="#" id="formModal" method="POST">
+                    @method('DELETE')
+                    @csrf
+                        <button type="submit "class="btn btn-default">Eliminar</button>
+                    </form>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div> 
         </div>
     </div>
 @endsection
@@ -160,6 +174,13 @@ function showModal(course){
         $('#courses').append('<li>'+value.name+'</li>');
     });
     $('#courseModal').modal();
+}
+
+function showModalDelete(competition){
+    console.log(competition);
+    $('#text1').html(competition.name);
+    $('#formModal').attr('action', '/eliminar/detalleTrayectoriaCompetencia/'+competition.pivot.trajectorie_id+'?competition_id='+competition.pivot.competition_id);
+    $('#myModalDelete').modal();
 }
 
 
