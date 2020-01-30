@@ -27,12 +27,21 @@
                         @method('PUT')
                         @csrf
                             <div class="m-portlet__body">
-                                <div class="form-group m-form__group">
-                                    @if(session('message'))
+                                @if(session('message'))
+                                <div class="form-group m-form__group" id="message">
                                         <div class="alert alert-success alert-dismissible">
                                             {{session('message')}}                                        
                                         </div>
-                                    @endif
+                                </div>
+                                @endif
+                                @if(session('messageError'))
+                                <div class="form-group m-form__group" id="messageError">
+                                    <div class="alert alert-danger alert-dismissible">
+                                        {{session('messageError')}}                                        
+                                    </div>
+                                </div>
+                                @endif
+                                <div class="form-group m-form__group">
                                     <label>Nombre</label>
                                     <input type="text" name="name" class="form-control m-input {{ $errors->has('name') ? 'is-danger' : '' }} " value="{{ $career->name }}" placeholder="e.g. Licenciatura en Psicología" autocomplete="off"> 
                                         @error('name')
@@ -42,10 +51,15 @@
                                 <div class="m-form__group"> <label>Trayectorias profesionales</label>
                                     <div class="form-inline">
                                         <select name="trajectorie" class="form-control m-input {{ $errors->has('trajectories') ? 'is-danger' : '' }} ">
+                                        {{ $i =0 }}
                                             @foreach($trajectories as $trajectorie)
+                                                @if($trajectorie->id != isset($career->trajectories[$i]->id))
                                                 <option value="{{$trajectorie->competitions}}">
                                                     {{$trajectorie->name}}
                                                 </option>
+                                                @endif
+
+                                                {{ $i++ }}
                                             @endforeach
                                             @error('trajectories')
                                                 <div class="text-red">{{ $errors->first('trajectories') }}</div>
@@ -159,14 +173,20 @@ function showModal(competition){
 }
 
 @if(session('message'))
-        $('.alert-success').fadeIn();
-        $('.alert-success').fadeOut(5000);
+    $('#message').fadeIn();
+    $('#message').fadeOut(5000);
+
+@endif
+
+@if(session('messageError'))
+    $('#messageError').fadeIn();
+    $('#messageError').fadeOut(5000);
 
 @endif
 
 function Mymodal(trajectorie){
       $('#text1').html(trajectorie.name);
-      $('#formModal').attr('action', '/eliminar/carrera/'+trajectorie.id);
+      $('#formModal').attr('action', '/eliminar/carrera/'+trajectorie.pivot.career_id+'?trajectorie_id='+trajectorie.pivot.trajectorie_id);
       $('#myModal').modal();
     }
 </script>

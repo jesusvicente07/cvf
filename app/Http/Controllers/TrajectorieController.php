@@ -40,7 +40,7 @@ class TrajectorieController extends Controller
         $addTrajectorie->save();
         $addTrajectorie->competitions()->attach($request->competitions);
 
-        return redirect('trayectorias')->with('message', "La trayectoria ha sido agregado exitosamente!");
+        return redirect('trayectorias')->with('message', "La trayectoria $request->name ha sido agregado exitosamente!");
 
     }
 

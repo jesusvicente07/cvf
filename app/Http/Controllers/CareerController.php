@@ -8,6 +8,9 @@ use App;
 
 class CareerController extends Controller
 {
+    private $messageError='';
+    private $message='';
+    
     public function careers(){
         $careers="";
         $careers=App\Career::all();
@@ -24,6 +27,11 @@ class CareerController extends Controller
         Validator::make($request->all(),$this->Rules())
                 ->setAttributeNames($this->Attributes())
                 ->validate();
+
+                if(count($request->trajectories) != count(array_unique($request->trajectories))){
+                    return redirect('nueva/carrera')->with('message', "Las trayectorias no deben repetirse!");
+                }
+
         $addcareer = new App\Career;
         $addcareer->name = $request->name;
         $addcareer->save();
@@ -46,12 +54,25 @@ class CareerController extends Controller
         Validator::make(request()->all(), $rules)
         ->setAttributeNames($this->Attributes())
         ->validate();
-        $career->name = request('name');
-        $career->save();
+
         if(request('trajectories')){
-            $career->trajectories()->attach(request('trajectories'));
+            if(count(request('trajectories')) != count(array_unique(request('trajectories')))){
+                $this->messageError='Las trayectorias no deben repetirse!';                
+            }else{
+                $career->trajectories()->syncWithoutDetaching(request('trajectories'));
+            }   
         }
-        return redirect('editar/carrera/'.$career->id)->with('message', "La carrra $career->name ha sido actualizada exitosamente!");
+
+        if(!$this->messageError){
+            $career->name = request('name');
+            $career->save();
+            $this->message="La carrera  $career->name ha sido actualizada exitosamente!";
+
+        }
+
+        return redirect('editar/carrera/'.$career->id)
+        ->with('message', ($this->message)? $this->message : '')
+        ->with('messageError',($this->messageError)? $this->messageError : '');
     }
 
     public function deletecareers($id){
@@ -63,8 +84,8 @@ class CareerController extends Controller
     }
 
     public function deletetrajectories($id){
-        $deleteTrajectories = App\Trajectorie::findOrFail($id);
-        $deleteTrajectories->careers()->detach();
+        $deleteTrajectories = App\Career::findOrFail($id);
+        $deleteTrajectories->trajectories()->detach(request('trajectorie_id'));
 
         return back();
     }
