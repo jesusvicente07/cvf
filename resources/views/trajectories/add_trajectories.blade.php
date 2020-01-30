@@ -26,6 +26,13 @@
                         <form action="{{ route('storeTrajectories') }}" method="post" class="m-form m-form--fit m-form--label-align-left" style="text-align:left">
                         @csrf
                             <div class="m-portlet__body">
+                                @if(session('message'))
+                                <div class="form-group m-form__group" id="message">
+                                    <div class="alert alert-danger alert-dismissible">
+                                        {{session('message')}}                                        
+                                    </div>
+                                </div>
+                                @endif
                                 <div class="form-group m-form__group">
                                 <label for="">Nombre:</label>
                                     <input type="text" name="name" class="form-control m-input {{ $errors->has('name') ? 'is-danger' : '' }} " value="{{ old('name') }}"  placeholder="Psicología educativa" autocomplete="off">
@@ -116,5 +123,11 @@ function showModal(course){
     });
     $('#courseModal').modal();
 }
+
+@if(session('message'))
+    $('#message').fadeIn();
+    $('#message').fadeOut(5000);
+
+@endif
 </script>
 @endsection

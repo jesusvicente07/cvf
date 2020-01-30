@@ -8,6 +8,9 @@ use App;
 
 class TrajectorieController extends Controller
 {
+    private $messageError='';
+    private $message='';
+
     public function index(){
         $trajectories="";
         if(request('search')){
@@ -28,6 +31,10 @@ class TrajectorieController extends Controller
         Validator::make($request->all(),$this->Rules())
                 ->setAttributeNames($this->Attributes())
                 ->validate();
+                
+        if(count($request->competitions) != count(array_unique($request->competitions))){
+            return redirect('nueva/trayectoria')->with('message', "Las competencias no deben repetirse!");
+        }
         $addTrajectorie = new App\Trajectorie;
         $addTrajectorie->name = $request->name;
         $addTrajectorie->save();
@@ -50,17 +57,35 @@ class TrajectorieController extends Controller
         Validator::make(request()->all(),$rules)
         ->setAttributeNames($this->Attributes())
         ->validate();
-        $trajectorie->name = request('name');
-        $trajectorie->save();
-        $trajectorie->competitions()->attach(request('competitions'));
-        return redirect('editar/trayectoria/'.$trajectorie->id)->with('message', "La trayectoria  $trajectorie->name ha sido actualizado exitosamente!");
+
+        if(request('competitions')){
+            if(count(request('competitions')) != count(array_unique(request('competitions')))){
+                $this->messageError='Las competencias no deben repetirse!';                
+            }else{
+                $trajectorie->competitions()->syncWithoutDetaching(request('competitions'));
+            }   
+        }
+
+        if(!$this->messageError){
+            $trajectorie->name = request('name');
+            $trajectorie->save();
+            $this->message="La trayectoria  $trajectorie->name ha sido actualizado exitosamente!";
+
+        }
+        return redirect('editar/trayectoria/'.$trajectorie->id)
+        ->with('message', ($this->message)? $this->message : '')
+        ->with('messageError',($this->messageError)? $this->messageError : '');
     }
 
     public function delete($id){
         $trajectorie = App\Trajectorie::findOrFail($id);
-        $nameTrajectorie = $trajectorie->email;
+        $nameTrajectorie = $trajectorie->name;
         $trajectorie->delete();
         return redirect('trayectorias')->with('message', "La trayectoria $nameTrajectorie ha sido eliminado exitosamente!");
+    }
+
+    public function deleteDetailTTrajectorie($id){
+        $trajectorie = App\Trajectorie::findOrFail($id);  
     }
 
     public function Rules(){

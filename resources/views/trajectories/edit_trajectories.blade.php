@@ -34,6 +34,13 @@
                                     </div>
                                 </div>
                                 @endif
+                                @if(session('messageError'))
+                                <div class="form-group m-form__group" id="messageError">
+                                    <div class="alert alert-danger alert-dismissible">
+                                        {{session('messageError')}}                                        
+                                    </div>
+                                </div>
+                                @endif
 
                                 <div class="form-group m-form__group">
                                 <label for="">Nombre:</label>
@@ -46,10 +53,17 @@
                                     <label for="">Competencias de la trayectoria</label>
                                     <div class="form-inline">
                                         <select name="competition" class="form-control m-input {{ $errors->has('competitions') ? 'is-danger' : '' }} ">
+                                            {{ $i =0 }}
                                             @foreach($competitions as $competition)
-                                                <option value="{{$competition->courses}}">
-                                                    {{$competition->name}}
-                                                </option>
+
+                                                @if($competition->id != isset($trajectorie->competitions[$i]->id))
+                                                    <option value="{{$competition->courses}}">
+                                                        {{$competition->name}}
+                                                    </option>
+                                                @endif
+
+                                                {{ $i++ }}
+
                                             @endforeach
                                             @error('competitions')
                                                 <div class="text-red">{{ $errors->first('competitions') }}</div>
@@ -84,7 +98,7 @@
                                         @foreach($trajectorie->competitions as $trajectorieCompetition )
                                         <tr>
                                             <td>{{$trajectorieCompetition->name}}</td>
-                                            <td><a onclick='showModal({{$trajectorieCompetition->courses}})' class='text-body'><i class='fa fa-book' style='font-size:150%'></i></a> &nbsp;&nbsp; <a  class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td>
+                                            <td><a onclick='showModal({{$trajectorieCompetition->courses}})' class='text-body'><i class='fa fa-book' style='font-size:150%'></i></a> &nbsp;&nbsp; <a class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td>
                                         </tr>
                                         @endforeach
                                         </tbody>
@@ -104,28 +118,26 @@
     </div>
 
     <div class="modal" id="courseModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-      <!-- Modal body -->
-      <div class="modal-body" style="text-align: center;">
-        <strong>Cursos de la competencia:</strong>
-        <p class="ml-5" id="text">
-            <ul style="text-align:left" id="courses"> 
-            </ul>
-        </p>
-      </div>
+                <!-- Modal body -->
+                <div class="modal-body" style="text-align: center;">
+                    <strong>Cursos de la competencia:</strong>
+                    <p class="ml-5" id="text">
+                        <ul style="text-align:left" id="courses"> 
+                        </ul>
+                    </p>
+                </div>
 
-         <!-- Modal footer -->
-      <div class="modal-footer">
+                    <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
 
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-     
-      </div>
-
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 @endsection
 
 @section('customScripts')
@@ -150,9 +162,16 @@ function showModal(course){
     $('#courseModal').modal();
 }
 
+
+
 @if(session('message'))
     $('#message').fadeIn();
     $('#message').fadeOut(5000);
+
+@endif
+@if(session('messageError'))
+    $('#messageError').fadeIn();
+    $('#messageError').fadeOut(5000);
 
 @endif
 </script>
