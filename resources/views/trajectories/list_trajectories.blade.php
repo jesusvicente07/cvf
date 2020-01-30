@@ -40,11 +40,11 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                          <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height">
-                                            <table class="table table-hover text-center">
+                                            <table class="table table-bordered" style="text-align:left">
                                                 <thead class="thead-dark">
                                                     <tr>
-                                                        <th scope="col">Trayectoria</th>
-                                                        <th scope="col">Carrera</th>
+                                                        <th scope="col">Trayectorias</th>
+                                                        <th scope="col">Carreras</th>
                                                         <th scope="col">Acciones</th>
                                                     </tr>
                                                 </thead>

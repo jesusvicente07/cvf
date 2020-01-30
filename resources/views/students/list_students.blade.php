@@ -30,7 +30,7 @@
                                     <input type="text" class="form-control m-input" style="width:50%" placeholder="Filtar .." autocomplete="off">      
                                 </div>
                                 <div class="m-form__group">
-                                    <table class="table table-hover text-center">
+                                    <table class="table table-bordered" style="text-align:left">
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th scope="col">Estudiantes</th>
@@ -42,7 +42,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <th scope="row">1</th>
+                                                <td>1</td>
                                                 <td>Mark</td>
                                                 <td>Otto</td>
                                                 <td>@mdo</td>

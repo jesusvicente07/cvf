@@ -69,11 +69,10 @@
                                     </div>
                                 </div>
                                 <div class="m-form__group">
-                                    <table class="table table-hover">
+                                    <table class="table table-bordered" style="text-align:left">
                                         <thead class="thead-dark">
                                             <tr>
-                                            <th>Nuevas trayectorias</th>
-                                            <th></th>
+                                            <th colspan="2" style="text-align:center">Nuevas trayectorias</th>
                                             </tr>
                                         </thead>
                                         <tbody id="newtrajectories">
@@ -81,11 +80,10 @@
                                     </table> 
                                 </div>
                                 <div class="m-form__group">
-                                    <table class="table table-hover">
+                                    <table class="table table-bordered" style="text-align:left">
                                         <thead class="thead-dark">
                                             <tr>
-                                            <th>Trayectorias existentes</th>
-                                            <th></th>
+                                            <th colspan="2" style="text-align:center">Trayectorias existentes</th>
                                             </tr>
                                         </thead>
                                         <tbody>

@@ -34,10 +34,10 @@
                                     <a class="btn btn-primary" href="{{route('addcareers')}}"><i class="fa fa-plus"></i>Agregar carrera</a>     
                                 </div>
                                 <div class="m-form__group">
-                                    <table class="table table-hover text-center">
+                                    <table class="table table-bordered" style="text-align:left">
                                         <thead class="thead-dark">
                                             <tr>
-                                                <th scope="col">Carrera</th>
+                                                <th scope="col">Carreras</th>
                                                 <th scope="col">Acciones</th>
                                             </tr>
                                         </thead>

@@ -56,7 +56,13 @@
                                     </div>
                                 </div>
                                 <div class="m-form__group">
-                                    <table class="table table-hover">
+                                    <table class="table table-bordered" style="text-align:left">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th scope="col">Trayectorias</th>
+                                                <th scope="col">Acciones</th>
+                                            </tr>
+                                        </thead>
                                         <tbody>
                                         </tbody>
                                     </table> 

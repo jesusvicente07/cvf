@@ -74,11 +74,10 @@
                                 </div>
 
                                 <div class="m-form__group">
-                                    <table class="table table-hover ">
+                                    <table class="table table-bordered" style="text-align:left">
                                         <thead class="thead-dark">
                                             <tr>
-                                            <th>Nuevas competencias</th>
-                                            <th></th>
+                                            <th colspan="2" style="text-align:center">Nuevas competencias</th>
                                             </tr>
                                         </thead>
                                         <tbody id="newcompetitions" >
@@ -87,11 +86,10 @@
                                 </div>
 
                                 <div class="m-form__group">
-                                    <table class="table table-hover ">
+                                    <table class="table table-bordered" style="text-align:left">
                                         <thead class="thead-dark">
                                             <tr>
-                                            <th>Competencias existentes</th>
-                                            <th></th>
+                                            <th colspan="2" style="text-align:center">Competencias existentes</th>
                                             </tr>
                                         </thead>
                                         <tbody>
