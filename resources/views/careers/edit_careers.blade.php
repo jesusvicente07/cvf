@@ -192,7 +192,7 @@ function showModal(competition){
 
 function Mymodal(trajectorie){
       $('#text1').html(trajectorie.name);
-      $('#formModal').attr('action', '/eliminar/carrera/'+trajectorie.pivot.career_id+'?trajectorie_id='+trajectorie.pivot.trajectorie_id);
+      $('#formModal').attr('action', '/eliminar/carreraT/'+trajectorie.pivot.career_id+'?trajectorie_id='+trajectorie.pivot.trajectorie_id);
       $('#myModal').modal();
     }
 </script>
