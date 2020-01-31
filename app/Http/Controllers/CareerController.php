@@ -28,9 +28,9 @@ class CareerController extends Controller
                 ->setAttributeNames($this->Attributes())
                 ->validate();
 
-                if(count($request->trajectories) != count(array_unique($request->trajectories))){
-                    return redirect('nueva/carrera')->with('message', "Las trayectorias no deben repetirse!");
-                }
+        if(count($request->trajectories) != count(array_unique($request->trajectories))){
+            return redirect('nueva/carrera')->with('message', "Las trayectorias no deben repetirse!");
+        }
 
         $addcareer = new App\Career;
         $addcareer->name = $request->name;

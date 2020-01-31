@@ -71,7 +71,7 @@
                     <form action="#" id="formModal" method="POST">
                     @method('DELETE')
                     @csrf
-                        <button type="submit "class="btn btn-default">Eliminar</button>
+                        <input type="submit" class="btn btn-default" value="Eliminar">
                     </form>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 </div>

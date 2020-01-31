@@ -65,7 +65,7 @@
                                     <table class="table table-bordered" style="text-align:left">
                                         <thead class="thead-dark">
                                             <tr>
-                                            <th colspan="3" style="text-align:center">Cursos existentes</th>
+                                                <th colspan="3" style="text-align:center">Cursos existentes</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -102,7 +102,7 @@
                     <form action="#" id="formModal" method="POST">
                     @method('DELETE')
                     @csrf
-                        <button type="submit "class="btn btn-default">Eliminar</button>
+                        <input type="submit" class="btn btn-default" value="Eliminar">
                     </form>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 </div>
@@ -138,7 +138,7 @@ $('#newcourses').on("click", ".delete", function() {
 
 function Mymodal(course_name){
       $('#text').html(course_name.name);
-      $('#formModal').attr('action', '/eliminar/competencia/'+course_name.id);
+      $('#formModal').attr('action', '/eliminar/curso/'+course_name.id);
       $('#myModal').modal();
     }
 </script>

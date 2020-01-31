@@ -51,22 +51,22 @@
                                 <div class="m-form__group"> <label>Trayectorias profesionales</label>
                                     <div class="form-inline">
                                         <select name="trajectorie" class="form-control m-input {{ $errors->has('trajectories') ? 'is-danger' : '' }} ">
-                                        {{ $i =0 }}
+                                            <?php $i = 0 ?>
                                             @foreach($trajectories as $trajectorie)
                                                 @if($trajectorie->id != isset($career->trajectories[$i]->id))
-                                                <option value="{{$trajectorie->competitions}}">
-                                                    {{$trajectorie->name}}
-                                                </option>
+                                                    <option value="{{ isset($trajectorie->competitions[0]) ? $trajectorie->competitions : $trajectorie }}">
+                                                        {{$trajectorie->name}}
+                                                    </option>
                                                 @endif
 
-                                                {{ $i++ }}
+                                                <?php $i++ ?>
                                             @endforeach
-                                            @error('trajectories')
-                                                <div class="text-red">{{ $errors->first('trajectories') }}</div>
-                                            @enderror 
                                         </select> 
                                         <div id="addtrajectories" class="btn btn-primary mr-4" ><i class="fa fa-plus"></i></div>
                                     </div>
+                                    @error('trajectories')
+                                        <div class="text-red">{{ $errors->first('trajectories') }}</div>
+                                    @enderror 
                                 </div>
                                 <div class="m-form__group">
                                     <table class="table table-bordered" style="text-align:left">
@@ -153,8 +153,16 @@
 $('#addtrajectories').click(function(){
     let value = JSON.parse($("select[name='trajectorie']").val());
     if(value){
+        var trajectorie_id='';
+        var competitions ='';
+        if(typeof value[0] !== 'undefined'){
+            trajectorie_id=value[0].pivot.trajectorie_id;
+            competitions=value;
+        }else{
+            trajectorie_id=value.id;
+        }
         let name = $("option:selected").text();
-        let tbody = "<tr><td><input hidden  name='trajectories[]' value='"+ value[0].pivot.trajectorie_id +"'> " + name + "</td><td><a class='text-body' onclick='showModal("+JSON.stringify(value)+")'><i class='fa fa-book' style='font-size:150%'></i></a> &nbsp;&nbsp; <a  class='delete' class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td></tr>";
+        let tbody = "<tr><td><input hidden  name='trajectories[]' value='"+ trajectorie_id +"'> " + name + "</td><td><a class='text-body' onclick='showModal("+JSON.stringify(competitions)+")'><i class='fa fa-book' style='font-size:150%'></i></a> &nbsp;&nbsp; <a  class='delete' class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td></tr>";
         $("#newtrajectories").append(tbody);
     }
 });
