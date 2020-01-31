@@ -34,18 +34,18 @@
                                 </div>
                                 @endif
                                 <div class="form-group m-form__group">
-                                <label for="">Nombre:</label>
+                                <label>Nombre:</label>
                                     <input type="text" name="name" class="form-control m-input {{ $errors->has('name') ? 'is-danger' : '' }} " value="{{ old('name') }}"  placeholder="Psicología educativa" autocomplete="off">
                                     @error('name')
                                       <div class="text-red">{{ $errors->first('name') }}</div>
                                     @enderror      
                                 </div>
                                 <div class="form-group m-form__group">
-                                    <label for="">Competencias de la trayectoria</label>
+                                    <label>Competencias de la trayectoria</label>
                                     <div class="form-inline">
                                         <select name="competition" class="form-control m-input {{ $errors->has('competitions') ? 'is-danger' : '' }} ">
                                             @foreach($competitions as $competition)
-                                                <option value="{{$competition->courses}}">
+                                                <option value="{{isset($competition->courses[0]) ? $competition->courses : $competition}}">
                                                     {{$competition->name}}
                                                 </option>
                                             @endforeach
@@ -55,6 +55,9 @@
                                         </select>
                                         <div id="addcompetition" class="btn btn-primary mr-4" ><i class="fa fa-plus"></i></div>
                                     </div>
+                                    @error('competitions')
+                                        <div class="text-red">{{ $errors->first('competitions') }}</div>
+                                    @enderror 
                                 </div>
 
                                 <div class="m-form__group">
@@ -112,7 +115,15 @@ $('#addcompetition').click(function(){
     let value =JSON.parse($("select[name='competition']").val());
     if(value){
         let name = $("option:selected").text();
-        let tbody = "<tr><td><input hidden  name='competitions[]' value='"+ value[0].competition_id +"'> " + name + "</td><td><a onclick='showModal("+JSON.stringify(value)+")' class='text-body'><i class='fa fa-book' style='font-size:150%'></i></a> &nbsp;&nbsp; <a  class='delete' class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td></tr>";
+        var competition_id='';
+        var course ='';
+        if(typeof value[0] !== 'undefined'){
+            competition_id=value[0].competition_id;
+            course=value;
+        }else{
+            competition_id=value.id;
+        }
+        let tbody = "<tr><td><input hidden  name='competitions[]' value='"+ competition_id +"'> " + name + "</td><td><a onclick='showModal("+JSON.stringify(course)+")' class='text-body'><i class='fa fa-book' style='font-size:150%'></i></a> &nbsp;&nbsp; <a  class='delete' class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td></tr>";
         $("table tbody").append(tbody);
     }
 });
