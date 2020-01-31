@@ -6,6 +6,7 @@ Route::post('/nueva/competencia', 'CompetitionController@store')->name('storecom
 Route::get('/editar/competencia/{competition}', 'CompetitionController@editcompetitions')->name('editcompetitions');
 Route::put('/editar/competencia/{competition}', 'CompetitionController@update')->name('updatecompetitions');
 Route::delete('eliminar/competencia/{id}', 'CompetitionController@deletecompetitions')->name('deletecompetitions');
+Route::delete('eliminar/competencia/{id}', 'CompetitionController@deletecourses')->name('deletecourses');
 
 Route::get('/carreras', 'CareerController@careers')->name('careers');
 Route::get('/nueva/carrera', 'CareerController@addcareers')->name('addcareers');
