@@ -46,7 +46,7 @@
                                                 <td>Mark</td>
                                                 <td>Otto</td>
                                                 <td>@mdo</td>
-                                                <td><a href="#" class="text-body"><i class="fa fa-eye" style="font-size:150%"></i></a></td>
+                                                <td><a href="{{route('studentprogress')}}" class="text-body"><i class="fa fa-eye" style="font-size:150%"></i></a></td>
                                             </tr>
                                         </tbody>
                                     </table>   

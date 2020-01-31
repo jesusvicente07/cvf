@@ -10,4 +10,9 @@ class StudentController extends Controller
         $student='';
          return view('students.list_students', compact('student'));
      }
+
+    public function studentprogress(){
+        $student="";
+        return view('students.students_progress', compact('student'));
+    }
 }

@@ -5,5 +5,3 @@ Route::get('/editar/trayectoria/{trajectorie}', 'TrajectorieController@edit')->n
 Route::put('/editar/trayectoria/{trajectorie}', 'TrajectorieController@update')->name('updateTrajectories');
 Route::delete('/eliminar/trayectoria/{trajectorie}', 'TrajectorieController@delete')->name('deleteTrajectories');
 Route::delete('/eliminar/detalleTrayectoriaCompetencia/{trajectorie}', 'TrajectorieController@deleteDetailTrajectorieCompetition')->name('deleteDetailTrajectorieCompetition');
-
-Route::delete('eliminar/carreraT/{id}', 'CareerController@deletetrajectories')->name('deletetrajectories');

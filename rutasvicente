@@ -1,4 +1,5 @@
 Route::get('/estudiantes', 'StudentController@students')->name('students');
+Route::get('/estudiantes/progreso', 'StudentController@studentprogress')->name('studentprogress');
 
 Route::get('/competencias', 'CompetitionController@competitions')->name('competitions');
 Route::get('/nueva/competencia', 'CompetitionController@addcompetitions')->name('addcompetitions');
@@ -14,4 +15,4 @@ Route::post('/nueva/carrera', 'CareerController@store')->name('storecareers');
 Route::get('/editar/carrera/{career}', 'CareerController@editcareers')->name('editcareers');
 Route::put('/editar/carrera/{career}', 'CareerController@update')->name('updatecareers');
 Route::delete('eliminar/carrera/{id}', 'CareerController@deletecareers')->name('deletecareers');
-Route::delete('eliminar/carrera/{id}', 'CareerController@deletetrajectories')->name('deletetrajectories');
+Route::delete('eliminar/carreraT/{id}', 'CareerController@deletetrajectories')->name('deletetrajectories');
