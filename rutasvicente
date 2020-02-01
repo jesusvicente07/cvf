@@ -1,3 +1,6 @@
+Route::get('/coordinadores', 'CoordinatorsController@coordinators')->name('coordinators');
+Route::get('/nuevo/coordinador', 'CoordinatorController@addcoordinators')->name('addcoordinators');
+
 Route::get('/estudiantes', 'StudentController@students')->name('students');
 Route::get('/estudiantes/progreso', 'StudentController@studentprogress')->name('studentprogress');
 

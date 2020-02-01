@@ -244,6 +244,15 @@
 					<div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark "   style="position: relative;">
 						<ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
 							<li class="m-menu__item" aria-haspopup="true"><a href="/" class="m-menu__link "><span class="m-menu__link-title"></span> <span class="m-menu__link-wrap"></span><i class="m-menu__link-icon fa fa-bar-chart"></i><span class="m-menu__link-text">Inicio</span></a>
+							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" ><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon fas fa-user-cog"></i><span class="m-menu__link-text">Coordinadores</span><i
+									 class="m-menu__ver-arrow la la-angle-right"></i></a>
+								<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
+									<ul class="m-menu__subnav">
+										<li class="m-menu__item " aria-haspopup="true"><a href="{{route('coordinators')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Administrar</span></a></li>
+										<li class="m-menu__item " aria-haspopup="true"><a href="{{route('addcoordinators')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Nuevo</span></a></li>
+									</ul>
+								</div>
+							</li>
 							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" ><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon fas fa-share"></i><span class="m-menu__link-text">Seguimiento</span><i
 									 class="m-menu__ver-arrow la la-angle-right"></i></a>
 								<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
@@ -280,7 +289,7 @@
 									</ul>
 								</div>
 							</li>
-							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" ><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon flaticon-settings"></i><span class="m-menu__link-text">Configuración</span></a>
+							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" ><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon fas fa-cog"></i><span class="m-menu__link-text">Configuración</span></a>
 							</li>
 						</ul>
 					</div>
