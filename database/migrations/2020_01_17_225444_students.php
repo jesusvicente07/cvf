@@ -13,7 +13,14 @@ class Students extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('students', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('career_id');
+            $table->string('name');
+            $table->string('password');
+            $table->timestamps();
+            $table->foreign('career_id')->references('id')->on('careers')->onDelete('cascade');
+        });
     }
 
     /**
