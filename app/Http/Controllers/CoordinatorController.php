@@ -15,4 +15,9 @@ class CoordinatorController extends Controller
         $coordinators="";
         return view('coordinators.add_coordinators', compact('coordinators'));
     }
+
+    public function editcoordinators(){
+        $coordinators="";
+        return view('coordinators.edit_coordinators', compact('coordinators'));
+    }
 }
