@@ -20,7 +20,7 @@ class CoordinatorController extends Controller
         }else{
             $coordinators=App\User::paginate(5);;
         }
-        dd($coordinators[0]->careers()->name);
+        dd($coordinators->careers());
         return view('coordinators.list_coordinators', compact('coordinators','careers'));
     }
 
