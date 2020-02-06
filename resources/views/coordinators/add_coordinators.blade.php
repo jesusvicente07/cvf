@@ -23,7 +23,7 @@
                         </div>
                     </div>
                         
-                        <form action="" method="POST" class="m-form m-form--fit m-form--label-align-left" style="text-align:left">
+                        <form action="{{route('storecoordinators')}}" method="POST" class="m-form m-form--fit m-form--label-align-left" style="text-align:left">
                         @csrf
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group">
@@ -42,23 +42,23 @@
                                 </div>    
                                 <div class="form-group m-form__group">
                                     <label>Contraseña</label>
-                                    <input type="text" name="password" class="form-control m-input {{ $errors->has('password') ? 'is-danger' : '' }} "  placeholder="********" value="{{ old('password') }}" autocomplete="off">
+                                    <input type="password" name="password" class="form-control m-input {{ $errors->has('password') ? 'is-danger' : '' }} "  placeholder="********" value="{{ old('password') }}" autocomplete="off">
                                     @error('password')
                                       <div class="text-red">{{ $errors->first('password') }}</div>
                                     @enderror  
                                 </div>
                                 <div class="m-form__group"> <label>Carrera</label>
                                     <div class="form-inline">
-                                        <select name="" class="form-control m-input {{ $errors->has('') ? 'is-danger' : '' }} ">
-                                                
-                                                <option value="">
-                                                    
+                                        <select name="careers" class="form-control m-input {{ $errors->has('careers') ? 'is-danger' : '' }} ">
+                                            @foreach($careers as $career)
+                                                <option value="{{$career->id}}">
+                                                    {{$career->name}}
                                                 </option>
-            
+                                            @endforeach
                                         </select> 
                                     </div>
-                                    @error('kkk')
-                                        <div class="text-red"></div>
+                                    @error('careers')
+                                        <div class="text-red">{{ $errors->first('careers') }}</div>
                                     @enderror 
                                 </div>
                                     <div class="m-form__group" style="text-align: right;">
@@ -73,29 +73,6 @@
 @endsection
 
 @section('customScripts')
-<!--<script>
-$('#addtrajectories').click(function(){
-    let value = JSON.parse($("select[name='trajectorie']").val());
-    
-    if(value){
-        let name = $("option:selected").text();
-        var trajectorie_id='';
-        var competitions ='';
-        if(typeof value[0] !== 'undefined'){
-            trajectorie_id=value[0].pivot.trajectorie_id;
-            competitions=value;
-        }else{
-            trajectorie_id=value.id;
-        }
-        let tbody = "<tr><td><input hidden  name='trajectories[]' value='"+trajectorie_id  +"'> " + name + "</td><td><a class='text-body' onclick='showModal("+JSON.stringify(competitions)+")'><i class='fa fa-book' style='font-size:150%'></i></a> &nbsp;&nbsp; <a  class='delete' class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td></tr>";
-        $("table tbody").append(tbody);
-    }
-});
-
-@if(session('message'))
-    $('#message').fadeIn();
-    $('#message').fadeOut(5000);
-
-@endif
-</script>-->
+<script>
+</script>
 @endsection

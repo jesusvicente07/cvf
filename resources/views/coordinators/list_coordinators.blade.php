@@ -23,15 +23,15 @@
                         </div>
                     </div>
                         
-                        <form action="" method="get" class="m-form m-form--fit m-form--label-align-right">
+                        <form action="{{route('coordinators')}}" method="get" class="m-form m-form--fit m-form--label-align-right">
                         @csrf
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group">
-                                    <!--@if(session('message'))
+                                    @if(session('message'))
                                         <div class="alert alert-success alert-dismissible">
                                             {{session('message')}}                                        
                                         </div>
-                                    @endif-->
+                                    @endif
                                     <a class="btn btn-primary" href="{{route('addcoordinators')}}"><i class="fa fa-plus"></i>Agregar coordinadores</a>
                                     <input type="text" name="search" class="form-control m-input" style="width:50%" placeholder="Filtar .." autocomplete="off">      
                                 </div>
@@ -49,15 +49,21 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @foreach($coordinators as $coordinator)
                                             <tr>
-                                                <td>Juan</td>
-                                                <td>jan7alberto@gmail.com</td>
-                                                <td>Adminstración</td>
+                                                <td>{{$coordinator->name}}</td>
+                                                <td>{{$coordinator->email}}</td>
+                                                <td>
+                                                @foreach($coordinator->careers as $careers)
+                                                    {{$careers->name}}
+                                                @endforeach    
+                                                </td>
                                                 <td>
                                                     <a href="{{route('editcoordinators')}}" class=" btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
                                                     <button class="btn text-body" onclick=""><i class="fa fa-trash" style="font-size:150%"></i></button>
                                                 </td>
                                             </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>   
                                 </div>
@@ -89,17 +95,17 @@
 @endsection
 
 @section('customScripts')
-<!--<script>
-    function Mymodal(competition){
+<script>
+    /*function Mymodal(competition){
       $('#text').html(competition.name);
       $('#formModal').attr('action', '/eliminar/competencia/'+competition.id);
       $('#myModal').modal();
-    }
+    }*/
 
     @if(session('message'))
         $('.alert-success').fadeIn();
         $('.alert-success').fadeOut(5000);
 
     @endif
-</script>-->
+</script>
 @endsection

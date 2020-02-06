@@ -44,7 +44,6 @@
                                     <div class="form-inline">
                                         <select name="trajectorie" class="form-control m-input {{ $errors->has('trajectories') ? 'is-danger' : '' }} ">
                                             @foreach($trajectories as $trajectorie)
-                                                
                                                 <option value="{{ isset($trajectorie->competitions[0]) ? $trajectorie->competitions : $trajectorie }}">
                                                     {{$trajectorie->name}}
                                                 </option>

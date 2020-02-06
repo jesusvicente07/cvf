@@ -1,5 +1,6 @@
 Route::get('/coordinadores', 'CoordinatorsController@coordinators')->name('coordinators');
 Route::get('/nuevo/coordinador', 'CoordinatorsController@addcoordinators')->name('addcoordinators');
+Route::post('/nuevo/coordinador', 'CoordinatorController@store')->name('storecoordinators');
 Route::get('/editar/coordinador/', 'CoordinatorController@editcoordinators')->name('editcoordinators');
 
 Route::get('/estudiantes', 'StudentController@students')->name('students');

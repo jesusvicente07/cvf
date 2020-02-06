@@ -12,4 +12,7 @@ class Career extends Model
     public function trajectories(){
         return $this->belongsToMany(Trajectorie::class, 'career_trajectorie');
     }
+    public function coordinators(){
+        return $this->hasOne(User::class);
+    }
 }
