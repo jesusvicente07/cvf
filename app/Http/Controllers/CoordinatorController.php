@@ -20,8 +20,7 @@ class CoordinatorController extends Controller
         }else{
             $coordinators=App\User::paginate(5);;
         }
-        dd($coordinators->careers());
-        return view('coordinators.list_coordinators', compact('coordinators','careers'));
+        return view('coordinators.list_coordinators', compact('coordinators'));
     }
 
     public function addcoordinators(){
@@ -40,17 +39,45 @@ class CoordinatorController extends Controller
         $addcoordinator->email = $request->email;
         $addcoordinator->password = Hash::make($request->password);
         $addcoordinator->type = '2';
-        $career = App\Career::FindOrFail($request->careers);
-        $addcoordinator->career_id=$career->id;
         $addcoordinator->save();
+        $career = App\Career::FindOrFail($request->careers);
+        $career->user_id=$addcoordinator->id;
+        $career->save();
 
         return redirect('coordinadores')->with('message', "El coordinador $request->name ha sido agregado exitosamente!");
 
     }
 
-    public function editcoordinators(){
-        $coordinators="";
-        return view('coordinators.edit_coordinators', compact('coordinators'));
+    public function editcoordinators(App\User $coordinator){
+        $careers=App\Career::all();
+        return view('coordinators.edit_coordinators', compact('coordinator','careers'));
+    }
+
+    public function updatecoordinators(App\User $coordinator){
+
+        Validator::make(request()->all(),$this->Rules2())
+        ->setAttributeNames($this->Attributes())
+        ->validate();
+
+        $coordinator->name=request('name');
+        $coordinator->email=request('email');
+        $coordinator->password=request('password') ?  Hash::make(request('password')) : $coordinator->password;
+        $coordinator->type='2';
+        $coordinator->save();
+
+        $career = App\Career::FindOrFail(request('careers'));
+        $career->user_id=$coordinator->id;
+        $career->save();
+
+        return redirect('editar/coordinador/'.$coordinator->id)->with('message', "El coordinador $coordinator->name ha sido actualizada exitosamente!");
+
+    }
+
+    public function deletecoordinators($id){
+        $coordinator = App\User::findOrFail($id);
+        $nameCoordinator = $coordinator->name;
+        $coordinator->delete();
+        return redirect('coordinadores')->with('message', "El coordinador $nameCoordinator ha sido eliminado exitosamente!");
     }
 
     public function Rules(){
@@ -58,6 +85,14 @@ class CoordinatorController extends Controller
             'name' => 'required',
             'email'=>'required',
             'password'=>'required',
+            'careers'=>'required',
+        ];
+    }
+
+    public function Rules2(){
+        return [
+            'name' => 'required',
+            'email'=>'required',
             'careers'=>'required',
         ];
     }

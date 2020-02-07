@@ -51,9 +51,11 @@
                                     <div class="form-inline">
                                         <select name="careers" class="form-control m-input {{ $errors->has('careers') ? 'is-danger' : '' }} ">
                                             @foreach($careers as $career)
-                                                <option value="{{$career->id}}">
-                                                    {{$career->name}}
-                                                </option>
+                                                @if(!$career->user_id)
+                                                    <option value="{{$career->id}}">
+                                                        {{$career->name}}
+                                                    </option>
+                                                @endif
                                             @endforeach
                                         </select> 
                                     </div>

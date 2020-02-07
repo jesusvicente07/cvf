@@ -53,14 +53,13 @@
                                             <tr>
                                                 <td>{{$coordinator->name}}</td>
                                                 <td>{{$coordinator->email}}</td>
+
                                                 <td>
-                                                @foreach($coordinator->careers as $careers)
-                                                    {{$careers->name}}
-                                                @endforeach    
+                                                     {{$coordinator->careers->name}}
                                                 </td>
                                                 <td>
-                                                    <a href="{{route('editcoordinators')}}" class=" btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
-                                                    <button class="btn text-body" onclick=""><i class="fa fa-trash" style="font-size:150%"></i></button>
+                                                    <a href="{{route('editcoordinators',$coordinator)}}" class=" btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
+                                                    <button class="btn text-body" onclick="Mymodal({{ $coordinator }})"><i class="fa fa-trash" style="font-size:150%"></i></button>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -73,11 +72,11 @@
         </div>
     </div>
 
-  <!--<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body" style="text-align:center">
-                    <strong>Seguro que desea eliminar la competencia:</strong>
+                    <strong>Seguro que desea eliminar al coordinador:</strong>
                     <p id="text"></p>
                 </div>
                 <div class="modal-footer">
@@ -86,21 +85,21 @@
                     @csrf
                     <input type="submit" class="btn btn-default" value="Eliminar">
                     </form>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 </div>
             </div> 
         </div>
-    </div> -->
+    </div>
 
 @endsection
 
 @section('customScripts')
 <script>
-    /*function Mymodal(competition){
-      $('#text').html(competition.name);
-      $('#formModal').attr('action', '/eliminar/competencia/'+competition.id);
+    function Mymodal(coordinator){
+      $('#text').html(coordinator.name);
+      $('#formModal').attr('action', '/eliminar/coordinador/'+coordinator.id);
       $('#myModal').modal();
-    }*/
+    }
 
     @if(session('message'))
         $('.alert-success').fadeIn();
