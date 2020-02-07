@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function students(){
         $student='';
          return view('students.list_students', compact('student'));

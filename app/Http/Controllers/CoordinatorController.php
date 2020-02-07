@@ -12,6 +12,11 @@ class CoordinatorController extends Controller
     private $messageError='';
     private $message='';
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function coordinators(){
         $coordinators="";
         if(request('search')){

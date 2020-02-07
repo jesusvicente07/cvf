@@ -8,6 +8,11 @@ use App;
 
 class CompetitionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function competitions(){
         $competitions="";
         if(request('search')){

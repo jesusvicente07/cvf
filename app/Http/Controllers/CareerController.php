@@ -10,6 +10,11 @@ class CareerController extends Controller
 {
     private $messageError='';
     private $message='';
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     
     public function careers(){
         $careers="";

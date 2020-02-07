@@ -13,11 +13,9 @@
 
 Auth::routes();
 
-Route::get('/', function () {
-    return view('home');
-});
-
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
+
 
 Route::get('/coordinadores', 'CoordinatorController@coordinators')->name('coordinators');
 Route::get('/nuevo/coordinador', 'CoordinatorController@addcoordinators')->name('addcoordinators');

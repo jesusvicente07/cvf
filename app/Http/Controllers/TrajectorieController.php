@@ -11,6 +11,11 @@ class TrajectorieController extends Controller
     private $messageError='';
     private $message='';
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(){
         $trajectories="";
         if(request('search')){
