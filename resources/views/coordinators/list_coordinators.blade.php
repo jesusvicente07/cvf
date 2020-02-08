@@ -55,7 +55,7 @@
                                                 <td>{{$coordinator->email}}</td>
 
                                                 <td>
-                                                     {{$coordinator->careers->name}}
+                                                     {{ isset($coordinator->careers->name) ? $coordinator->careers->name : '' }}
                                                 </td>
                                                 <td>
                                                     <a href="{{route('editcoordinators',$coordinator)}}" class=" btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
