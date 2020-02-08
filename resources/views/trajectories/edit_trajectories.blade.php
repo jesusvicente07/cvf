@@ -44,7 +44,7 @@
 
                                 <div class="form-group m-form__group">
                                 <label>Nombre:</label>
-                                    <input type="text" name="name" class="form-control m-input {{ $errors->has('name') ? 'is-danger' : '' }} " value="{{ $trajectorie->name }}"  placeholder="Psicología educativa" autocomplete="off">
+                                    <input type="text" name="name" class="form-control m-input {{ $errors->has('name') ? 'is-danger' : '' }} " value="{{ $trajectorie->name }}" minlength="3" maxlength="50" placeholder="Psicología educativa" autocomplete="off">
                                     @error('name')
                                       <div class="text-red">{{ $errors->first('name') }}</div>
                                     @enderror      

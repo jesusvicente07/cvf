@@ -28,21 +28,21 @@
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group">
                                     <label>Nombre</label>
-                                    <input type="text" name="name" class="form-control m-input {{ $errors->has('name') ? 'is-danger' : '' }} "  placeholder="Jesus Vicente" value="{{ old('name') }}" autocomplete="off">
+                                    <input type="text" name="name" class="form-control m-input {{ $errors->has('name') ? 'is-danger' : '' }} "  placeholder="example" value="{{ old('name') }}" minlength="3" maxlength="50" autocomplete="off">
                                     @error('name')
                                       <div class="text-red">{{ $errors->first('name') }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group m-form__group">      
                                     <label>Correo</label>
-                                    <input type="text" name="email" class="form-control m-input {{ $errors->has('email') ? 'is-danger' : '' }} "  placeholder="example@gmail.com" value="{{ old('email') }}" autocomplete="off">
+                                    <input type="email" name="email" class="form-control m-input {{ $errors->has('email') ? 'is-danger' : '' }} "  placeholder="example@gmail.com" value="{{ old('email') }}" minlength="3" maxlength="50" autocomplete="off">
                                     @error('email')
                                       <div class="text-red">{{ $errors->first('email') }}</div>
                                     @enderror 
                                 </div>    
                                 <div class="form-group m-form__group">
                                     <label>Contraseña</label>
-                                    <input type="password" name="password" class="form-control m-input {{ $errors->has('password') ? 'is-danger' : '' }} "  placeholder="********" value="{{ old('password') }}" autocomplete="off">
+                                    <input type="password" name="password" class="form-control m-input {{ $errors->has('password') ? 'is-danger' : '' }} "  placeholder="********" value="{{ old('password') }}" minlength="3" maxlength="50" autocomplete="off">
                                     @error('password')
                                       <div class="text-red">{{ $errors->first('password') }}</div>
                                     @enderror  

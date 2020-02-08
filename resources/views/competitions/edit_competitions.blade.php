@@ -34,7 +34,7 @@
                                         </div>
                                     @endif
                                     <label>Nombre</label>
-                                    <input type="text" name="name" class="form-control m-input {{ $errors->has('name') ? 'is-danger' : '' }} " value="{{$competition->name}}" placeholder="e.g. Evaluación WISC IV" autocomplete="off">
+                                    <input type="text" name="name" class="form-control m-input {{ $errors->has('name') ? 'is-danger' : '' }} " value="{{$competition->name}}" placeholder="e.g. Evaluación WISC IV" minlength="3" maxlength="50" autocomplete="off">
                                     @error('name')
                                       <div class="text-red">{{ $errors->first('name') }}</div>
                                     @enderror   
@@ -42,8 +42,8 @@
                                 <div class="m-form__group">
                                     <label>Cursos que conforman la competencia</label>
                                     <div class="form-inline">
-                                        <input type="text" name="course_name" class="form-control m-input {{ $errors->has('courses') ? 'is-danger' : '' }}" placeholder="Nombre" value="{{ old('course_name') }}" autocomplete="off"> 
-                                        <input type="text" name="link" class="form-control m-input mr-3 {{ $errors->has('courses') ? 'is-danger' : '' }}" placeholder="Enlace" value="{{ old('link') }}" autocomplete="off"> 
+                                        <input type="text" name="course_name" class="form-control m-input {{ $errors->has('courses') ? 'is-danger' : '' }}" placeholder="Nombre" value="{{ old('course_name') }}" minlength="3" maxlength="50" autocomplete="off"> 
+                                        <input type="text" name="link" class="form-control m-input mr-3 {{ $errors->has('courses') ? 'is-danger' : '' }}" placeholder="Enlace" value="{{ old('link') }}" minlength="3" maxlength="50" autocomplete="off"> 
                                         <div class="btn btn-primary mr-4" id="addcompetition"><i class="fa fa-plus"></i></div>
                                     </div>
                                     @error('courses')
