@@ -17,13 +17,13 @@
                                     <i class="la la-gear"></i>
                                 </span>
                                     <h3 class="m-portlet__head-text">
-                                        Editar coordinador
+                                        Editar estudiante
                                     </h3>
                             </div>
                         </div>
                     </div>
                         
-                        <form action="{{ route('updatecoordinators',$coordinator) }}" method="POST" class="m-form m-form--fit m-form--label-align-left" style="text-align:left">
+                        <form action="{{ route('updatestudents',$student) }}" method="POST" class="m-form m-form--fit m-form--label-align-left" style="text-align:left">
                         @csrf
                         @method('PUT')
                             <div class="m-portlet__body">
@@ -34,14 +34,14 @@
                                         </div>
                                     @endif
                                     <label>Nombre</label>
-                                    <input type="text" name="name" class="form-control m-input {{ $errors->has('name') ? 'is-danger' : '' }} "  placeholder="example" value="{{ $coordinator->name }}" minlength="3" maxlength="50" autocomplete="off">
+                                    <input type="text" name="name" class="form-control m-input {{ $errors->has('name') ? 'is-danger' : '' }} "  placeholder="example" value="{{ $student->name }}" minlength="3" maxlength="50" autocomplete="off">
                                     @error('name')
                                       <div class="text-red">{{ $errors->first('name') }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group m-form__group">      
                                     <label>Correo</label>
-                                    <input type="email" name="email" class="form-control m-input {{ $errors->has('email') ? 'is-danger' : '' }} "  placeholder="example@gmail.com" value="{{ $coordinator->email }}" minlength="3" maxlength="50" autocomplete="off">
+                                    <input type="email" name="email" class="form-control m-input {{ $errors->has('email') ? 'is-danger' : '' }} "  placeholder="example@gmail.com" value="{{ $student->email }}" minlength="3" maxlength="50" autocomplete="off">
                                     @error('email')
                                       <div class="text-red">{{ $errors->first('email') }}</div>
                                     @enderror 
@@ -57,7 +57,7 @@
                                     <div class="form-inline">
                                         <select name="careers" class="form-control m-input {{ $errors->has('careers') ? 'is-danger' : 'careers' }} ">
                                             @foreach($careers as $career)
-                                                    <option value="{{$career->id}}" {{ $career->user_id == $coordinator->id ? 'selected' : '' }} >
+                                                    <option value="{{$career->id}}" {{ $student->career_id == $career->id ? 'selected' : '' }} >
                                                         {{$career->name}}
                                                     </option>
                                             @endforeach

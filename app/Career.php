@@ -16,4 +16,8 @@ class Career extends Model
     public function coordinators(){
         return $this->belongsTo(User::class,'user_id');
     }
+
+    public function students(){
+        return $this->hasOne(Student::class,'career_id','id');
+    }
 }

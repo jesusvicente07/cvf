@@ -74,7 +74,7 @@ class CoordinatorController extends Controller
         $career->user_id=$coordinator->id;
         $career->save();
 
-        return redirect('editar/coordinador/'.$coordinator->id)->with('message', "El coordinador $coordinator->name ha sido actualizada exitosamente!");
+        return redirect('editar/coordinador/'.$coordinator->id)->with('message', "El coordinador $coordinator->name ha sido actualizado exitosamente!");
 
     }
 

@@ -5,6 +5,11 @@ Route::get('/editar/coordinador/', 'CoordinatorController@editcoordinators')->na
 
 Route::get('/estudiantes', 'StudentController@students')->name('students');
 Route::get('/estudiantes/progreso', 'StudentController@studentprogress')->name('studentprogress');
+Route::get('/nuevo/estudiante', 'StudentController@addstudents')->name('addstudents');
+Route::post('/nuevo/estudiante', 'StudentController@store')->name('storestudents');
+Route::get('/editar/estudiante/{student}', 'StudentController@editstudents')->name('editstudents');
+Route::put('/editar/estudiante/{student}', 'StudentController@updatestudents')->name('updatestudents');
+Route::delete('eliminar/estudiante/{id}', 'StudentController@deletestudents')->name('deletestudents');
 
 Route::get('/competencias', 'CompetitionController@competitions')->name('competitions');
 Route::get('/nueva/competencia', 'CompetitionController@addcompetitions')->name('addcompetitions');

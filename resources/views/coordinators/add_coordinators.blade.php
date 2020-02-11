@@ -42,7 +42,7 @@
                                 </div>    
                                 <div class="form-group m-form__group">
                                     <label>Contraseña</label>
-                                    <input type="password" name="password" class="form-control m-input {{ $errors->has('password') ? 'is-danger' : '' }} "  placeholder="********" value="{{ old('password') }}" minlength="3" maxlength="50" autocomplete="off">
+                                    <input type="password" name="password" class="form-control m-input {{ $errors->has('password') ? 'is-danger' : '' }} "  placeholder="********" value="{{ old('password') }}" minlength="8" maxlength="50" autocomplete="off">
                                     @error('password')
                                       <div class="text-red">{{ $errors->first('password') }}</div>
                                     @enderror  
@@ -51,11 +51,9 @@
                                     <div class="form-inline">
                                         <select name="careers" class="form-control m-input {{ $errors->has('careers') ? 'is-danger' : '' }} ">
                                             @foreach($careers as $career)
-                                                @if(!$career->user_id)
-                                                    <option value="{{$career->id}}">
-                                                        {{$career->name}}
-                                                    </option>
-                                                @endif
+                                                <option value="{{$career->id}}">
+                                                    {{$career->name}}
+                                                </option>
                                             @endforeach
                                         </select> 
                                     </div>

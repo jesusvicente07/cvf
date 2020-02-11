@@ -15,11 +15,14 @@ class Students extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('career_id');
             $table->string('name');
+            $table->string('email');
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->unsignedBigInteger('career_id')->nullable();
+            $table->rememberToken();
             $table->timestamps();
-            $table->foreign('career_id')->references('id')->on('careers')->onDelete('cascade');
+            $table->foreign('career_id')->references('id')->on('careers')->onDelete('set null');
         });
     }
 
