@@ -12,3 +12,5 @@ Route::post('/nuevo/coordinador', 'CoordinatorController@store')->name('storecoo
 Route::get('/editar/coordinador/{coordinator}', 'CoordinatorController@editcoordinators')->name('editcoordinators');
 Route::put('/editar/coordinador/{coordinator}', 'CoordinatorController@updatecoordinators')->name('updatecoordinators');
 Route::delete('eliminar/coordinador/{id}', 'CoordinatorController@deletecoordinators')->name('deletecoordinators');
+
+Route::post('/estudiantes/login', 'Auth\LoginController@studentLogin');

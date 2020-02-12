@@ -160,8 +160,8 @@
 																<img src="/img/users/user4.jpg" class="m--img-rounded m--marginless" alt="" />
 															</div>
 															<div class="m-card-user__details">
-																<span class="m-card-user__name m--font-weight-500">{{ Auth::user()->name }}</span>
-															<a href="#" class="m-card-user__email m--font-weight-300 m-link">{{Auth::user()->email}}</a>
+																<span class="m-card-user__name m--font-weight-500">{{ isset(Auth::user()->name)? Auth::user()->name : Auth::guard('student')->user()->name }}</span>
+															<a href="#" class="m-card-user__email m--font-weight-300 m-link">{{isset(Auth::user()->email)? Auth::user()->email : Auth::guard('student')->user()->email}}</a>
 															</div>
 														</div>
 													</div>
