@@ -259,6 +259,7 @@
 									</ul>
 								</div>
 							</li>
+							@if(Auth::guard('student')->check())
 							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" ><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon fas fa-user-graduate"></i><span class="m-menu__link-text">Mis trayectorias</span><i
 									 class="m-menu__ver-arrow la la-angle-right"></i></a>
 								<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
@@ -268,6 +269,7 @@
 									</ul>
 								</div>
 							</li>
+							@endif
 							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" ><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon fas fa-cog"></i><span class="m-menu__link-text">Configuración</span></a>
 							</li>
 						</ul>

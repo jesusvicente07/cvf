@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use App;
 
 class StudentController extends Controller
@@ -15,6 +16,11 @@ class StudentController extends Controller
     public function __construct()
     {
         $this->middleware('auth.session');
+        
+        if(!Auth::guard('student')->check())
+        {
+            return redirect('home');
+        }
     }
     
     public function students(){
@@ -91,8 +97,8 @@ class StudentController extends Controller
     }
 
     public function selecttrajectories(){
-        $students="";
-        return view('students.select_trajectories', compact('students'));
+        $student = App\Student::findOrFail(Auth::guard('student')->user()->id);
+        return view('students.select_trajectories', compact('student'));
     }
 
     public function Rules(){
