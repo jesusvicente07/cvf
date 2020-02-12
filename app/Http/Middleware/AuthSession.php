@@ -11,13 +11,26 @@ class AuthSession
     
     public function handle($request, Closure $next, $guard = null)
     {
+
         if (Auth::guard($guard)->check()) {
-            return $next($request);
+
+            if($request->is('trayectorias/selecionadas') || $request->is('selecionar/trayectorias')){
+                return back();
+            }else{
+                return $next($request);
+            }
+            
         }
 
-        if (Auth::guard('student')->check()) {
-            return $next($request);
+        if (Auth::guard('student')->check() ) {
+
+            if($request->is('trayectorias/selecionadas') || $request->is('selecionar/trayectorias')){
+                return $next($request);
+            }else{
+                return redirect('trayectorias/selecionadas');
+            }
         }
+
 
         return  redirect('login');
     }

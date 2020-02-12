@@ -13,14 +13,8 @@ class StudentController extends Controller
     private $messageError='';
     private $message='';
 
-    public function __construct()
-    {
+    public function __construct(){
         $this->middleware('auth.session');
-        
-        if(!Auth::guard('student')->check())
-        {
-            return redirect('home');
-        }
     }
     
     public function students(){

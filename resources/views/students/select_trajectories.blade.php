@@ -29,7 +29,7 @@
                                 <div class="form-group m-form__group">
                                     <h4>{{$student->name}}</h4> 
                                 </div>
-                                <div class="m-form__group"> <h5>{{$student->careers->name}}</h5>
+                                <div class="m-form__group"> <h5>{{  isset($student->careers->name) ? $student->careers->name : '' }}</h5>
                                     <div class="form-inline" style="margin-top:4%">
                                         <select name="trajectorie" class="form-control m-input {{ $errors->has('trajectories') ? 'is-danger' : '' }} ">
                                                 <option value="">
