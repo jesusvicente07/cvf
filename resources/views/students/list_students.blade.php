@@ -33,7 +33,7 @@
                                         </div>
                                 @endif
                                     <a class="btn btn-primary" href="{{route('addstudents')}}"><i class="fa fa-plus"></i>Agregar estudiantes</a>
-                                    <input type="text" class="form-control m-input" style="width:50%" placeholder="Filtar .." autocomplete="off">      
+                                    <input type="text" name="search" class="form-control m-input" style="width:50%" placeholder="Filtar .." minlength="1" autocomplete="off">      
                                 </div>
                             </div>
                         </form>

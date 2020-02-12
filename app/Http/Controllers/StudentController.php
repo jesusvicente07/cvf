@@ -18,8 +18,13 @@ class StudentController extends Controller
     }
     
     public function students(){
-        $students=App\Student::all();
-
+        $students="";
+        if(request('search')){
+            $search=request('search');
+            $students=App\Student::where('name','LIKE',"%{$search}%")->paginate(5);
+        }else{
+            $students=App\Student::paginate(5);;
+        }
          return view('students.list_students', compact('students'));
      }
 
@@ -78,6 +83,16 @@ class StudentController extends Controller
         $nameStudent = $student->name;
         $student->delete();
         return redirect('estudiantes')->with('message', "El estudiante $nameStudent ha sido eliminado exitosamente!");
+    }
+
+    public function studenttrajectories(){
+        $students="";
+        return view('students.students_trajectories', compact('students'));
+    }
+
+    public function selecttrajectories(){
+        $students="";
+        return view('students.select_trajectories', compact('students'));
     }
 
     public function Rules(){
