@@ -10,49 +10,29 @@
                     <div class="m-login__logo">
                             <img src="../img/logo/logo-1.png">
                     </div>
-                      <!-- Nav tabs -->
-                    <ul class="nav">
-                        <li class="nav-item" style="display:none">
-                            <a class="nav-link" id="return" href="#"> << Regresar</a>
-                        </li>
-                    </ul>
-                    <div id="user" class="container"><br>
-                        <div class="m-login__signin">
-                            <div class="m-login__head">
-                                <h3 class="m-login__title">Selecionar Usuario</h3>
-                            </div>
-                            <div class="m-login__form m-form">
-                                <div class="form-group">
-                                    <select name="selectUser" class="form-control">
-                                        <option value="" selected>Selecionar</option>
-                                        <option value="coordinator">Coordinador</option>
-                                        <option value="student">Estudiante</option>
-                                    </select>
-                                    <span class="invalid-feedback" style="display:none" role="alert">
-                                            <strong>Es requerido selecionar un usuario</strong>
-                                    </span>
-                                </div>
-                                <div class="m-login__form-action">
-                                    <button id="next"  class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary">Siguiente</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="login" class="container" style="display:none"><br>
+
+                    <div id="login" class="container"><br>
                         <div class="m-login__signin">
                             <div class="m-login__head">
                                 <h3 class="m-login__title">{{ __('Ingresar') }}</h3>
                             </div>
                             <form class="m-login__form m-form" id="form_login" method="POST" action="#">
                                 @csrf
+                                <div class="form-group">
+                                    <label>Seleccionar usuario</label>
+                                    <select name="selectUser" class="form-control">
+                                        <option value="coordinator">Coordinador</option>
+                                        <option value="student">Estudiante</option>
+                                    </select>
+                                </div>
                                 <div class="form-group m-form__group">
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Correo electrónico">
 
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                    @if(session('error'))
+                                        <span style="color:red;font-size: 80%;">
+                                            <strong>Estas credenciales no coinciden con nuestros registros.</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                                 <div class="form-group m-form__group">
                                         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Contraseña">
@@ -94,35 +74,21 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
     $(document).ready(function(){
-        
-        $('#next').click(function(){
-            if($("select[name='selectUser']").val()){
-                $('#user').hide();
-                switch($("select[name='selectUser']").val()){
+        $('#form_login').attr('action', 'users/login');
+        $( "select[name='selectUser']" ).click(function() {
+            switch($(this).val()){
                     case 'coordinator':
-                    $('#form_login').attr('action', 'login');
+                    $('#form_login').attr('action', 'users/login');
                         break;
                     case 'student':
                     $('#form_login').attr('action', 'estudiantes/login');                       
                      break;
                     case 'admin':
-                    $('#form_login').attr('action', 'login');                        
+                    $('#form_login').attr('action', 'users/login');                        
                     break;
-                }
-                $('.nav-item').show();
-                $('#login').show();
-            }else{
-                $("select[name='selectUser']").addClass('is-invalid');
-                $('.invalid-feedback').show();
             }
         });
-        $('#return').click(function(){
-            $('.nav-item').hide();
-            $("select[name='selectUser']").removeClass('is-invalid');
-            $('.invalid-feedback').hide();
-            $('#login').hide();
-            $('#user').show();
-        });
+        
 
     });
     </script>

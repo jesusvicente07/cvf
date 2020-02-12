@@ -14,3 +14,4 @@ Route::put('/editar/coordinador/{coordinator}', 'CoordinatorController@updatecoo
 Route::delete('eliminar/coordinador/{id}', 'CoordinatorController@deletecoordinators')->name('deletecoordinators');
 
 Route::post('/estudiantes/login', 'Auth\LoginController@studentLogin');
+Route::post('/users/login', 'Auth\LoginController@userLogin');
