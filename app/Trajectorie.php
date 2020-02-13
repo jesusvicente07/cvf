@@ -16,4 +16,8 @@ class Trajectorie extends Model
     public function careers(){
         return $this->belongsToMany(Career::class,'career_trajectorie');
     }
+
+    public function students(){
+        return $this->belongsToMany(Student::class,'student_trajectorie');
+    }
 }

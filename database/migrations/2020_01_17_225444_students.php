@@ -24,6 +24,19 @@ class Students extends Migration
             $table->timestamps();
             $table->foreign('career_id')->references('id')->on('careers')->onDelete('set null');
         });
+
+        Schema::create('student_trajectorie', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('student_id');
+            $table->unsignedBigInteger('trajectorie_id');
+            $table->timestamps();
+
+            $table->unique(['student_id','trajectorie_id']);
+
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('trajectorie_id')->references('id')->on('trajectories')->onDelete('cascade');
+
+        });
     }
 
     /**

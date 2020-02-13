@@ -54,7 +54,9 @@
                                             <tr>
                                                 <td>{{$student->name}}</td>
                                                 <td>{{ isset($student->careers->name) ? $student->careers->name : '' }}</td>
-                                                <td>5</td>
+                                                <td>
+                                                     {{$student->trajectories->count()}}
+                                                </td>
                                                 <td>2</td>
                                                 <td>
                                                     <a href="{{route('studentprogress')}}" class=" btn text-body"><i class="fa fa-eye" style="font-size:150%"></i></a>

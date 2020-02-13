@@ -53,17 +53,10 @@
                                     <label>Competencias de la trayectoria</label>
                                     <div class="form-inline">
                                         <select name="competition" class="form-control m-input {{ $errors->has('competitions') ? 'is-danger' : '' }} ">
-                                            <?php $i =0  ?>
                                             @foreach($competitions as $competition)
-
-                                                @if($competition->id != isset($trajectorie->competitions[$i]->id))
                                                     <option value="{{isset($competition->courses[0]) ? $competition->courses : $competition}}">
                                                         {{$competition->name}}
                                                     </option>
-                                                @endif
-
-                                                <?php $i++  ?>
-
                                             @endforeach
                                         </select>
                                         <div id="addcompetition" class="btn btn-primary mr-4" ><i class="fa fa-plus"></i></div>

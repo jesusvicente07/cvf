@@ -12,6 +12,9 @@ Route::put('/editar/estudiante/{student}', 'StudentController@updatestudents')->
 Route::delete('eliminar/estudiante/{id}', 'StudentController@deletestudents')->name('deletestudents');
 Route::get('/trayectorias/selecionadas', 'StudentController@studenttrajectories')->name('studenttrajectories');
 Route::get('/selecionar/trayectorias', 'StudentController@selecttrajectories')->name('selecttrajectories');
+Route::post('/selecionar/trayectorias', 'StudentController@storetrajectories')->name('storetrajectories');
+Route::get('/editar/trayectorias/selecionadas/{student}', 'StudentController@editstudenttrajectories')->name('editstudenttrajectories');
+Route::put('/editar/trayectorias/selecionadas/{student}', 'StudentController@updatestudenttrajectories')->name('updatestudenttrajectories');
 
 Route::get('/competencias', 'CompetitionController@competitions')->name('competitions');
 Route::get('/nueva/competencia', 'CompetitionController@addcompetitions')->name('addcompetitions');

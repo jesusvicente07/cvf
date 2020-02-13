@@ -85,15 +85,75 @@ class StudentController extends Controller
         return redirect('estudiantes')->with('message', "El estudiante $nameStudent ha sido eliminado exitosamente!");
     }
 
+    //----------------------------------------------------------------------------------------------------------//
+
     public function studenttrajectories(){
-        $students="";
-        return view('students.students_trajectories', compact('students'));
+        $student = App\Student::findOrFail(Auth::guard('student')->user()->id);
+        return view('students.students_trajectories', compact('student'));
     }
 
     public function selecttrajectories(){
         $student = App\Student::findOrFail(Auth::guard('student')->user()->id);
-        return view('students.select_trajectories', compact('student'));
+        $trajectories=App\Trajectorie::all();
+        return view('students.select_trajectories', compact('student','trajectories'));
     }
+
+    public function storetrajectories(Request $request){
+        Validator::make($request->all(),$this->Rules3())
+                ->setAttributeNames($this->Attributes())
+                ->validate();
+
+        if(count($request->trajectories) != count(array_unique($request->trajectories))){
+            return redirect('selecionar/trayectorias')->with('message', "Las trayectorias no deben repetirse!");
+        }
+
+        $student = App\Student::findOrFail(Auth::guard('student')->user()->id);
+        $student->trajectories()->attach($request->trajectories);
+
+        return redirect('trayectorias/selecionadas')->with('message', "Las trayectorias han sido agregadas exitosamente!");
+
+    }
+
+    public function editstudenttrajectories(App\Student $student){
+        $student = App\Student::findOrFail(Auth::guard('student')->user()->id);
+        $trajectories=App\Trajectorie::all();
+        return view('students.edit_student_trajectories', compact('student','trajectories'));
+    }
+
+    public function updatestudenttrajectories(App\Student $student){
+        if(!$student->trajectories){
+            $rules['trajectories']='required';
+        }
+        Validator::make(request()->all(),$this->Rules3())
+        ->setAttributeNames($this->Attributes())
+        ->validate();
+
+        if(request('trajectories')){
+            if(count(request('trajectories')) != count(array_unique(request('trajectories')))){
+                $this->messageError='Las trayectorias no deben repetirse!';                
+            }else{
+                $student->trajectories()->syncWithoutDetaching(request('trajectories'));
+            }   
+        }
+
+        if(!$this->messageError){
+            $student->save();
+            $this->message="Las trayectorias han sido actualizadas exitosamente!";
+        }
+
+        return redirect('editar/trayectorias/selecionadas/'.$student->id)
+        ->with('message', ($this->message)? $this->message : '')
+        ->with('messageError',($this->messageError)? $this->messageError : '');
+    }
+
+    public function deletecareers($id){
+        $deleteCareers = App\Career::findOrFail($id);
+        $namecareer = $deleteCareers->name;
+        $deleteCareers->delete();
+
+        return redirect('carreras')->with('message', "La carrera $namecareer ha sido eliminada exitosamente!");
+    }
+
 
     public function Rules(){
         return [
@@ -112,12 +172,19 @@ class StudentController extends Controller
         ];
     }
 
+    public function Rules3(){
+        return [
+            'trajectories'=>'required'
+        ];
+    }
+
     public function Attributes(){
         return [
             'name' => 'nombre',
             'email'=>'correo',
             'password'=>'contraseña',
-            'careers'=>'carrera'
+            'careers'=>'carrera',
+            'trajectories'=>'trayectorias '
         ];
     }
 }

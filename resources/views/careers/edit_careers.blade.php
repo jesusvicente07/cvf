@@ -51,15 +51,10 @@
                                 <div class="m-form__group"> <label>Trayectorias profesionales</label>
                                     <div class="form-inline">
                                         <select name="trajectorie" class="form-control m-input {{ $errors->has('trajectories') ? 'is-danger' : '' }} ">
-                                            <?php $i = 0 ?>
                                             @foreach($trajectories as $trajectorie)
-                                                @if($trajectorie->id != isset($career->trajectories[$i]->id))
                                                     <option value="{{ isset($trajectorie->competitions[0]) ? $trajectorie->competitions : $trajectorie }}">
                                                         {{$trajectorie->name}}
                                                     </option>
-                                                @endif
-
-                                                <?php $i++ ?>
                                             @endforeach
                                         </select> 
                                         <div id="addtrajectories" class="btn btn-primary mr-4" ><i class="fa fa-plus"></i></div>

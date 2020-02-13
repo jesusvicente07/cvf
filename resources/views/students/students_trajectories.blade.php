@@ -26,6 +26,11 @@
                         @csrf
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group">
+                                @if(session('message'))
+                                        <div class="alert alert-success alert-dismissible">
+                                            {{session('message')}}                                        
+                                        </div>
+                                @endif
                                     <a class="btn btn-primary" href="{{route('selecttrajectories')}}"><i class="fa fa-plus"></i>Selecionar nueva trayectoria</a>
                                     <input type="text" name="search" class="form-control m-input" style="width:50%" placeholder="Filtar .." minlength="1" autocomplete="off">      
                                 </div>
@@ -43,13 +48,15 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody> 
+                                                @foreach($student->trajectories as $trajectorie)
                                                     <tr>
-                                                        <td>Hola</td>
+                                                        <td>{{$trajectorie->name}}</td>
                                                         <td>
-                                                            <a href="" class="btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
+                                                            <a href="{{route('editstudenttrajectories',$student)}}" class="btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
                                                             <button class=" btn text-body"><i class="fa fa-trash" onclick="" style="font-size:150%"></i></button>
                                                         </td>
                                                     </tr>
+                                                @endforeach
                                                 </tbody>
                                             </table>    
                                         </div>
@@ -88,16 +95,16 @@
 @endsection
 
 @section('customScripts')
-<!--<script>
+<script>
 @if(session('message'))
     $('.alert-success').fadeIn();
     $('.alert-success').fadeOut(5000);
 
 @endif
-function showModal(trajectorie){
+/*function showModal(trajectorie){
     $('#text').html(trajectorie.name);
     $('#formModal').attr('action', '/eliminar/trayectoria/'+trajectorie.id);
     $('#deleteModal').modal();
-}
-</script>-->
+}*/
+</script>
 @endsection
