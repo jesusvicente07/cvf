@@ -206,6 +206,7 @@
 					<div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark "   style="position: relative;">
 						<ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
 							<li class="m-menu__item" aria-haspopup="true"><a href="/" class="m-menu__link "><span class="m-menu__link-title"></span> <span class="m-menu__link-wrap"></span><i class="m-menu__link-icon fa fa-bar-chart"></i><span class="m-menu__link-text">Inicio</span></a>
+							@if(isset(Auth::user()->type)=='1' ? Auth::user()->type=='1' : '')
 							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" ><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon fas fa-user-cog"></i><span class="m-menu__link-text">Coordinadores</span><i
 									 class="m-menu__ver-arrow la la-angle-right"></i></a>
 								<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
@@ -215,6 +216,8 @@
 									</ul>
 								</div>
 							</li>
+							@endif
+							@if(isset(Auth::user()->type)=='2' || isset(Auth::user()->type)=='1' )
 							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" ><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon fas fa-share"></i><span class="m-menu__link-text">Seguimiento</span><i
 									 class="m-menu__ver-arrow la la-angle-right"></i></a>
 								<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
@@ -250,6 +253,8 @@
 									</ul>
 								</div>
 							</li>
+							@endif
+							@if(isset(Auth::user()->type)=='1' ? Auth::user()->type=='1' : '')
 							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" ><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon fas fa-graduation-cap"></i><span class="m-menu__link-text">Carreras</span><i
 									 class="m-menu__ver-arrow la la-angle-right"></i></a>
 								<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
@@ -259,6 +264,7 @@
 									</ul>
 								</div>
 							</li>
+							@endif
 							@if(Auth::guard('student')->check())
 							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" ><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon fas fa-user-graduate"></i><span class="m-menu__link-text">Mis trayectorias</span><i
 									 class="m-menu__ver-arrow la la-angle-right"></i></a>

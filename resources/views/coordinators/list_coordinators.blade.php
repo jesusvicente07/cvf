@@ -51,6 +51,7 @@
                                         <tbody>
                                         @foreach($coordinators as $coordinator)
                                             <tr>
+                                                @if($coordinator->type=='2')
                                                 <td>{{$coordinator->name}}</td>
                                                 <td>{{$coordinator->email}}</td>
 
@@ -61,6 +62,7 @@
                                                     <a href="{{route('editcoordinators',$coordinator)}}" class=" btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
                                                     <button class="btn text-body" onclick="Mymodal({{ $coordinator }})"><i class="fa fa-trash" style="font-size:150%"></i></button>
                                                 </td>
+                                                @endif
                                             </tr>
                                             @endforeach
                                         </tbody>
