@@ -16,6 +16,13 @@ class AuthSession
 
             if($request->is('trayectorias/selecionadas') || $request->is('selecionar/trayectorias')){
                 return back();
+            }else if(Auth::user()->type == 2 ){
+                    if($request->is('editar/coordinador/*') || $request->is('coordinadores') 
+                    || $request->is('nuevo/coordinador') ||  $request->is('carreras') ||  $request->is('nueva/carrera') ||  $request->is('editar/carrera/*'))
+                    return back();                
+                    
+                    return $next($request);
+
             }else{
                 return $next($request);
             }

@@ -29,6 +29,7 @@ class Students extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('trajectorie_id');
+            $table->string('status')->nullable();
             $table->timestamps();
 
             $table->unique(['student_id','trajectorie_id']);
