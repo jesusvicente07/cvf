@@ -17,7 +17,7 @@
                                     <i class="la la-gear"></i>
                                 </span>
                                     <h3 class="m-portlet__head-text">
-                                        Trayectorias selecionadas
+                                        Trayectorias selecionadas 
                                     </h3>
                             </div>
                         </div>
@@ -51,10 +51,7 @@
                                                 @foreach($student->trajectories as $trajectorie)
                                                     <tr>
                                                         <td>{{$trajectorie->name}}</td>
-                                                        <td>
-                                                            <a href="{{route('editstudenttrajectories',$student)}}" class="btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
-                                                            <button class=" btn text-body"><i class="fa fa-trash" onclick="" style="font-size:150%"></i></button>
-                                                        </td>
+                                                        <td><button class=" btn text-body"><i class="fa fa-trash" onclick="showModal({{$trajectorie}})" style="font-size:150%"></i></button></td>
                                                     </tr>
                                                 @endforeach
                                                 </tbody>
@@ -67,27 +64,22 @@
             </div>
         </div>
     </div>
+
 <div class="modal" id="deleteModal">
   <div class="modal-dialog">
     <div class="modal-content">
-
-      <!-- Modal body -->
       <div class="modal-body" style="text-align: center;">
         <strong>Seguro que desea eliminar la trayectoria:</strong>
         <p class="ml-5" id="text"></p>
       </div>
-
-         <!-- Modal footer -->
       <div class="modal-footer">
-        <form action="#" id="formModal" method="POST">
+        <form action="#" id="formModal" method="post">
         @method('DELETE')
         @csrf
         <input type="submit" class="btn btn-default" value="Eliminar" >
         </form>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-     
       </div>
-
     </div>
   </div>
 </div>
@@ -96,15 +88,16 @@
 
 @section('customScripts')
 <script>
-@if(session('message'))
+/*@if(session('message'))
     $('.alert-success').fadeIn();
     $('.alert-success').fadeOut(5000);
 
-@endif
-/*function showModal(trajectorie){
+@endif*/
+function showModal(trajectorie){
+    console.log(trajectorie);
     $('#text').html(trajectorie.name);
-    $('#formModal').attr('action', '/eliminar/trayectoria/'+trajectorie.id);
+    $('#formModal').attr('action', '/eliminar/trayectoria/selecionada/'+trajectorie.pivot.student_id+'?trajectorie_id='+trajectorie.pivot.trajectorie_id);
     $('#deleteModal').modal();
-}*/
+}
 </script>
 @endsection

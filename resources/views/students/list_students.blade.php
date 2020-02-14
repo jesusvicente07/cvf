@@ -59,7 +59,7 @@
                                                 </td>
                                                 <td>2</td>
                                                 <td>
-                                                    <a href="{{route('studentprogress')}}" class=" btn text-body"><i class="fa fa-eye" style="font-size:150%"></i></a>
+                                                    <a href="{{route('studentprogress',$student)}}" class=" btn text-body"><i class="fa fa-eye" style="font-size:150%"></i></a>
                                                     <a href="{{route('editstudents',$student)}}" class=" btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
                                                     <button class="btn text-body" onclick="Mymodal({{ $student }})"><i class="fa fa-trash" style="font-size:150%"></i></button>
                                                 </td>   

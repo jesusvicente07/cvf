@@ -28,9 +28,9 @@ class StudentController extends Controller
          return view('students.list_students', compact('students'));
      }
 
-    public function studentprogress(){
-        $students="";
-        return view('students.students_progress', compact('students'));
+    public function studentprogress($id){
+        $student = App\Student::findOrFail($id);
+        return view('students.students_progress', compact('student'));
     }
 
     public function addstudents(){
@@ -114,44 +114,12 @@ class StudentController extends Controller
 
     }
 
-    public function editstudenttrajectories(App\Student $student){
-        $student = App\Student::findOrFail(Auth::guard('student')->user()->id);
-        $trajectories=App\Trajectorie::all();
-        return view('students.edit_student_trajectories', compact('student','trajectories'));
-    }
+    public function deletestudenttrajectories($id){
+        dd($id);
+        $student = App\Trajectorie::findOrFail($id);
+        $student->students()->detach(request('student_id'));
 
-    public function updatestudenttrajectories(App\Student $student){
-        if(!$student->trajectories){
-            $rules['trajectories']='required';
-        }
-        Validator::make(request()->all(),$this->Rules3())
-        ->setAttributeNames($this->Attributes())
-        ->validate();
-
-        if(request('trajectories')){
-            if(count(request('trajectories')) != count(array_unique(request('trajectories')))){
-                $this->messageError='Las trayectorias no deben repetirse!';                
-            }else{
-                $student->trajectories()->syncWithoutDetaching(request('trajectories'));
-            }   
-        }
-
-        if(!$this->messageError){
-            $student->save();
-            $this->message="Las trayectorias han sido actualizadas exitosamente!";
-        }
-
-        return redirect('editar/trayectorias/selecionadas/'.$student->id)
-        ->with('message', ($this->message)? $this->message : '')
-        ->with('messageError',($this->messageError)? $this->messageError : '');
-    }
-
-    public function deletecareers($id){
-        $deleteCareers = App\Career::findOrFail($id);
-        $namecareer = $deleteCareers->name;
-        $deleteCareers->delete();
-
-        return redirect('carreras')->with('message', "La carrera $namecareer ha sido eliminada exitosamente!");
+        return back();
     }
 
 
