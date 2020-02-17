@@ -13,6 +13,7 @@ Route::delete('eliminar/estudiante/{id}', 'StudentController@deletestudents')->n
 Route::get('/trayectorias/selecionadas', 'StudentController@studenttrajectories')->name('studenttrajectories');
 Route::get('/selecionar/trayectorias', 'StudentController@selecttrajectories')->name('selecttrajectories');
 Route::post('/selecionar/trayectorias', 'StudentController@storetrajectories')->name('storetrajectories');
+Route::get('/mi/progreso/{student}', 'StudentController@myprogress')->name('myprogress');
 Route::delete('eliminar/trayectoria/selecionada/{id}', 'StudentController@deletestudenttrajectories')->name('deletestudenttrajectories');
 
 Route::get('/competencias', 'CompetitionController@competitions')->name('competitions');
