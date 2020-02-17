@@ -114,6 +114,11 @@ class StudentController extends Controller
 
     }
 
+    public function myprogress($id){
+        $student = App\Student::findOrFail(Auth::guard('student')->user()->id);
+        return view('students.my_progress', compact('student'));
+    }
+
     public function deletestudenttrajectories($id){
         dd($id);
         $student = App\Trajectorie::findOrFail($id);
