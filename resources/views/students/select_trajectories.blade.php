@@ -23,7 +23,7 @@
                         </div>
                     </div>
                         
-                        <form action="" method="post" class="m-form m-form--fit m-form--label-align-left" style="text-align:left">
+                        <form action="{{ route('storeStudentTrajectories') }}" method="post" class="m-form m-form--fit m-form--label-align-left" style="text-align:left">
                         @csrf
                             <div class="m-portlet__body">
                             @if(session('message'))

@@ -85,48 +85,6 @@ class StudentController extends Controller
         return redirect('estudiantes')->with('message', "El estudiante $nameStudent ha sido eliminado exitosamente!");
     }
 
-    //----------------------------------------------------------------------------------------------------------//
-
-    public function studenttrajectories(){
-        $student = App\Student::findOrFail(Auth::guard('student')->user()->id);
-        return view('students.students_trajectories', compact('student'));
-    }
-
-    public function selecttrajectories(){
-        $student = App\Student::findOrFail(Auth::guard('student')->user()->id);
-        $trajectories=App\Trajectorie::all();
-        return view('students.select_trajectories', compact('student','trajectories'));
-    }
-
-    public function storetrajectories(Request $request){
-        Validator::make($request->all(),$this->Rules3())
-                ->setAttributeNames($this->Attributes())
-                ->validate();
-
-        if(count($request->trajectories) != count(array_unique($request->trajectories))){
-            return redirect('selecionar/trayectorias')->with('message', "Las trayectorias no deben repetirse!");
-        }
-
-        $student = App\Student::findOrFail(Auth::guard('student')->user()->id);
-        $student->trajectories()->syncWithoutDetaching($request->trajectories);
-
-        return redirect('trayectorias/selecionadas')->with('message', "Las trayectorias han sido agregadas exitosamente!");
-
-    }
-
-    public function myprogress($id){
-        $student = App\Student::findOrFail(Auth::guard('student')->user()->id);
-        return view('students.my_progress', compact('student'));
-    }
-
-    public function deletestudenttrajectories($id){
-        dd($id);
-        $student = App\Trajectorie::findOrFail($id);
-        $student->students()->detach(request('student_id'));
-
-        return back();
-    }
-
 
     public function Rules(){
         return [

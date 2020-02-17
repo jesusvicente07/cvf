@@ -22,7 +22,7 @@
                             </div>
                         </div>
                     </div> 
-                        <form action="" class="m-form m-form--fit m-form--label-align-right" method="get" >
+                        <form action="{{route('studenttrajectories')}}" class="m-form m-form--fit m-form--label-align-right" method="get" >
                         @csrf
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group">
@@ -65,39 +65,39 @@
         </div>
     </div>
 
-<div class="modal" id="deleteModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body" style="text-align: center;">
-        <strong>Seguro que desea eliminar la trayectoria:</strong>
-        <p class="ml-5" id="text"></p>
-      </div>
-      <div class="modal-footer">
-        <form action="#" id="formModal" method="post">
-        @method('DELETE')
-        @csrf
-        <input type="submit" class="btn btn-default" value="Eliminar" >
-        </form>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-      </div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="text-align:center">
+                    <strong>Seguro que desea eliminar al estudiante:</strong>
+                    <p id="text"></p>
+                </div>
+                <div class="modal-footer">
+                    <form action="#" id="formModal" method="POST">
+                    @method('DELETE')
+                    @csrf
+                    <input type="submit" class="btn btn-default" value="Eliminar">
+                    </form>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div> 
+        </div>
     </div>
-  </div>
-</div>
     
 @endsection
 
 @section('customScripts')
 <script>
-/*@if(session('message'))
+@if(session('message'))
     $('.alert-success').fadeIn();
     $('.alert-success').fadeOut(5000);
 
-@endif*/
+@endif
 function showModal(trajectorie){
     console.log(trajectorie);
     $('#text').html(trajectorie.name);
-    $('#formModal').attr('action', '/eliminar/trayectoria/selecionada/'+trajectorie.pivot.student_id+'?trajectorie_id='+trajectorie.pivot.trajectorie_id);
-    $('#deleteModal').modal();
+    $('#formModal').attr('action', '/eliminar/trayectoria/selecionada/'+trajectorie.id);
+    $('#myModal').modal();
 }
 </script>
 @endsection

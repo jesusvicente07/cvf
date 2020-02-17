@@ -32,7 +32,7 @@ class AuthSession
 
         if (Auth::guard('student')->check() ) {
 
-            if($request->is('trayectorias/selecionadas') || $request->is('selecionar/trayectorias') || $request->is('editar/trayectorias/selecionadas/*') || $request->is('/')
+            if($request->is('trayectorias/selecionadas') || $request->is('selecionar/trayectorias') || $request->is('eliminar/trayectoria/selecionada/*') || $request->is('/')
                 || $request->is('mi/progreso/*')){
                 return $next($request);
             }else{
