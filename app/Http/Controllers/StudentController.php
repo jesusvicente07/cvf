@@ -108,7 +108,7 @@ class StudentController extends Controller
         }
 
         $student = App\Student::findOrFail(Auth::guard('student')->user()->id);
-        $student->trajectories()->attach($request->trajectories);
+        $student->trajectories()->syncWithoutDetaching($request->trajectories);
 
         return redirect('trayectorias/selecionadas')->with('message', "Las trayectorias han sido agregadas exitosamente!");
 
