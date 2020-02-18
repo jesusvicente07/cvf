@@ -49,7 +49,7 @@ class StudentTrajectories extends Controller
     public function deletestudenttrajectories($id){
         $student = App\Student::findOrFail(Auth::guard('student')->user()->id);
         $student->trajectories()->detach($id);
-        return back();
+        return redirect('trayectorias/selecionadas')->with('message', "La trayectoria ha sido eliminada exitosamente!");
     }
 
     
