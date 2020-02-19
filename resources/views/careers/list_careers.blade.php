@@ -23,7 +23,8 @@
                         </div>
                     </div>
                         
-                        <div class="m-form m-form--fit m-form--label-align-right">
+                        <form action="{{route('careers')}}" method="get" class="m-form m-form--fit m-form--label-align-right">
+                        @csrf
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group">
                                     @if(session('message'))
@@ -31,9 +32,13 @@
                                             {{session('message')}}                                        
                                         </div>
                                     @endif
-                                    <a class="btn btn-primary" href="{{route('addcareers')}}"><i class="fa fa-plus"></i>Agregar carrera</a>     
+                                    <a class="btn btn-primary" href="{{route('addcareers')}}"><i class="fa fa-plus"></i>Agregar carrera</a>
+                                    <input type="text" name="search" class="form-control m-input" style="width:50%" placeholder="Filtar .." minlength="1" autocomplete="off">     
                                 </div>
-                                <div class="m-form__group">
+                            </div>
+                        </form>
+                            <div class="m-form__group">
+                                <div class="m-portlet__body">
                                     <table class="table table-bordered" style="text-align:left">
                                         <thead class="thead-dark">
                                             <tr>
@@ -55,7 +60,6 @@
                                     </table>    
                                 </div>
                             </div>
-                        </div>
                 </div>
             </div>
         </div>

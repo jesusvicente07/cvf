@@ -31,8 +31,7 @@
                                             {{session('message')}}                                        
                                         </div>
                                 @endif
-                                    <a class="btn btn-primary" href="{{route('selecttrajectories')}}"><i class="fa fa-plus"></i>Selecionar nueva trayectoria</a>
-                                    <input type="text" name="search" class="form-control m-input" style="width:50%" placeholder="Filtar .." minlength="1" autocomplete="off">      
+                                    <a class="btn btn-primary" href="{{route('selecttrajectories')}}"><i class="fa fa-plus"></i>Selecionar nueva trayectoria</a>     
                                 </div>
                             </div>
                         </form>

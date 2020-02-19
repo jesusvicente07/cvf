@@ -18,7 +18,13 @@ class CareerController extends Controller
     
     public function careers(){
         $careers="";
-        $careers=App\Career::all();
+        if(request('search')){
+            $search=request('search');
+            $careers=App\Career::where('name','LIKE',"%{$search}%")->paginate(5);
+        }else{
+            $careers=App\Career::paginate(5);;
+        }
+
         return view('careers.list_careers', compact('careers'));
     }
 
