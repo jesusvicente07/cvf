@@ -23,7 +23,7 @@ class CoordinatorController extends Controller
             $search=request('search');
             $coordinators=App\User::where('name','LIKE',"%{$search}%")->paginate(5);
         }else{
-            $coordinators=App\User::paginate(5);;
+            $coordinators=App\User::paginate(5);
         }
         return view('coordinators.list_coordinators', compact('coordinators'));
     }

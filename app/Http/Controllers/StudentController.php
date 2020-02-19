@@ -19,11 +19,13 @@ class StudentController extends Controller
     
     public function students(){
         $students="";
+        $user = App\User::findOrFail(Auth::user()->id);
+        $career_id=isset($user->careers->id) ? $user->careers->id : '';
         if(request('search')){
             $search=request('search');
-            $students=App\Student::where('name','LIKE',"%{$search}%")->paginate(5);
+            $students=App\Student::where([ ['career_id','LIKE',"%{$career_id}%"] ,['name','LIKE',"%{$search}%"] ])->paginate(5);
         }else{
-            $students=App\Student::paginate(5);;
+            $students=App\Student::where('career_id','LIKE',"%{$career_id}%")->paginate(5);
         }
          return view('students.list_students', compact('students'));
      }
