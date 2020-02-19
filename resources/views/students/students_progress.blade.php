@@ -63,7 +63,7 @@
                                                 <td>{{$course->name}}</td>
                                                 <td>
                                                 <a class="text-body"><i class="fa fa-check" style="font-size:150%"></i></a> &nbsp;  &nbsp;
-                                                <button class="btn btn-primary" onclick="Mymodal({{ $student }})">Subir</button> 
+                                                <button class="btn btn-primary" onclick="Mymodal({{ $student }})">Aprobar</button> 
                                                 </td>
                                                 <tr></tr>
                                                 <tr>

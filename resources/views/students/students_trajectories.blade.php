@@ -51,7 +51,10 @@
                                                 @foreach($student->trajectories as $trajectorie)
                                                     <tr>
                                                         <td>{{$trajectorie->name}}</td>
-                                                        <td><button class=" btn text-body"><i class="fa fa-trash" onclick="showModal({{$trajectorie}})" style="font-size:150%"></i></button></td>
+                                                        <td>
+                                                        <a href="{{route('myprogress',$student)}}" class=" btn text-body"><i class="fa fa-eye" style="font-size:150%"></i></a>
+                                                            <button class=" btn text-body"><i class="fa fa-trash" onclick="showModal({{$trajectorie}})" style="font-size:150%"></i></button>
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                                 </tbody>
