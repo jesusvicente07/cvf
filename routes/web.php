@@ -29,7 +29,7 @@ Route::post('/users/login', 'Auth\LoginController@userLogin');
 
 Route::post('/estudiantes/login', 'Auth\LoginController@studentLogin');
 Route::get('/estudiantes', 'StudentController@students')->name('students');
-Route::get('/estudiantes/progreso', 'StudentController@studentprogress')->name('studentprogress');
+Route::get('/estudiantes/progreso/{student}', 'StudentController@studentprogress')->name('studentprogress');
 Route::get('/nuevo/estudiante', 'StudentController@addstudents')->name('addstudents');
 Route::post('/nuevo/estudiante', 'StudentController@store')->name('storestudents');
 Route::get('/editar/estudiante/{student}', 'StudentController@editstudents')->name('editstudents');
