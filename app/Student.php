@@ -22,4 +22,8 @@ class Student extends Authenticatable
     public function trajectories(){
         return $this->belongsToMany(Trajectorie::class,'student_trajectorie');
     }
+
+    public function courses(){
+        return $this->belongsToMany(Course::class,'student_course');
+    }
 }

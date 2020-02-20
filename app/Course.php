@@ -12,4 +12,8 @@ class Course extends Model
     public function competitions(){
         return $this->belongsTo(Competition::class);
     }
+
+    public function students(){
+        return $this->belongsToMany(Student::class,'student_course');
+    }
 }

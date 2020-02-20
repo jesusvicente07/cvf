@@ -52,6 +52,10 @@ class StudentTrajectories extends Controller
         return redirect('trayectorias/selecionadas')->with('message', "La trayectoria ha sido eliminada exitosamente!");
     }
 
+    public function studentsevidences(){
+        $student = App\Student::findOrFail(Auth::guard('student')->user()->id);
+    }
+
     
     public function Rules3(){
         return [

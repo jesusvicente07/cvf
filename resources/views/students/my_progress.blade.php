@@ -34,7 +34,6 @@
                     </div>
                         
                         <div class="m-form m-form--fit m-form--label-align-right">
-                        @csrf
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group" style="text-align:left">
                                     <label>Trayectorias profesionales iniciadas</label>     
@@ -62,8 +61,18 @@
                                                 @foreach($competition->courses as $course)
                                                 <td>{{$course->name}}</td>
                                                 <td>
-                                                <a class="text-body"><i class="fa fa-check" style="font-size:150%"></i></a> &nbsp;  &nbsp;
-                                                <button class="btn btn-primary" onclick="Mymodal({{ $student }})">Subir</button> 
+                                                    <div class="m-form__group">
+                                                        <div class="form-inline">
+                                                                <a class="text-body"><i class="fa fa-check" style="font-size:150%"></i></a>
+                                                                <a class="text-body"><i class="fa fa-close" style="font-size:150%"></i></a>
+                                                            <form action="{{route('studentsevidences')}}" method="post" enctype="multipart/form-data">
+                                                            @csrf
+                                                                <input type="file" class="form-control m-input">
+                                                                <input type="text" hidden value="{{$course->id}}" name="courses">
+                                                                <input class="btn btn-primary" value="Enviar" type="submit"> 
+                                                            </form>
+                                                        </div> 
+                                                    </div>
                                                 </td>
                                                 <tr></tr>
                                                 <tr>
@@ -82,31 +91,9 @@
         </div>
     </div>
 
-    <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body" style="text-align:center">
-                    <strong>Necesitas confirmar para subir evidencia:</strong>
-                </div>
-                <div class="modal-footer">
-                    <form action="#" id="formModal" method="POST">
-                    @method('DELETE')
-                    @csrf
-                    <input type="submit" class="btn btn-default" value="Confirmar">
-                    </form>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                </div>
-            </div> 
-        </div>
-    </div>
-
 @endsection
 
 @section('customScripts')
 <script>
-    function Mymodal(student){
-      $('#formModal').attr('action', '/eliminar/estudiante/'+student.id);
-      $('#myModal').modal();
-    }
 </script>
 @endsection

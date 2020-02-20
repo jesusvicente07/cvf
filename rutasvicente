@@ -16,6 +16,8 @@ Route::post('/selecionar/trayectorias', 'StudentController@storetrajectories')->
 Route::get('/mi/progreso/{student}', 'StudentController@myprogress')->name('myprogress');
 Route::delete('eliminar/trayectoria/selecionada/{id}', 'StudentController@deletestudenttrajectories')->name('deletestudenttrajectories');
 
+Route::post('evidencias', 'StudentTrajectories@studentsevidences')->name('studentsevidences');
+
 Route::get('/competencias', 'CompetitionController@competitions')->name('competitions');
 Route::get('/nueva/competencia', 'CompetitionController@addcompetitions')->name('addcompetitions');
 Route::post('/nueva/competencia', 'CompetitionController@store')->name('storecompetitions');
