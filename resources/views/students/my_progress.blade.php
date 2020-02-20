@@ -67,7 +67,7 @@
                                                                 <a class="text-body"><i class="fa fa-close" style="font-size:150%"></i></a>
                                                             <form action="{{route('studentsevidences')}}" method="post" enctype="multipart/form-data">
                                                             @csrf
-                                                                <input type="file" class="form-control m-input">
+                                                                <input type="file" name="file" class="form-control m-input">
                                                                 <input type="text" hidden value="{{$course->id}}" name="courses">
                                                                 <input class="btn btn-primary" value="Enviar" type="submit"> 
                                                             </form>

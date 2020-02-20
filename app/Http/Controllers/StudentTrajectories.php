@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App;
 
 class StudentTrajectories extends Controller
@@ -52,8 +53,12 @@ class StudentTrajectories extends Controller
         return redirect('trayectorias/selecionadas')->with('message', "La trayectoria ha sido eliminada exitosamente!");
     }
 
-    public function studentsevidences(){
+    public function studentsevidences(Request $request){
         $student = App\Student::findOrFail(Auth::guard('student')->user()->id);
+        $file = $request->file('file');
+        $filename = $file->getClientOriginalName();
+        Storage::putFileAs('uploads',$file,$filename);
+        dd($file);
     }
 
     
