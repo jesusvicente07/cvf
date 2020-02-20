@@ -54,10 +54,11 @@ class StudentTrajectories extends Controller
     }
 
     public function studentsevidences(Request $request){
-        $student = App\Student::findOrFail(Auth::guard('student')->user()->id);
+        $student = App\Student::findOrFail(Auth::guard('student')->user()->id);        
         $file = $request->file('file');
-        $filename = $file->getClientOriginalName();
+        $filename = 'std.'.$student->id.'_'.$file->getClientOriginalName();
         Storage::putFileAs('uploads',$file,$filename);
+        $student->courses()->attach($request->courses,['evidence' => $filename]);
         dd($file);
     }
 
