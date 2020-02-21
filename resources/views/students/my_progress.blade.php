@@ -56,7 +56,7 @@
                                 <div class="form-group m-form__group" style="text-align:left">
                                     <strong><h3>{{$trajectorie->name}}</h3></strong>
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width:0%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+                                        <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
                                     </div>     
                                 </div>
                                 <div class="m-form__group">
