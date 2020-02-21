@@ -56,16 +56,29 @@ class StudentTrajectories extends Controller
     public function studentsevidences(Request $request){
         $student = App\Student::findOrFail(Auth::guard('student')->user()->id);        
         $file = $request->file('file');
+        if($file){
+        Validator::make($request->all(),$this->Rules4())
+        ->validate();
         $filename = 'std.'.$student->id.'_'.$file->getClientOriginalName();
         Storage::putFileAs('uploads',$file,$filename);
         $student->courses()->attach($request->courses,['evidence' => $filename]);
-        dd($file);
+
+        return redirect('mi/progreso/'.$student->id)->with('message', "El arvicho se ha guardado exitosamente!");
+        }
+        else
+        return redirect('mi/progreso/'.$student->id)->with('message2', "No se ha selecionado un archivo!");
     }
 
     
     public function Rules3(){
         return [
-            'trajectories'=>'required'
+            'trajectories'=>'required',
+            'file' => 'required|mimes:jpeg,jpg,png,pdf'
+        ];
+    }
+    public function Rules4(){
+        return [
+            'file' => 'required|mimes:jpeg,jpg,png,pdf'
         ];
     }
 

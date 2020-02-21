@@ -35,6 +35,20 @@
                         
                         <div class="m-form m-form--fit m-form--label-align-right">
                             <div class="m-portlet__body">
+                            @if(session('message'))
+                                <div class="form-group m-form__group" id="message">
+                                    <div class="alert alert-success alert-dismissible">
+                                        {{session('message')}}                                        
+                                    </div>
+                                </div>
+                            @endif
+                            @if(session('message2'))
+                                <div class="form-group m-form__group" id="message">
+                                    <div class="alert alert-danger alert-dismissible">
+                                        {{session('message2')}}                                        
+                                    </div>
+                                </div>
+                            @endif
                                 <div class="form-group m-form__group" style="text-align:left">
                                     <label>Trayectorias profesionales iniciadas</label>     
                                 </div>
@@ -63,13 +77,18 @@
                                                 <td>
                                                     <div class="m-form__group">
                                                         <div class="form-inline">
-                                                                <a class="text-body"><i class="fa fa-check" style="font-size:150%"></i></a>
-                                                                <a class="text-body"><i class="fa fa-close" style="font-size:150%"></i></a>
+                                                        @foreach($student->courses as $c)
+                                                        @if($c->pivot->status && $course->id == $c->pivot->course_id)
+                                                                <a class="text-body"><i class="fa fa-check" style="font-size:150%"></i></a> &nbsp; &nbsp;
+                                                        @elseif (!$c->pivot->status && $course->id == $c->pivot->course_id)
+                                                                <a class="text-body"><i class="fa fa-close" style="font-size:150%"></i></a> &nbsp; &nbsp;
+                                                        @endif
+                                                        @endforeach
                                                             <form action="{{route('studentsevidences')}}" method="post" enctype="multipart/form-data">
                                                             @csrf
-                                                                <input type="file" name="file" class="form-control m-input">
+                                                                <input type="file" name="file" class="form-control m-input"> &nbsp; &nbsp;
                                                                 <input type="text" hidden value="{{$course->id}}" name="courses">
-                                                                <input class="btn btn-primary" value="Enviar" type="submit"> 
+                                                                <input class="btn btn-primary" value="Enviar" type="submit">
                                                             </form>
                                                         </div> 
                                                     </div>
@@ -95,5 +114,13 @@
 
 @section('customScripts')
 <script>
+@if(session('message'))
+    $('#message').fadeIn();
+    $('#message').fadeOut(5000);
+@endif
+@if(session('message2'))
+    $('#message').fadeIn();
+    $('#message').fadeOut(5000);
+@endif
 </script>
 @endsection

@@ -24,6 +24,6 @@ class Student extends Authenticatable
     }
 
     public function courses(){
-        return $this->belongsToMany(Course::class,'student_course');
+        return $this->belongsToMany(Course::class,'student_course')->withPivot('evidence','status', 'id');
     }
 }
