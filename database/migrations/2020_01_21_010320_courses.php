@@ -15,12 +15,29 @@ class Courses extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('competition_id');
             $table->string('name');
-            $table->string('link');
+            $table->enum('type', ['virtual', 'face-to-face']);
+            $table->string('link')->nullable();
+            $table->string('place')->nullable();
+            $table->string('objective',150);
+            $table->text('content');
+            $table->date('start_course')->nullable();
+            $table->date('end_course')->nullable();
             $table->timestamps();
 
+        });
+
+        Schema::create('competition_course', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('competition_id');
+            $table->unsignedBigInteger('course_id');
+            $table->timestamps();
+
+            $table->unique(['competition_id','course_id']);
+
             $table->foreign('competition_id')->references('id')->on('competitions')->onDelete('cascade');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+
         });
 
         Schema::create('student_course', function (Blueprint $table) {

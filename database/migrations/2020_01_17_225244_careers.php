@@ -20,6 +20,21 @@ class Careers extends Migration
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
+
+        Schema::create('user_career', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('career_id');
+            $table->timestamps();
+
+            $table->unique(['user_id','career_id']);
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('career_id')->references('id')->on('careers')->onDelete('cascade');
+
+        });
+
+
     }
 
     /**
