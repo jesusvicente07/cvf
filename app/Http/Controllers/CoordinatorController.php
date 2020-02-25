@@ -28,7 +28,7 @@ class CoordinatorController extends Controller
         return view('coordinators.list_coordinators', compact('coordinators'));
     }
 
-    public function addcoordinators(){
+    public function addcoordinators(){ 
         $coordinators="";
         $careers=App\Career::all();
         return view('coordinators.add_coordinators', compact('coordinators','careers'));
@@ -39,16 +39,17 @@ class CoordinatorController extends Controller
                 ->setAttributeNames($this->Attributes())
                 ->validate();
 
+        if(count($request->careers) != count(array_unique($request->careers))){
+            return redirect('nuevo/coordinador')->with('message', "Las carreras no deben repetirse!");
+        }
+
         $addcoordinator = new App\User;
         $addcoordinator->name = $request->name;
         $addcoordinator->email = $request->email;
         $addcoordinator->password = Hash::make($request->password);
         $addcoordinator->type = '2';
         $addcoordinator->save();
-        $career = App\Career::FindOrFail($request->careers);
-        $career->user_id=$addcoordinator->id;
-        $career->save();
-
+        $addcoordinator->careers()->attach($request->careers);
         return redirect('coordinadores')->with('message', "El coordinador $request->name ha sido agregado exitosamente!");
 
     }
@@ -59,23 +60,34 @@ class CoordinatorController extends Controller
     }
 
     public function updatecoordinators(App\User $coordinator){
-
-        Validator::make(request()->all(),$this->Rules2())
+        $rules=['name' => 'required','email'=>'required',];
+        if(!$coordinator->careers){
+            $rules['careers']='required';
+        }
+        Validator::make(request()->all(),$rules)
         ->setAttributeNames($this->Attributes())
         ->validate();
 
-        $coordinator->name=request('name');
-        $coordinator->email=request('email');
-        $coordinator->password=request('password') ?  Hash::make(request('password')) : $coordinator->password;
-        $coordinator->type='2';
-        $coordinator->save();
+        if(request('careers')){
+            if(count(request('careers')) != count(array_unique(request('careers')))){
+                $this->messageError='Las carreras no deben repetirse!';                
+            }else{
+                $coordinator->careers()->syncWithoutDetaching(request('careers'));
+            }   
+        }
 
-        $career = App\Career::FindOrFail(request('careers'));
-        $career->user_id=$coordinator->id;
-        $career->save();
+        if(!$this->messageError){
+            $coordinator->name=request('name');
+            $coordinator->email=request('email');
+            $coordinator->password=request('password') ?  Hash::make(request('password')) : $coordinator->password;
+            $coordinator->type='2';
+            $coordinator->save();
+            $this->message="El coordinador $coordinator->name ha sido actualizado exitosamente!";
+        }
 
-        return redirect('editar/coordinador/'.$coordinator->id)->with('message', "El coordinador $coordinator->name ha sido actualizado exitosamente!");
-
+        return redirect('editar/coordinador/'.$coordinator->id)
+        ->with('message', ($this->message)? $this->message : '')
+        ->with('messageError',($this->messageError)? $this->messageError : '');
     }
 
     public function deletecoordinators($id){
@@ -83,6 +95,12 @@ class CoordinatorController extends Controller
         $nameCoordinator = $coordinator->name;
         $coordinator->delete();
         return redirect('coordinadores')->with('message', "El coordinador $nameCoordinator ha sido eliminado exitosamente!");
+    }
+
+    public function deleteDetailUserCareer($id){
+        $coordinator = App\User::findOrFail($id);
+        $coordinator->careers()->detach(request('career_id'));
+        return back();
     }
 
     public function Rules(){
@@ -98,7 +116,6 @@ class CoordinatorController extends Controller
         return [
             'name' => 'required',
             'email'=>'required',
-            'careers'=>'required',
         ];
     }
 

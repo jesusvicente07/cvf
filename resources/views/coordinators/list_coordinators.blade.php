@@ -44,7 +44,7 @@
                                             <tr>
                                                 <th scope="col">Nombre</th>
                                                 <th scope="col">Correo</th>
-                                                <th scope="col">Carrera</th>
+                                                <th scope="col">Carreras</th>
                                                 <th scope="col">Acciones</th>
                                             </tr>
                                         </thead>
@@ -52,16 +52,16 @@
                                         @foreach($coordinators as $coordinator)
                                             <tr>
                                                 @if($coordinator->type=='2')
-                                                <td>{{$coordinator->name}}</td>
-                                                <td>{{$coordinator->email}}</td>
+                                                    <td>{{$coordinator->name}}</td>
+                                                    <td>{{$coordinator->email}}</td>
 
-                                                <td>
-                                                     {{ isset($coordinator->careers->name) ? $coordinator->careers->name : '' }}
-                                                </td>
-                                                <td>
-                                                    <a href="{{route('editcoordinators',$coordinator)}}" class=" btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
-                                                    <button class="btn text-body" onclick="Mymodal({{ $coordinator }})"><i class="fa fa-trash" style="font-size:150%"></i></button>
-                                                </td>
+                                                    <td>
+                                                        <a onclick='showModalCarrer({{$coordinator->careers}})' class='text-body'><i class='fa fa-book' style='font-size:150%'></i></a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{route('editcoordinators',$coordinator)}}" class=" btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
+                                                        <button class="btn text-body" onclick="Mymodal({{ $coordinator }})"><i class="fa fa-trash" style="font-size:150%"></i></button>
+                                                    </td>
                                                 @endif
                                             </tr>
                                             @endforeach
@@ -93,6 +93,30 @@
         </div>
     </div>
 
+    <div class="modal" id="carrerModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal body -->
+                <div class="modal-body" style="text-align: center;">
+                    <strong>Carreras del coordinador:</strong>
+                    <p class="ml-5" id="text">
+                        <ul style="text-align:left" id="carrer"> 
+                        </ul>
+                    </p>
+                </div>
+
+                    <!-- Modal footer -->
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('customScripts')
@@ -101,6 +125,14 @@
       $('#text').html(coordinator.name);
       $('#formModal').attr('action', '/eliminar/coordinador/'+coordinator.id);
       $('#myModal').modal();
+    }
+
+    function showModalCarrer(carrers){
+        $('#carrer').html('');
+        $.each(carrers, function(index, value){
+            $('#carrer').append('<li>'+value.name+'</li>');
+        });
+        $('#carrerModal').modal();
     }
 
     @if(session('message'))

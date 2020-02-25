@@ -38,6 +38,6 @@ class User extends Authenticatable
     ];
 
     public function careers(){
-        return $this->hasOne(Career::class,'user_id','id');
+        return $this->belongsToMany(Career::class,'user_career');
     }
 }
