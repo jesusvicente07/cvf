@@ -10,12 +10,12 @@ Route::post('/nuevo/estudiante', 'StudentController@store')->name('storestudents
 Route::get('/editar/estudiante/{student}', 'StudentController@editstudents')->name('editstudents');
 Route::put('/editar/estudiante/{student}', 'StudentController@updatestudents')->name('updatestudents');
 Route::delete('eliminar/estudiante/{id}', 'StudentController@deletestudents')->name('deletestudents');
+
 Route::get('/trayectorias/selecionadas', 'StudentController@studenttrajectories')->name('studenttrajectories');
 Route::get('/selecionar/trayectorias', 'StudentController@selecttrajectories')->name('selecttrajectories');
 Route::post('/selecionar/trayectorias', 'StudentController@storetrajectories')->name('storetrajectories');
 Route::get('/mi/progreso/{student}', 'StudentController@myprogress')->name('myprogress');
 Route::delete('eliminar/trayectoria/selecionada/{id}', 'StudentController@deletestudenttrajectories')->name('deletestudenttrajectories');
-
 Route::post('evidencias', 'StudentTrajectories@studentsevidences')->name('studentsevidences');
 
 Route::get('/competencias', 'CompetitionController@competitions')->name('competitions');
@@ -25,6 +25,10 @@ Route::get('/editar/competencia/{competition}', 'CompetitionController@editcompe
 Route::put('/editar/competencia/{competition}', 'CompetitionController@update')->name('updatecompetitions');
 Route::delete('eliminar/competencia/{id}', 'CompetitionController@deletecompetitions')->name('deletecompetitions');
 Route::delete('eliminar/curso/{id}', 'CompetitionController@deletecourses')->name('deletecourses');
+
+Route::get('/cursos', 'CourseController@courses')->name('courses');
+Route::get('/nuevo/curso', 'CourseController@addcourses')->name('addcourses');
+Route::post('/nuevo/curso', 'CourseController@storecourses')->name('storecourses');
 
 Route::get('/carreras', 'CareerController@careers')->name('careers');
 Route::get('/nueva/carrera', 'CareerController@addcareers')->name('addcareers');

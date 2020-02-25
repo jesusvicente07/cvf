@@ -10,7 +10,7 @@ class Competition extends Model
         'name'
     ];
     public function courses(){
-        return $this->hasMany(Course::class);
+        return $this->belongsToMany(Course::class,'competition_course');
     }
 
     public function trajectories(){

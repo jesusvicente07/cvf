@@ -10,7 +10,7 @@ class Course extends Model
         'name', 'link'
     ];
     public function competitions(){
-        return $this->belongsTo(Competition::class);
+        return $this->belongsToMany(Competition::class,'competition_course');
     }
 
     public function students(){

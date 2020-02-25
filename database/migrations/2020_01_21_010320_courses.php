@@ -18,11 +18,9 @@ class Courses extends Migration
             $table->string('name');
             $table->enum('type', ['virtual', 'face-to-face']);
             $table->string('link')->nullable();
-            $table->string('place')->nullable();
             $table->string('objective',150);
             $table->text('content');
-            $table->date('start_course')->nullable();
-            $table->date('end_course')->nullable();
+            $table->string('duration')->nullable();
             $table->timestamps();
 
         });
