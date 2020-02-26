@@ -8,6 +8,9 @@ use App;
 
 class CompetitionController extends Controller
 {
+    private $messageError='';
+    private $message='';
+
     public function __construct()
     {
         $this->middleware('auth.session');
@@ -26,26 +29,32 @@ class CompetitionController extends Controller
     }
 
     public function addcompetitions(){
-        $competitions=App\Competition::all();
-        return view('competitions.add_competitions', compact('competitions'));
+        $competitions="";
+        $courses=App\Course::all();
+        return view('competitions.add_competitions', compact('competitions','courses'));
     }
 
     public function store(Request $request){
         Validator::make($request->all(),$this->Rules())
         ->setAttributeNames($this->Attributes())
         ->validate();
+
+        if(count($request->courses) != count(array_unique($request->courses))){
+            return redirect('nueva/competencia')->with('message', "Los cursos no deben repetirse!");
+        }
       
         $addCompetition = new App\Competition;
         $addCompetition->name = $request->name;
         $addCompetition->save();
-        $addCompetition->courses()->createMany($request->courses);
+        $addCompetition->courses()->attach($request->courses);
 
         return redirect('competencias')->with('message', "La competencia $request->name ha sido agregada exitosamente!");
 
     }
 
     public function editcompetitions(App\Competition  $competition){
-        return view('competitions.edit_competitions', compact('competition'));
+        $courses=App\Course::all();
+        return view('competitions.edit_competitions', compact('competition','courses'));
     }
 
     public function update(App\Competition  $competition){
@@ -56,12 +65,25 @@ class CompetitionController extends Controller
         Validator::make(request()->all(), $rules)
         ->setAttributeNames($this->Attributes())
         ->validate();
-        $competition->name = request('name');
-        $competition->save();
+
         if(request('courses')){
-            $competition->courses()->createMany(request('courses'));
+            if(count(request('courses')) != count(array_unique(request('courses')))){
+                $this->messageError='Los cursos no deben repetirse!';                
+            }else{
+                $competition->courses()->syncWithoutDetaching(request('courses'));
+            }   
         }
-        return redirect('editar/competencia/'.$competition->id)->with('message', "La competencia $competition->name ha sido actualizada exitosamente!");
+
+        if(!$this->messageError){
+            $competition->name = request('name');
+            $competition->save();
+            $this->message="La competencia $competition->name ha sido actualizada exitosamente!";
+
+        }
+
+        return redirect('editar/competencia/'.$competition->id)
+        ->with('message', ($this->message)? $this->message : '')
+        ->with('messageError',($this->messageError)? $this->messageError : '');
     }
 
     public function deletecompetitions($id){

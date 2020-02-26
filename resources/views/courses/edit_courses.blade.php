@@ -17,25 +17,26 @@
                                     <i class="la la-gear"></i>
                                 </span>
                                     <h3 class="m-portlet__head-text">
-                                        Nuevo curso
+                                        Editar curso
                                     </h3>
                             </div>
                         </div>
                     </div>
                         
-                        <form action="{{route('storecourses')}}" method="post" class="m-form m-form--fit m-form--label-align-left" style="text-align:left">
+                        <form action="{{route('updatecourses',$course)}}" method="post" class="m-form m-form--fit m-form--label-align-left" style="text-align:left">
+                        @method('PUT')
                         @csrf
                             <div class="m-portlet__body">
                                 @if(session('message'))
                                 <div class="form-group m-form__group" id="message">
-                                    <div class="alert alert-danger alert-dismissible">
+                                    <div class="alert alert-success alert-dismissible">
                                         {{session('message')}}                                        
                                     </div>
                                 </div>
                                 @endif
                                 <div class="form-group m-form__group">
                                     <label>Nombre</label>
-                                    <input type="text" name="name" class="form-control m-input {{ $errors->has('name') ? 'is-danger' : '' }} " value="{{ old('name') }}" placeholder="e.g. Licenciatura en Psicología" autocomplete="off" minlength="3" maxlength="50"> 
+                                    <input type="text" name="name" class="form-control m-input {{ $errors->has('name') ? 'is-danger' : '' }} " value="{{$course->name}}" placeholder="e.g. Licenciatura en Psicología" autocomplete="off" minlength="3" maxlength="50"> 
                                         @error('name')
                                             <div class="text-red">{{ $errors->first('name') }}</div>
                                         @enderror   
@@ -43,14 +44,11 @@
                                 <div class="m-form__group"> 
                                     <label>Tipo</label>
                                     <div class="form-inline">
-                                        <select name="type" class="form-control m-input {{ $errors->has('type') ? 'is-danger' : '' }} ">
-                                                <option value="">
-                                                    Selecionar
-                                                </option>
-                                                <option value="virtual">
+                                        <select name="type" class="form-control m-input {{ $errors->has('type') ? 'is-danger' : '' }} ">    
+                                                <option value="virtual" {{$course->type == 'virtual' ? 'selected' : ''}}>
                                                     Virtual
                                                 </option>
-                                                <option value="face-to-face">
+                                                <option value="face-to-face" {{$course->type == 'face-to-face' ? 'selected' : ''}}>
                                                     Presencial
                                                 </option>
                                         </select> 
@@ -59,44 +57,44 @@
                                         <div class="text-red">{{ $errors->first('type') }}</div>
                                     @enderror 
                                 </div>
-                                <div class="form-group m-form__group" id="link" style="display:none">
+                                <div class="form-group m-form__group" id="link" style="display:{{ !$course->link ? 'none' : 'block' }}" >
                                     <label>Link</label>
-                                    <input type="text" name="link" class="form-control m-input" value="{{ old('link') }}" placeholder="Udemy.com" autocomplete="off" minlength="3" maxlength="50">   
+                                    <input type="text" name="link" class="form-control m-input" value="{{$course->link}}" placeholder="Udemy.com" autocomplete="off" minlength="3" maxlength="50">   
                                 </div>
                                 <div class="form-group m-form__group">
                                     <label>Objetivo del curso</label>
-                                    <input type="text" name="objective" class="form-control m-input {{ $errors->has('objective') ? 'is-danger' : '' }}" value="{{ old('objective') }}" placeholder="objetivo" autocomplete="off" minlength="3" maxlength="50"> 
+                                    <input type="text" name="objective" class="form-control m-input {{ $errors->has('objective') ? 'is-danger' : '' }}" value="{{$course->objective}}" placeholder="objetivo" autocomplete="off" minlength="3" maxlength="50"> 
                                         @error('objective')
                                             <div class="text-red">{{ $errors->first('objective') }}</div>
                                         @enderror   
                                 </div>
                                 <div class="form-group m-form__group">
                                     <label>Contenido</label>
-                                    <textarea name="content" class="form-control m-input {{ $errors->has('content') ? 'is-danger' : '' }} " autocomplete="off">{{ old('content') }}</textarea>
+                                    <textarea name="content" class="form-control m-input {{ $errors->has('content') ? 'is-danger' : '' }} " autocomplete="off">{{$course->content}}</textarea>
                                         @error('content')
                                             <div class="text-red">{{ $errors->first('content') }}</div>
                                         @enderror   
                                 </div>
-                                <div class="m-form__group" id="duracion" style="display:none"> 
+                                <div class="m-form__group" id="duracion" style="display:{{ !$course->link ? 'none' : 'block' }}"> 
                                     <label>Duración</label>
                                     <div class="form-inline">
                                         <select name="duration" class="form-control m-input">
-                                                <option value="">
+                                                <option value="" {{$course->duration == '' ? 'selected' : ''}}>
                                                     Selecionar
                                                 </option>
-                                                <option value="10-D">
+                                                <option value="10-D" {{$course->duration == '10-D' ? 'selected' : ''}}>
                                                     10 días
                                                 </option>
-                                                <option value="15-D">
+                                                <option value="15-D" {{$course->duration == '15-D' ? 'selected' : ''}}>
                                                     15 días
                                                 </option>
-                                                <option value="20-D">
+                                                <option value="20-D" {{$course->duration == '20-D' ? 'selected' : ''}}>
                                                     20 días
                                                 </option>
-                                                <option value=" 25-D">
+                                                <option value=" 25-D" {{$course->duration == '25-D' ? 'selected' : ''}}>
                                                     25 días
                                                 </option>
-                                                <option value="30-D">
+                                                <option value="30-D" {{$course->duration == '30-D' ? 'selected' : ''}}>
                                                     30 días
                                                 </option>
                                         </select> 
@@ -119,6 +117,7 @@
 @if(session('message'))
     $('#message').fadeIn();
     $('#message').fadeOut(5000);
+
 @endif
 
 $(document).ready(function(){

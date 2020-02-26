@@ -33,22 +33,33 @@
                                             {{session('message')}}                                        
                                         </div>
                                     @endif
+                                    @if(session('messageError'))
+                                    <div class="form-group m-form__group" id="messageError">
+                                        <div class="alert alert-danger alert-dismissible">
+                                            {{session('messageError')}}                                        
+                                        </div>
+                                    </div>
+                                    @endif
                                     <label>Nombre</label>
                                     <input type="text" name="name" class="form-control m-input {{ $errors->has('name') ? 'is-danger' : '' }} " value="{{$competition->name}}" placeholder="e.g. Evaluación WISC IV" minlength="3" maxlength="50" autocomplete="off">
                                     @error('name')
                                       <div class="text-red">{{ $errors->first('name') }}</div>
                                     @enderror   
                                 </div>
-                                <div class="m-form__group">
-                                    <label>Cursos que conforman la competencia</label>
+                                <div class="m-form__group"> <label>Cursos que conforman la competencia</label>
                                     <div class="form-inline">
-                                        <input type="text" name="course_name" class="form-control m-input {{ $errors->has('courses') ? 'is-danger' : '' }}" placeholder="Nombre" value="{{ old('course_name') }}" minlength="3" maxlength="50" autocomplete="off"> 
-                                        <input type="text" name="link" class="form-control m-input mr-3 {{ $errors->has('courses') ? 'is-danger' : '' }}" placeholder="Enlace" value="{{ old('link') }}" minlength="3" maxlength="50" autocomplete="off"> 
-                                        <div class="btn btn-primary mr-4" id="addcompetition"><i class="fa fa-plus"></i></div>
+                                        <select name="course" class="form-control m-input {{ $errors->has('courses') ? 'is-danger' : '' }} ">
+                                            @foreach($courses as $course)
+                                                <option value="{{$course->id}}">
+                                                    {{$course->name}}
+                                                </option>
+                                            @endforeach
+                                        </select> 
+                                        <div id="addcourses" class="btn btn-primary mr-4" ><i class="fa fa-plus"></i></div>
                                     </div>
                                     @error('courses')
-                                      <div class="text-red">{{ $errors->first('courses') }}</div>
-                                    @enderror   
+                                        <div class="text-red">{{ $errors->first('courses') }}</div>
+                                    @enderror 
                                 </div>
                                 <div class="m-form__group">
                                     <table class="table table-bordered" style="text-align:left">
@@ -72,7 +83,6 @@
                                         @foreach($competition->courses as $course_name)
                                         <tr>
                                             <td>{{$course_name->name}}</td>
-                                            <td>{{$course_name->link}}</td>
                                             <td><a class="btn text-body" onclick="Mymodal({{$course_name}})"><i class="fa fa-trash" style="font-size:150%"></i></a></td>
                                         </tr>
                                         @endforeach
@@ -115,18 +125,15 @@
 
 @section('customScripts')
 <script>
-var count_courses=0;
-$('#addcompetition').click(function(){
-    let course_name = $("input[name='course_name']").val();
-    let link = $("input[name='link']").val();
-    if(course_name && link)
-    {
-        let tbody = "<tr><td><input hidden  name='courses["+ count_courses +"][name]' value='"+ course_name +"'> " + course_name + "</td><td><input hidden  name='courses["+ count_courses +"][link]' value='"+ link +"'> " + link + "</td><td><a class='delete' class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td></tr>";
-        $('#newcourses').append(tbody);
-        count_courses++;
+$('#addcourses').click(function(){
+    let value = $("select[name='course']").val();
+    if(value){
+        let name = $("option:selected").text();
+        let tbody = "<tr><td><input hidden  name='courses[]' value='"+value  +"'> " + name + "</td><td><a  class='delete' class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td></tr>";
+        $("#newcourses").append(tbody);
     }
 });
-$('#newcourses').on("click", ".delete", function() {
+$("#newcourses").on("click", ".delete", function() {
    $(this).closest("tr").remove();
 });
 
@@ -136,10 +143,10 @@ $('#newcourses').on("click", ".delete", function() {
 
 @endif
 
-function Mymodal(course_name){
+/*function Mymodal(course_name){
       $('#text').html(course_name.name);
       $('#formModal').attr('action', '/eliminar/curso/'+course_name.id);
       $('#myModal').modal();
-    }
+    }*/
 </script>
 @endsection

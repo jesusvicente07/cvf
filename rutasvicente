@@ -24,11 +24,14 @@ Route::post('/nueva/competencia', 'CompetitionController@store')->name('storecom
 Route::get('/editar/competencia/{competition}', 'CompetitionController@editcompetitions')->name('editcompetitions');
 Route::put('/editar/competencia/{competition}', 'CompetitionController@update')->name('updatecompetitions');
 Route::delete('eliminar/competencia/{id}', 'CompetitionController@deletecompetitions')->name('deletecompetitions');
-Route::delete('eliminar/curso/{id}', 'CompetitionController@deletecourses')->name('deletecourses');
+Route::delete('eliminar/competenciaC/{id}', 'CompetitionController@deletecompetitionsC')->name('deletecompetitionsC');
 
 Route::get('/cursos', 'CourseController@courses')->name('courses');
 Route::get('/nuevo/curso', 'CourseController@addcourses')->name('addcourses');
 Route::post('/nuevo/curso', 'CourseController@storecourses')->name('storecourses');
+Route::get('/editar/curso/{course}', 'CourseController@editcourses')->name('editcourses');
+Route::put('/editar/curso/{course}', 'CourseController@updatecourses')->name('updatecourses');
+Route::delete('eliminar/curso/{id}', 'CourseController@deletecourses')->name('deletecourses');
 
 Route::get('/carreras', 'CareerController@careers')->name('careers');
 Route::get('/nueva/carrera', 'CareerController@addcareers')->name('addcareers');

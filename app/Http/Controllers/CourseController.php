@@ -31,7 +31,7 @@ class CourseController extends Controller
 
     public function addcourses(){
         $courses="";
-        return view('courses.add_courses', compact('courses','diff'));
+        return view('courses.add_courses', compact('courses'));
     }
 
     public function storecourses(Request $request){
@@ -43,15 +43,41 @@ class CourseController extends Controller
         $addcourse->name = $request->name;
         $addcourse->type = $request->type;
         $addcourse->link = $request->link;
-        $addcourse->place = $request->place;
         $addcourse->objective = $request->objective;
         $addcourse->content = $request->content;
-        $addcourse->start_course = $request->start_course;
-        $addcourse->end_course = $request->end_course;
+        $addcourse->duration = $request->duration;
         $addcourse->save();
 
         return redirect('cursos')->with('message', "El curso $request->name ha sido agregado exitosamente!");
 
+    }
+
+    public function editcourses(App\Course  $course){
+        return view('courses.edit_courses', compact('course'));
+    }
+
+    public function updatecourses(App\Course  $course){
+        Validator::make(request()->all(),$this->Rules())
+        ->setAttributeNames($this->Attributes())
+        ->validate();
+
+        $course->name = request('name');
+        $course->type = request('type');
+        $course->link = request('type')=='virtual'? request('link') : '';
+        $course->objective = request('objective');
+        $course->content = request('content');
+        $course->duration = request('type')=='virtual'? request('duration') : '';
+        $course->save();
+
+        return redirect('editar/curso/'.$course->id)->with('message', "El curso $course->name ha sido actualizado exitosamente!");
+    }
+
+    public function deletecourses($id){
+        $deleteCourses = App\Course::findOrFail($id);
+        $namecourse = $deleteCourses->name;
+        $deleteCourses->delete();
+
+        return redirect('cursos')->with('message', "El curso $namecourse ha sido eliminado exitosamente!");
     }
 
     public function Rules(){

@@ -48,14 +48,16 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @foreach($courses as $course)
                                             <tr>
-                                                <td>$course->name</td>
-                                                <td>$course->link</td>
+                                                <td>{{$course->name}}</td>
+                                                <td>{{isset($course->link) ? $course->link : ''}}</td>
                                                 <td>
-                                                    <a href="" class=" btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
-                                                    <button class="btn text-body" onclick="Mymodal({{}})"><i class="fa fa-trash" style="font-size:150%"></i></button>
+                                                    <a href="{{route('editcourses',$course)}}" class="btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
+                                                    <button class="btn text-body" onclick="Mymodal({{$course}})"><i class="fa fa-trash" style="font-size:150%"></i></button>
                                                 </td>
                                             </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>   
                                 </div>
@@ -69,7 +71,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body" style="text-align:center">
-                    <strong>Seguro que desea eliminar la competencia:</strong>
+                    <strong>Seguro que desea eliminar el curso:</strong>
                     <p id="text"></p>
                 </div>
                 <div class="modal-footer">
@@ -88,9 +90,9 @@
 
 @section('customScripts')
 <script>
-    /*function Mymodal(competition){
-      $('#text').html(competition.name);
-      $('#formModal').attr('action', '/eliminar/competencia/'+competition.id);
+    function Mymodal(course){
+      $('#text').html(course.name);
+      $('#formModal').attr('action', '/eliminar/curso/'+course.id);
       $('#myModal').modal();
     }
 
@@ -98,6 +100,6 @@
         $('.alert-success').fadeIn();
         $('.alert-success').fadeOut(5000);
 
-    @endif*/
+    @endif
 </script>
 @endsection
