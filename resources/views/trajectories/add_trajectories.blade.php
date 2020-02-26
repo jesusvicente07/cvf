@@ -68,7 +68,40 @@
                                             <th scope="col">Acciones</th>
                                         </tr>
                                         </thead>
-                                        <tbody >
+                                        <tbody id="newcompetition" >
+                                        </tbody>
+                                    </table>    
+                                </div>
+
+                                <div class="form-group m-form__group">
+                                    <label>Asociar trayectoria a carreras</label>
+                                    <div class="form-inline">
+                                        <select name="career" class="form-control m-input {{ $errors->has('careers') ? 'is-danger' : '' }} ">
+                                            @foreach($careers as $career)
+                                                <option value="{{$career->id}}">
+                                                    {{$career->name}}
+                                                </option>
+                                            @endforeach
+                                            @error('careers')
+                                                <div class="text-red">{{ $errors->first('careers') }}</div>
+                                            @enderror 
+                                        </select>
+                                        <div id="addcareer" class="btn btn-primary mr-4" ><i class="fa fa-plus"></i></div>
+                                    </div>
+                                    @error('careers')
+                                        <div class="text-red">{{ $errors->first('careers') }}</div>
+                                    @enderror 
+                                </div>
+
+                                <div class="m-form__group">
+                                    <table class="table table-bordered" style="text-align:left">
+                                        <thead class="thead-dark"> 
+                                        <tr>
+                                            <th scope="col">Carreras</th>
+                                            <th scope="col">Acciones</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="newcareer" >
                                         </tbody>
                                     </table>    
                                 </div>
@@ -85,28 +118,23 @@
     </div>
 
     <div class="modal" id="courseModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- Modal body -->
-      <div class="modal-body" style="text-align: center;">
-        <strong>Cursos de la competencia:</strong>
-        <p class="ml-5" id="text">
-            <ul style="text-align:left" id="courses"> 
-            </ul>
-        </p>
-      </div>
-
-         <!-- Modal footer -->
-      <div class="modal-footer">
-
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-     
-      </div>
-
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal body -->
+                <div class="modal-body" style="text-align: center;">
+                    <strong>Cursos de la competencia:</strong>
+                    <p class="ml-5" id="text">
+                        <ul style="text-align:left" id="courses"> 
+                        </ul>
+                    </p>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 @endsection
 
 @section('customScripts')
@@ -114,7 +142,7 @@
 $('#addcompetition').click(function(){
     let value =JSON.parse($("select[name='competition']").val());
     if(value){
-        let name = $("option:selected").text();
+        let name = $("select[name='competition'] > option:selected").text();
         var competition_id='';
         var course ='';
         if(typeof value[0] !== 'undefined'){
@@ -124,10 +152,23 @@ $('#addcompetition').click(function(){
             competition_id=value.id;
         }
         let tbody = "<tr><td><input hidden  name='competitions[]' value='"+ competition_id +"'> " + name + "</td><td><a onclick='showModal("+JSON.stringify(course)+")' class='text-body'><i class='fa fa-book' style='font-size:150%'></i></a> &nbsp;&nbsp; <a  class='delete' class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td></tr>";
-        $("table tbody").append(tbody);
+        $("#newcompetition").append(tbody);
     }
 });
-$("table tbody").on("click", ".delete", function() {
+$("#newcompetition").on("click", ".delete", function() {
+   $(this).closest("tr").remove();
+});
+
+$('#addcareer').click(function(){
+    let value =$("select[name='career']").val();
+    if(value){
+        let name = $("select[name='career'] > option:selected").text();
+        let tbody = "<tr><td><input hidden  name='careers[]' value='"+ value +"'> " + name + "</td><td><a  class='delete' class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td></tr>";
+        $("#newcareer").append(tbody);
+    }
+});
+
+$("#newcareer").on("click", ".delete", function() {
    $(this).closest("tr").remove();
 });
 

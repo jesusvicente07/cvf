@@ -54,9 +54,7 @@
                                                     <tr>
                                                         <td>{{ $trajectorie->name}}</td>
                                                         <td>
-                                                        @foreach($trajectorie->careers as $careers )
-                                                             {{$careers->name}} <br>
-                                                        @endforeach
+                                                            <a onclick='showModalCarrer({{$trajectorie->careers}})' class='text-body'><i class='fa fa-book' style='font-size:150%'></i></a>
                                                         </td>
                                                         <td>
                                                             <a href="{{ route('editTrajectories',$trajectorie) }}" class="btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
@@ -77,30 +75,46 @@
             </div>
         </div>
     </div>
-<div class="modal" id="deleteModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
 
-      <!-- Modal body -->
-      <div class="modal-body" style="text-align: center;">
-        <strong>Seguro que desea eliminar la trayectoria:</strong>
-        <p class="ml-5" id="text"></p>
-      </div>
-
-         <!-- Modal footer -->
-      <div class="modal-footer">
-        <form action="#" id="formModal" method="POST">
-        @method('DELETE')
-        @csrf
-        <input type="submit" class="btn btn-default" value="Eliminar" >
-        </form>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-     
-      </div>
-
+    <div class="modal" id="deleteModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal body -->
+                <div class="modal-body" style="text-align: center;">
+                    <strong>Seguro que desea eliminar la trayectoria:</strong>
+                    <p class="ml-5" id="text"></p>
+                </div>
+                 <!-- Modal footer -->
+                <div class="modal-footer">
+                    <form action="#" id="formModal" method="POST">
+                    @method('DELETE')
+                    @csrf
+                    <input type="submit" class="btn btn-default" value="Eliminar" >
+                    </form>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
+
+    <div class="modal" id="carrerModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal body -->
+                <div class="modal-body" style="text-align: center;">
+                    <strong>Carreras de la trayectoria:</strong>
+                    <p class="ml-5" id="text">
+                        <ul style="text-align:left" id="carrer"> 
+                        </ul>
+                    </p>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
     
 @endsection
 
@@ -115,6 +129,13 @@ function showModal(trajectorie){
     $('#text').html(trajectorie.name);
     $('#formModal').attr('action', '/eliminar/trayectoria/'+trajectorie.id);
     $('#deleteModal').modal();
+}
+function showModalCarrer(carrers){
+    $('#carrer').html('');
+    $.each(carrers, function(index, value){
+        $('#carrer').append('<li>'+value.name+'</li>');
+    });
+    $('#carrerModal').modal();
 }
 </script>
 @endsection

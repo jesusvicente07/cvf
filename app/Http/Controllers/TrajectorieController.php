@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use App;
 
 class TrajectorieController extends Controller
@@ -29,7 +30,9 @@ class TrajectorieController extends Controller
 
     public function create(){
         $competitions=App\Competition::all();
-        return view('trajectories.add_trajectories', compact('competitions'));
+        $user = App\User::findOrFail(Auth::user()->id);
+        $careers= isset($user->careers[0])? $user->careers : App\Career::all();
+        return view('trajectories.add_trajectories', compact('competitions','careers'));
     }
 
     public function store(Request $request){
@@ -40,10 +43,16 @@ class TrajectorieController extends Controller
         if(count($request->competitions) != count(array_unique($request->competitions))){
             return redirect('nueva/trayectoria')->with('message', "Las competencias no deben repetirse!");
         }
+
+        if(count($request->careers) != count(array_unique($request->careers))){
+            return redirect('nueva/trayectoria')->with('message', "Las carreras no deben repetirse!");
+        }
+
         $addTrajectorie = new App\Trajectorie;
         $addTrajectorie->name = $request->name;
         $addTrajectorie->save();
         $addTrajectorie->competitions()->attach($request->competitions);
+        $addTrajectorie->careers()->attach($request->careers);
 
         return redirect('trayectorias')->with('message', "La trayectoria $request->name ha sido agregado exitosamente!");
 
@@ -51,13 +60,18 @@ class TrajectorieController extends Controller
 
     public function edit(App\Trajectorie $trajectorie){
         $competitions=App\Competition::all();
-        return view('trajectories.edit_trajectories', compact('trajectorie','competitions'));
+        $user = App\User::findOrFail(Auth::user()->id);
+        $careers= isset($user->careers[0])? $user->careers : App\Career::all();
+        return view('trajectories.edit_trajectories', compact('trajectorie','competitions','careers'));
     }
 
     public function update(App\Trajectorie $trajectorie){
         $rules['name']='required';
         if(!$trajectorie->competitions){
             $rules['competitions']='required';
+        }
+        if(!$trajectorie->careers){
+            $rules['careers']='required';
         }
         Validator::make(request()->all(),$rules)
         ->setAttributeNames($this->Attributes())
@@ -68,6 +82,14 @@ class TrajectorieController extends Controller
                 $this->messageError='Las competencias no deben repetirse!';                
             }else{
                 $trajectorie->competitions()->syncWithoutDetaching(request('competitions'));
+            }   
+        }
+
+        if(request('careers')){
+            if(count(request('careers')) != count(array_unique(request('careers')))){
+                $this->messageError='Las carreras no deben repetirse!';                
+            }else{
+                $trajectorie->careers()->syncWithoutDetaching(request('careers'));
             }   
         }
 
@@ -98,14 +120,16 @@ class TrajectorieController extends Controller
     public function Rules(){
         return [
             'name' => 'required',
-            'competitions'=>'required'
+            'competitions'=>'required',
+            'careers'=>'required'
         ];
     }
 
     public function Attributes(){
         return [
             'name' => 'nombre',
-            'competitions'=>'competencias '
+            'competitions'=>'competencias ',
+            'careers'=>'carrera'
         ];
     }
     

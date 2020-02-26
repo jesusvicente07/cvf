@@ -89,12 +89,63 @@
                                         @foreach($trajectorie->competitions as $trajectorieCompetition )
                                         <tr>
                                             <td>{{$trajectorieCompetition->name}}</td>
-                                            <td><a onclick='showModal({{$trajectorieCompetition->courses}})' class='text-body'><i class='fa fa-book' style='font-size:150%'></i></a> &nbsp;&nbsp; <a onClick='showModalDelete({{ $trajectorieCompetition }})' class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td>
+                                            <td><a onclick='showModal({{$trajectorieCompetition->courses}})' class='text-body'><i class='fa fa-book' style='font-size:150%'></i></a> &nbsp;&nbsp; <a onClick='showModalDelete({{ $trajectorieCompetition }},"competition")' class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td>
                                         </tr>
                                         @endforeach
                                         </tbody>
                                     </table>    
                                 </div>
+
+                                <div class="form-group m-form__group">
+                                    <label>Asociar trayectoria a carreras</label>
+                                    <div class="form-inline">
+                                        <select name="career" class="form-control m-input {{ $errors->has('careers') ? 'is-danger' : '' }} ">
+                                            @foreach($careers as $career)
+                                                <option value="{{$career->id}}">
+                                                    {{$career->name}}
+                                                </option>
+                                            @endforeach
+                                            @error('careers')
+                                                <div class="text-red">{{ $errors->first('careers') }}</div>
+                                            @enderror 
+                                        </select>
+                                        <div id="addcareer" class="btn btn-primary mr-4" ><i class="fa fa-plus"></i></div>
+                                    </div>
+                                    @error('careers')
+                                        <div class="text-red">{{ $errors->first('careers') }}</div>
+                                    @enderror 
+                                </div>
+
+                                <div class="m-form__group">
+                                    <table class="table table-bordered" style="text-align:left">
+                                        <thead class="thead-dark"> 
+                                        <tr>
+                                            <th colspan="2" style="text-align:center">Nuevas carreras</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="newcareer" >
+                                        </tbody>
+                                    </table>    
+                                </div>
+
+                                <div class="m-form__group">
+                                    <table class="table table-bordered" style="text-align:left">
+                                        <thead class="thead-dark"> 
+                                        <tr>
+                                            <th colspan="2" style="text-align:center">Carreras asociadas</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($trajectorie->careers as $trajectorieCareers )
+                                            <tr>
+                                                <td>{{$trajectorieCareers->name}}</td>
+                                                <td><a onClick='showModalDelete({{ $trajectorieCareers }},"career")' class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>    
+                                </div>
+
 
 
                                 <div class="m-form__group" style="text-align: right;">
@@ -129,7 +180,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body" style="text-align:center">
-                    <strong>Seguro que desea eliminar la competencia:</strong>
+                    <strong id="titledelete"></strong>
                     <p id="text1"></p>
                 </div>
                 <div class="modal-footer">
@@ -167,6 +218,20 @@ $("#newcompetitions").on("click", ".delete", function() {
    $(this).closest("tr").remove();
 });
 
+$('#addcareer').click(function(){
+    let value =$("select[name='career']").val();
+    if(value){
+        let name = $("select[name='career'] > option:selected").text();
+        let tbody = "<tr><td><input hidden  name='careers[]' value='"+ value +"'> " + name + "</td><td><a  class='delete' class='text-body'><i class='fa fa-trash' style='font-size:150%'></i></a></td></tr>";
+        $("#newcareer").append(tbody);
+    }
+});
+
+$("#newcareer").on("click", ".delete", function() {
+   $(this).closest("tr").remove();
+});
+
+
 function showModal(course){
     $('#courses').html('');
     $.each(course, function(index, value){
@@ -175,10 +240,21 @@ function showModal(course){
     $('#courseModal').modal();
 }
 
-function showModalDelete(competition){
-    console.log(competition);
-    $('#text1').html(competition.name);
-    $('#formModal').attr('action', '/eliminar/detalleTrayectoriaCompetencia/'+competition.pivot.trajectorie_id+'?competition_id='+competition.pivot.competition_id);
+function showModalDelete(data,string=''){
+    let url='';
+    let title="";
+    if(string == 'career'){
+        url='/eliminar/carreraT/'+data.pivot.career_id+'?trajectorie_id='+data.pivot.trajectorie_id;
+        title="Seguro que desea eliminar la carrera:";
+    }else if(string =='competition'){
+        url='/eliminar/detalleTrayectoriaCompetencia/'+data.pivot.trajectorie_id+'?competition_id='+data.pivot.competition_id;
+        title="Seguro que desea eliminar la competencia:";
+    }else{
+        url='#';
+    }
+    $('#titledelete').html(title);
+    $('#text1').html(data.name);
+    $('#formModal').attr('action',url);
     $('#myModalDelete').modal();
 }
 
