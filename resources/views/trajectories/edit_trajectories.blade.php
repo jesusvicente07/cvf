@@ -204,7 +204,7 @@ $('#addcompetition').click(function(){
         var competition_id='';
         var course ='';
         if(typeof value[0] !== 'undefined'){
-            competition_id=value[0].competition_id;
+            competition_id=value[0].pivot.competition_id;
             course=value;
         }else{
             competition_id=value.id;

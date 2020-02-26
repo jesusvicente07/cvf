@@ -39,15 +39,18 @@ class CareerController extends Controller
                 ->setAttributeNames($this->Attributes())
                 ->validate();
 
-        if(count($request->trajectories) != count(array_unique($request->trajectories))){
-            return redirect('nueva/carrera')->with('message', "Las trayectorias no deben repetirse!");
+        if($request->trajectories){
+            if(count($request->trajectories) != count(array_unique($request->trajectories))){
+                return redirect('nueva/carrera')->with('message', "Las trayectorias no deben repetirse!");
+            }
         }
 
         $addcareer = new App\Career;
         $addcareer->name = $request->name;
         $addcareer->save();
-        $addcareer->trajectories()->attach($request->trajectories);
-
+        if($request->trajectories){
+            $addcareer->trajectories()->attach($request->trajectories);
+        }
         return redirect('carreras')->with('message', "La carrera $request->name ha sido agregado exitosamente!");
 
     }
@@ -58,11 +61,8 @@ class CareerController extends Controller
     }
 
     public function update(App\Career  $career){
-        $rules['name']='required';
-        if(!$career->trajectories){
-            $rules['trajectories']='required';
-        }
-        Validator::make(request()->all(), $rules)
+
+        Validator::make(request()->all(),$this->Rules())
         ->setAttributeNames($this->Attributes())
         ->validate();
 
@@ -105,7 +105,6 @@ class CareerController extends Controller
     public function Rules(){
         return [
             'name' => 'required',
-            'trajectories'=>'required'
         ];
     }
 
