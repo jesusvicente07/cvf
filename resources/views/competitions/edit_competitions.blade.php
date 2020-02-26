@@ -143,10 +143,10 @@ $("#newcourses").on("click", ".delete", function() {
 
 @endif
 
-/*function Mymodal(course_name){
+function Mymodal(course_name){
       $('#text').html(course_name.name);
-      $('#formModal').attr('action', '/eliminar/curso/'+course_name.id);
+      $('#formModal').attr('action', '/eliminar/competenciaC/'+course_name.pivot.competition_id+'?course_id='+course_name.pivot.course_id);
       $('#myModal').modal();
-    }*/
+}
 </script>
 @endsection

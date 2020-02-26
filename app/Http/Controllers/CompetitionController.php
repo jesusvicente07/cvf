@@ -94,9 +94,9 @@ class CompetitionController extends Controller
         return redirect('competencias')->with('message', "La competencia $namecompetition ha sido eliminada exitosamente!");
     }
 
-    public function deletecourses($id){
-        $deleteCourses = App\Course::findOrFail($id);
-        $deleteCourses->delete();
+    public function deletecompetitionsC($id){
+        $deleteCourses = App\Competition::findOrFail($id);
+        $deleteCourses->courses()->detach(request('course_id'));
 
         return back();
     }
