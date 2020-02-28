@@ -66,7 +66,8 @@
                                                         No hay registros
                                                 @endif
                                                 </tbody>
-                                            </table>    
+                                            </table>
+                                            {{$trajectories->links()}}    
                                         </div>
                                     </div>
                                 </div>

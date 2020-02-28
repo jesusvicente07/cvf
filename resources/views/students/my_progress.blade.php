@@ -89,7 +89,11 @@
                                                                 <input type="file" name="file" class="form-control m-input"> &nbsp; &nbsp;
                                                                 <input type="text" hidden value="{{$course->id}}" name="courses">
                                                                 <input class="btn btn-primary" value="Enviar" type="submit">
-                                                            </form>
+                                                            </form> &nbsp; &nbsp;
+                                                            <div class="form-inline">
+                                                                <input class="btn btn-success" value="Iniciar" type="submit">  &nbsp; &nbsp;
+                                                                <input class="btn btn-warning" value="Pausear" type="submit">
+                                                            </div>
                                                         </div> 
                                                     </div>
                                                 </td>

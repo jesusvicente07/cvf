@@ -57,7 +57,8 @@
                                                 </tr>
                                             @endforeach
                                         </tbody>
-                                    </table>    
+                                    </table> 
+                                    {{$careers->links()}}   
                                 </div>
                             </div>
                 </div>

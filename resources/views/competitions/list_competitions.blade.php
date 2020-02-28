@@ -57,7 +57,8 @@
                                             </tr>
                                             @endforeach
                                         </tbody>
-                                    </table>   
+                                    </table>  
+                                    {{$competitions->links()}} 
                                 </div>
                             </div>
                 </div>

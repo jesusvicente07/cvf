@@ -25,11 +25,10 @@ class StudentTrajectories extends Controller
         Validator::make($request->all(),$this->Rules3())
                 ->setAttributeNames($this->Attributes())
                 ->validate();
-
+              
         if(count($request->trajectories) != count(array_unique($request->trajectories))){
             return redirect('selecionar/trayectorias')->with('message', "Las trayectorias no deben repetirse!");
         }
-
         $student = App\Student::findOrFail(Auth::guard('student')->user()->id);
         $student->trajectories()->syncWithoutDetaching($request->trajectories);
 
@@ -72,8 +71,7 @@ class StudentTrajectories extends Controller
     
     public function Rules3(){
         return [
-            'trajectories'=>'required',
-            'file' => 'required|mimes:jpeg,jpg,png,pdf'
+            'trajectories'=>'required'
         ];
     }
     public function Rules4(){

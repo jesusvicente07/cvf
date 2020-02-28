@@ -44,6 +44,7 @@
                                             <tr>
                                                 <th scope="col">Estudiantes</th>
                                                 <th scope="col">Carreras</th>
+                                                <th scope="col">Trayectorias</th>
                                                 <th scope="col">Trayectorias iniciadas</th>
                                                 <th scope="col">Trayectorias completadas</th>
                                                 <th scope="col">Acciones</th>
@@ -54,6 +55,11 @@
                                             <tr>
                                                 <td>{{$student->name}}</td>
                                                 <td>{{ isset($student->careers->name) ? $student->careers->name : '' }}</td>
+                                                <td>
+                                                @foreach($student->trajectories as $trajectories)
+                                                    {{$trajectories->name}}
+                                                @endforeach
+                                                </td>
                                                 <td>
                                                      {{$student->trajectories->count()}}
                                                 </td>
@@ -66,7 +72,8 @@
                                             </tr>
                                         @endforeach  
                                         </tbody>
-                                    </table>   
+                                    </table> 
+                                    {{$students->links()}}  
                                 </div>
                             </div>
                 </div>

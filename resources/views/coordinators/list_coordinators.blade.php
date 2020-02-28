@@ -67,6 +67,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>   
+                                    {{$coordinators->links()}}
                                 </div>
                             </div>
                 </div>
