@@ -7,6 +7,8 @@
 		<title>@yield('title')</title>
 		<meta name="description" content="Latest updates and statistic charts">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+		<meta name="csrf-token" content="{{ csrf_token() }}">
+
 
 		<!--begin::Web font -->
 		<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
@@ -57,6 +59,7 @@
 		<link href="/vendors/chartist/dist/chartist.min.css" rel="stylesheet" type="text/css" />
 		<link href="/vendors/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet" type="text/css" />
         -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.css">
 		<link href="/vendors/summernote/dist/summernote.css" rel="stylesheet" type="text/css" />
         <link href="/vendors/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.css" rel="stylesheet" type="text/css" />
 		<link href="/vendors/socicon/css/socicon.css" rel="stylesheet" type="text/css" />
@@ -386,6 +389,7 @@
 		<script src="/vendors/sweetalert2/dist/sweetalert2.min.js"></script>
 		<script src="/vendors/js/framework/components/plugins/base/sweetalert2.init.js"></script>
         -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
 		<script src="/vendors/jquery.repeater/src/jquery.input.js"></script>
 		<script src="/vendors/summernote/dist/summernote.js"></script>
 

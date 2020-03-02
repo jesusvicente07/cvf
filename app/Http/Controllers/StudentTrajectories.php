@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\File;
 use App;
 
 class StudentTrajectories extends Controller
@@ -56,16 +57,20 @@ class StudentTrajectories extends Controller
         $student = App\Student::findOrFail(Auth::guard('student')->user()->id);        
         $file = $request->file('file');
         if($file){
-        Validator::make($request->all(),$this->Rules4())
-        ->validate();
-        $filename = 'std.'.$student->id.'_'.$file->getClientOriginalName();
-        Storage::putFileAs('uploads',$file,$filename);
-        $student->courses()->attach($request->courses,['evidence' => $filename]);
+            Validator::make($request->all(),$this->Rules4())
+            ->validate();
+            $filename = 'std.'.$student->id.'_'.uniqid().'_'.$file->getClientOriginalName();
+            //$path = public_path();
+            //$file->move($path, $filename);
+            //Storage::disk('local')->put($filename,$file);
+            Storage::putFileAs('uploads/students/'.$student->id,$file,$filename);
+            $student->courses()->attach($request->courses,['evidence' => 'uploads/students/'.$student->id.'/'.$filename]);
+            return response($file, 200)->header('Content-Type', 'application/json');
 
-        return redirect('mi/progreso/'.$student->id)->with('message', "El arvicho se ha guardado exitosamente!");
         }
-        else
-        return redirect('mi/progreso/'.$student->id)->with('message2', "No se ha selecionado un archivo!");
+        return response('error', 200)->header('Content-Type', 'application/json');
+
+
     }
 
     

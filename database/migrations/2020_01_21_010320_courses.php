@@ -46,8 +46,6 @@ class Courses extends Migration
             $table->boolean('status')->nullable();
             $table->timestamps();
 
-            $table->unique(['student_id','course_id']);
-
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
 
