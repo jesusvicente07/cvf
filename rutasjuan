@@ -17,3 +17,5 @@ Route::post('/estudiantes/login', 'Auth\LoginController@studentLogin');
 Route::post('/users/login', 'Auth\LoginController@userLogin');
 
 Route::delete('/eliminar/detalleUsuarioCarrera/{coordinator}', 'CoordinatorController@deleteDetailUserCareer')->name('deleteDetailUserCareer');
+Route::delete('eliminar/evidencia/{id}', 'StudentTrajectories@deleteevidences')->name('deleteevidences');
+

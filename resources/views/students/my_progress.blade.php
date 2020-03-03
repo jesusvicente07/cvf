@@ -77,11 +77,18 @@
                                                 <td>
                                                     <div class="m-form__group">
                                                         <div class="form-inline">
+                                                        <?php $sT=1; $sF=1; ?>
                                                         @foreach($student->courses as $c)
                                                         @if($c->pivot->status && $course->id == $c->pivot->course_id)
-                                                                <a class="text-body"><i class="fa fa-check" style="font-size:150%"></i></a> &nbsp; &nbsp;
+                                                                @if(1 == $sT)
+                                                                    <a class="text-body"><i class="fa fa-check" style="font-size:150%"></i></a> &nbsp; &nbsp;
+                                                                    <?php $sT++; ?>
+                                                                @endif
                                                         @elseif (!$c->pivot->status && $course->id == $c->pivot->course_id)
-                                                                <a class="text-body"><i class="fa fa-close" style="font-size:150%"></i></a> &nbsp; &nbsp;
+                                                                @if(1 == $sF)
+                                                                    <a class="text-body"><i class="fa fa-close" style="font-size:150%"></i></a> &nbsp; &nbsp;
+                                                                    <?php $sF++; ?>
+                                                                @endif
                                                         @endif
                                                         @endforeach
                                                             <form action="{{route('studentsevidences')}}" method="post" class="dropzone" id="my-awesome-dropzone" enctype="multipart/form-data">
@@ -89,8 +96,7 @@
                                                                 <input type="file" name="file" hidden class="form-control m-input"> &nbsp; &nbsp;
                                                                 <input type="text" hidden value="{{$course->id}}" name="courses">
                                                             </form> &nbsp; &nbsp;
-                                                            <div class="form-inline">
-                                                                <input class="btn btn-primary" value="Enviar" type="submit"> &nbsp; &nbsp;
+                                                            <div class="form-inline mt-2">
                                                                 <input class="btn btn-success" value="Iniciar" type="submit">  &nbsp; &nbsp;
                                                                 <input class="btn btn-warning" value="Pausear" type="submit">
                                                             </div>
@@ -118,15 +124,15 @@
 
 @section('customScripts')
 <script>
-Dropzone.autoDiscover=false;
+//Dropzone.autoDiscover=false;
 $('.dropzone').dropzone({
-    init: function(){
-        myDropzone =this;
-        console.log("hola");
+    addRemoveLinks: true,
+    removedfile:function(file){
+        console.log(file);
         $.ajax({
-            url:'/evidencias',
-            type:'post',
-            data:{data:1},
+            url:'/eliminar/evidencia/'+file.id,
+            type:'delete',
+            data:{file:file.name},
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -139,6 +145,34 @@ $('.dropzone').dropzone({
             }
 
         });
+        var _ref= file.previewElement;
+        return  _ref.parentNode.removeChild(file.previewElement) ;
+
+    },
+    init: function(){
+        let myDropzone =this;
+        $.ajax({
+            url:'/evidencias',
+            type:'post',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success:function(response){
+                $.each(response,function(i,value){
+                    let mockFile = { name:value.pivot.evidence , size: 12345, id:value.pivot.id };
+                    myDropzone.emit('addedfile', mockFile);
+                    myDropzone.emit('thumbnail', mockFile, 'http://127.0.0.1:8000/'+value.pivot.evidence);
+                    myDropzone.emit('complete', mockFile);
+                });
+                
+            },
+            error:function(err1,err2){
+                console.log(err1,err2);
+
+            }
+
+        });
+        
         
     }
 });

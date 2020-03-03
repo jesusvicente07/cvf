@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
+use Illuminate\Support\Facades\DB;
 use App;
 
 class StudentTrajectories extends Controller
@@ -60,16 +61,18 @@ class StudentTrajectories extends Controller
             Validator::make($request->all(),$this->Rules4())
             ->validate();
             $filename = 'std.'.$student->id.'_'.uniqid().'_'.$file->getClientOriginalName();
-            //$path = public_path();
-            //$file->move($path, $filename);
-            //Storage::disk('local')->put($filename,$file);
             Storage::putFileAs('uploads/students/'.$student->id,$file,$filename);
             $student->courses()->attach($request->courses,['evidence' => 'uploads/students/'.$student->id.'/'.$filename]);
             return response($file, 200)->header('Content-Type', 'application/json');
-
         }
-        return response('error', 200)->header('Content-Type', 'application/json');
+        return response($student->courses, 200)->header('Content-Type', 'application/json');
 
+    }
+    public function deleteevidences($idEvidences){
+        $student = App\Student::findOrFail(Auth::guard('student')->user()->id); 
+        Storage::delete(request('file'));
+        DB::table('student_course')->where('id', '=', $idEvidences)->delete();
+        return response($idEvidences, 200)->header('Content-Type', 'application/json');
 
     }
 

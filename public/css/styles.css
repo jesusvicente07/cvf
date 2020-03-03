@@ -1,4 +1,10 @@
 .noSubrayado:hover{
     text-decoration: none;
-  }
+}
+
+.dz-preview .dz-image img{
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+}
   
