@@ -77,26 +77,8 @@
                                                 <td>
                                                     <div class="m-form__group">
                                                         <div class="form-inline">
-                                                        <?php $sT=1; $sF=1; ?>
-                                                        @foreach($student->courses as $c)
-                                                        @if($c->pivot->status && $course->id == $c->pivot->course_id)
-                                                                @if(1 == $sT)
-                                                                    <a class="text-body"><i class="fa fa-check" style="font-size:150%"></i></a> &nbsp; &nbsp;
-                                                                    <?php $sT++; ?>
-                                                                @endif
-                                                        @elseif (!$c->pivot->status && $course->id == $c->pivot->course_id)
-                                                                @if(1 == $sF)
-                                                                    <a class="text-body"><i class="fa fa-close" style="font-size:150%"></i></a> &nbsp; &nbsp;
-                                                                    <?php $sF++; ?>
-                                                                @endif
-                                                        @endif
-                                                        @endforeach
-                                                            <form action="{{route('studentsevidences')}}" method="post" class="dropzone" id="my-awesome-dropzone" enctype="multipart/form-data">
-                                                            @csrf
-                                                                <input type="file" name="file" hidden class="form-control m-input"> &nbsp; &nbsp;
-                                                                <input type="text" hidden value="{{$course->id}}" name="courses">
-                                                            </form> &nbsp; &nbsp;
                                                             <div class="form-inline mt-2">
+                                                                <button class="btn btn-primary" onclick='showModal({{$student->id}},{{$course->id}})' >Evidencia</button>&nbsp; &nbsp;
                                                                 <input class="btn btn-success" value="Iniciar" type="submit">  &nbsp; &nbsp;
                                                                 <input class="btn btn-warning" value="Pausear" type="submit">
                                                             </div>
@@ -115,6 +97,27 @@
                                 @endforeach
                             </div>
                         </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="evidenceModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal body -->
+                <div class="modal-body" style="text-align: center;">
+                    <strong>Evicencia:</strong>
+                    <div id="evidence">
+                        <form action="{{route('studentsevidences')}}" method="post" class="dropzone" id="my-awesome-dropzone" enctype="multipart/form-data">
+                            @csrf
+                            <input type="file" name="file" hidden class="form-control m-input"> 
+                        </form>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -172,19 +175,12 @@ $('.dropzone').dropzone({
             }
 
         });
-        
-        
     }
 });
-/*Dropzone.options.myAwesomeDropzone = {
-    paramName: "file", // Las imágenes se van a usar bajo este nombre de parámetro,
-    maxFilesize: 2,// Tamaño máximo en MB
-    success: function (file, response) {
-        console.log(response);
-    }
-};
-let mockFile = { name: "Filename", size: 12345 };
-Dropzone.options.myAwesomeDropzone.displayExistingFile(mockFile, 'https://image-url');*/
+function showModal($idS,$idC){
+    console.log($idS,$idC);
+    $('#evidenceModal').modal();
+}
 
 @if(session('message'))
     $('#message').fadeIn();

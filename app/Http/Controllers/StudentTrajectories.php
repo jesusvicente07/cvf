@@ -68,6 +68,11 @@ class StudentTrajectories extends Controller
         return response($student->courses, 200)->header('Content-Type', 'application/json');
 
     }
+
+    public function getevidence($idS,$idC){
+        $evidence=DB::table('student_course')->where('student_id', '=', $idS)->where('course_id', '=', $idC)->get();
+        return response($evidence, 200)->header('Content-Type', 'application/json'); 
+    } 
     public function deleteevidences($idEvidences){
         $student = App\Student::findOrFail(Auth::guard('student')->user()->id); 
         Storage::delete(request('file'));

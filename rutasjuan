@@ -18,4 +18,6 @@ Route::post('/users/login', 'Auth\LoginController@userLogin');
 
 Route::delete('/eliminar/detalleUsuarioCarrera/{coordinator}', 'CoordinatorController@deleteDetailUserCareer')->name('deleteDetailUserCareer');
 Route::delete('eliminar/evidencia/{id}', 'StudentTrajectories@deleteevidences')->name('deleteevidences');
+Route::get('obtener/evidencia/{idS}/{idC}', 'StudentTrajectories@getevidence')->name('getevidence');
+
 
