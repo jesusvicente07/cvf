@@ -43,7 +43,6 @@
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th scope="col">Cursos</th>
-                                                <th scope="col">Links</th>
                                                 <th scope="col">Acciones</th>
                                             </tr>
                                         </thead>
@@ -51,7 +50,6 @@
                                         @foreach($courses as $course)
                                             <tr>
                                                 <td>{{$course->name}}</td>
-                                                <td>{{isset($course->link) ? $course->link : ''}}</td>
                                                 <td>
                                                     <a href="{{route('editcourses',$course)}}" class="btn text-body"><i class="fa fa-pencil" style="font-size:150%"></i></a>
                                                     <button class="btn text-body" onclick="Mymodal({{$course}})"><i class="fa fa-trash" style="font-size:150%"></i></button>

@@ -56,9 +56,7 @@
                                                 <td>{{$student->name}}</td>
                                                 <td>{{ isset($student->careers->name) ? $student->careers->name : '' }}</td>
                                                 <td>
-                                                @foreach($student->trajectories as $trajectories)
-                                                    {{$trajectories->name}}
-                                                @endforeach
+                                                    <a onclick='showModalTrajectorie({{$student->trajectories}})' class='text-body'><i class='fa fa-book' style='font-size:150%'></i></a>
                                                 </td>
                                                 <td>
                                                      {{$student->trajectories->count()}}
@@ -100,6 +98,30 @@
         </div>
     </div>
 
+    <div class="modal" id="trajectorieModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal body -->
+                <div class="modal-body" style="text-align: center;">
+                    <strong>Trajectorias del estudiante:</strong>
+                    <p class="ml-5" id="text">
+                        <ul style="text-align:left" id="trajectorie"> 
+                        </ul>
+                    </p>
+                </div>
+
+                    <!-- Modal footer -->
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('customScripts')
@@ -108,6 +130,14 @@
       $('#text').html(student.name);
       $('#formModal').attr('action', '/eliminar/estudiante/'+student.id);
       $('#myModal').modal();
+    }
+
+    function showModalTrajectorie(trajectories){
+        $('#trajectorie').html('');
+        $.each(trajectories, function(index, value){
+            $('#trajectorie').append('<li>'+value.name+'</li>');
+        });
+        $('#trajectorieModal').modal();
     }
 
     @if(session('message'))
