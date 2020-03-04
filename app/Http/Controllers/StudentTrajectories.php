@@ -62,10 +62,10 @@ class StudentTrajectories extends Controller
             ->validate();
             $filename = 'std.'.$student->id.'_'.uniqid().'_'.$file->getClientOriginalName();
             Storage::putFileAs('uploads/students/'.$student->id,$file,$filename);
-            $student->courses()->attach($request->courses,['evidence' => 'uploads/students/'.$student->id.'/'.$filename]);
+            $student->courses()->attach($request->courses,['evidence' => 'uploads/students/'.$student->id.'/'.$filename, 'status' => 0]);
             return response($file, 200)->header('Content-Type', 'application/json');
         }
-        return response($student->courses, 200)->header('Content-Type', 'application/json');
+        return response('you need upload file', 404)->header('Content-Type', 'application/json');
 
     }
 
@@ -77,7 +77,7 @@ class StudentTrajectories extends Controller
         $student = App\Student::findOrFail(Auth::guard('student')->user()->id); 
         Storage::delete(request('file'));
         DB::table('student_course')->where('id', '=', $idEvidences)->delete();
-        return response($idEvidences, 200)->header('Content-Type', 'application/json');
+        return response('success', 200)->header('Content-Type', 'application/json');
 
     }
 
@@ -89,7 +89,8 @@ class StudentTrajectories extends Controller
     }
     public function Rules4(){
         return [
-            'file' => 'required|mimes:jpeg,jpg,png,pdf'
+            'file' => 'required|mimes:jpeg,jpg,png,pdf',
+            'courses'=>'required'
         ];
     }
 

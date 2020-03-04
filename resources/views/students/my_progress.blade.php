@@ -78,7 +78,7 @@
                                                     <div class="m-form__group">
                                                         <div class="form-inline">
                                                             <div class="form-inline mt-2">
-                                                                <button class="btn btn-primary" onclick='showModal({{$student->id}},{{$course->id}})' >Evidencia</button>&nbsp; &nbsp;
+                                                                <button class="btn btn-primary" onclick='showModal({{$student->id}},{{$course->id}})' >Enviar</button>&nbsp; &nbsp;
                                                                 <input class="btn btn-success" value="Iniciar" type="submit">  &nbsp; &nbsp;
                                                                 <input class="btn btn-warning" value="Pausear" type="submit">
                                                             </div>
@@ -111,7 +111,9 @@
                     <div id="evidence">
                         <form action="{{route('studentsevidences')}}" method="post" class="dropzone" id="my-awesome-dropzone" enctype="multipart/form-data">
                             @csrf
-                            <input type="file" name="file" hidden class="form-control m-input"> 
+                            <input type="file" name="file" hidden class="form-control m-input">
+                            <input type="text" hidden name="courses" id="courses" > 
+ 
                         </form>
                     </div>
                 </div>
@@ -128,57 +130,65 @@
 @section('customScripts')
 <script>
 //Dropzone.autoDiscover=false;
-$('.dropzone').dropzone({
-    addRemoveLinks: true,
-    removedfile:function(file){
-        console.log(file);
-        $.ajax({
-            url:'/eliminar/evidencia/'+file.id,
-            type:'delete',
-            data:{file:file.name},
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success:function(response){
-                console.log(response);
-            },
-            error:function(err1,err2){
-                console.log(err1,err2);
+var myDropzone = new Dropzone("form#my-awesome-dropzone",{url: "/evidencias", addRemoveLinks: true,maxFilesize: 5,headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }});
 
-            }
+myDropzone.on("removedfile", function(file) {
+    console.log(file.id);
+    $.ajax({
+        url:'/eliminar/evidencia/'+file.id,
+        type:'delete',
+        data:{file:file.name},
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(response){
+            console.log(response);
+        },
+        error:function(err1,err2){
+            console.log(err1,err2);
 
-        });
-        var _ref= file.previewElement;
-        return  _ref.parentNode.removeChild(file.previewElement) ;
+        }
 
-    },
-    init: function(){
-        let myDropzone =this;
-        $.ajax({
-            url:'/evidencias',
-            type:'post',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success:function(response){
+    });
+    
+});
+
+function showModal(idS,idC){
+    console.log(idS,idC);
+    if ($('.dz-image-preview').length) {
+        $('.dz-image-preview').remove();
+    }
+    $('#courses').val(idC);
+    $.ajax({
+        url:'/obtener/evidencia/'+idS+'/'+idC,
+        type:'get',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(response){
+            console.log(response);
+            if(response.length){
+                $('.dz-message').hide();
                 $.each(response,function(i,value){
-                    let mockFile = { name:value.pivot.evidence , size: 12345, id:value.pivot.id };
+                    let mockFile = { name:value.evidence , size: 12345, id:value.id };
                     myDropzone.emit('addedfile', mockFile);
-                    myDropzone.emit('thumbnail', mockFile, 'http://127.0.0.1:8000/'+value.pivot.evidence);
+                    myDropzone.emit('thumbnail', mockFile, 'http://127.0.0.1:8000/'+value.evidence);
                     myDropzone.emit('complete', mockFile);
                 });
-                
-            },
-            error:function(err1,err2){
-                console.log(err1,err2);
-
+            }else{
+                console.log('hola');
+                $('.dz-message').show();
             }
+            
+        },
+        error:function(err1,err2){
+            console.log(err1,err2);
 
-        });
-    }
-});
-function showModal($idS,$idC){
-    console.log($idS,$idC);
+        }
+
+    });
     $('#evidenceModal').modal();
 }
 
