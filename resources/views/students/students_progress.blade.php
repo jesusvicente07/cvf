@@ -62,32 +62,14 @@
                                                 @foreach($competition->courses as $course)
                                                 <td>{{$course->name}}</td>
                                                 <td>
-                                                <div class="m-form__group">
+                                                    <div class="m-form__group">
                                                         <div class="form-inline">
-                                                        <?php $sT=1; $sF=1; ?>
-                                                        @foreach($student->courses as $c)
-                                                        @if($c->pivot->status && $course->id == $c->pivot->course_id)
-                                                                @if(1 == $sT)
-                                                                    <a class="text-body"><i class="fa fa-check" style="font-size:150%"></i></a> &nbsp; &nbsp;
-                                                                    <?php $sT++; ?>
-                                                                @endif
-                                                        @elseif (!$c->pivot->status && $course->id == $c->pivot->course_id)
-                                                                @if(1 == $sF)
-                                                                    <a class="text-body"><i class="fa fa-close" style="font-size:150%"></i></a> &nbsp; &nbsp;
-                                                                    <?php $sF++; ?>
-                                                                @endif
-                                                        @endif
-                                                        @endforeach
-                                                            <form action="{{route('studentsevidences')}}" method="post" class="dropzone" id="my-awesome-dropzone" enctype="multipart/form-data">
-                                                            @csrf
-                                                                <input type="file" name="file" hidden class="form-control m-input"> &nbsp; &nbsp;
-                                                                <input type="text" hidden value="{{$course->id}}" name="courses">
-                                                            </form> &nbsp; &nbsp;
                                                             <div class="form-inline mt-2">
-                                                                <button class="btn btn-primary" onclick="Mymodal({{ $student }})">Aprobar</button>
+                                                                <button class="btn btn-primary" onclick="myModal({{$student->id}},{{$course->id}})" >Mostrar</button>&nbsp; &nbsp;
+                                                                <button class="btn btn-success" onclick="Mymodal({{$student}})">Aprobar</button>
                                                             </div>
                                                         </div> 
-                                                    </div> 
+                                                    </div>
                                                 </td>
                                                 <tr></tr>
                                                 <tr>
@@ -124,6 +106,29 @@
         </div>
     </div>
 
+    <div class="modal" id="myModal2">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal body -->
+                <div class="modal-body" style="text-align: center;">
+                    <strong>Evidencias del estudiante:</strong>
+                    <p class="ml-5" id="text">
+                    <ul style="text-align:left;list-style-type: none;" id="evidence"></ul>
+                    </p>
+                </div>
+
+                    <!-- Modal footer -->
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('customScripts')
@@ -133,33 +138,26 @@
       $('#myModal').modal();
     };
 
-    $('.dropzone').dropzone({
-    init: function(){
-        let myDropzone =this;
+    function myModal(idS,idC){
+        $('#evidence').html('');
         $.ajax({
-            url:'/evidencias',
-            type:'post',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success:function(response){
-                $.each(response,function(i,value){
-                    let mockFile = { name:value.pivot.evidence , size: 12345, id:value.pivot.id };
-                    myDropzone.emit('addedfile', mockFile);
-                    myDropzone.emit('thumbnail', mockFile, 'http://127.0.0.1:8000/'+value.pivot.evidence);
-                    myDropzone.emit('complete', mockFile);
-                });
-                
-            },
-            error:function(err1,err2){
-                console.log(err1,err2);
-
-            }
-
+        url:'/obtener/evidencia/'+idS+'/'+idC,
+        type:'get',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        },
+        success:function(response){
+            $.each(response, function(index, value){
+            $('#evidence').append('<li>'+value.evidence+'</li>');
         });
-        
-        
-    }
-});
+            console.log(response);
+        },
+        error:function(err1,err2){
+            console.log(err1,err2);
+
+        }
+    });
+        $('#myModal2').modal();
+    };
 </script>
 @endsection
