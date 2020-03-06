@@ -20,8 +20,16 @@ class StudentController extends Controller
     
     public function students(){
         $students="";
-        //$user = App\User::findOrFail(Auth::user()->id);
-        //$career_id=isset($user->careers->id) ? $user->careers->id : '';
+        $user = App\User::findOrFail(Auth::user()->id);
+       /* $array_name=array();
+        foreach($user->careers as $career){
+            $array_name[]=$career->name;
+
+        }
+        $career_string=implode("','",$array_name); //ensure quoted values
+        dd($career_string);
+        //$career_id=isset($user->careers->id) ? $user->careers->id : '';*/
+
         if(request('search')){
             $search=request('search');
             $query='';

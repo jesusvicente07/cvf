@@ -108,6 +108,11 @@
 						<!-- BEGIN: Brand -->
 						<div class="m-stack__item m-brand  m-brand--skin-dark ">
 							<div class="m-stack m-stack--ver m-stack--general">
+							<div class="m-stack__item m-stack__item--middle m-brand__logo">
+									<a href="#" class="m-brand__logo-wrapper">
+										<img alt="" src="https://apps2.itson.edu.mx/controlasistencia/Aviso/ITSONMARCA2.png" style="width: 150px;height: 65px;">
+									</a>
+								</div>
 								<div class="m-stack__item m-stack__item--middle m-brand__tools">
 
 									<!-- BEGIN: Left Aside Minimize Toggle -->
