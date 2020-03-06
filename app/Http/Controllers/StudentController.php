@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App;
 
 class StudentController extends Controller
@@ -19,15 +20,31 @@ class StudentController extends Controller
     
     public function students(){
         $students="";
-        $user = App\User::findOrFail(Auth::user()->id);
-        $career_id=isset($user->careers->id) ? $user->careers->id : '';
+        //$user = App\User::findOrFail(Auth::user()->id);
+        //$career_id=isset($user->careers->id) ? $user->careers->id : '';
         if(request('search')){
             $search=request('search');
-            $students=App\Student::where([ ['career_id','LIKE',"%{$career_id}%"] ,['name','LIKE',"%{$search}%"] ])->paginate(5);
+            $query='';
+            switch(request('filter')){
+                case 'trajectorie':
+                    $query='t.name';
+                break;
+                case 'student': 
+                    $query='students.name';
+                break;
+                default:
+                    $query='students.name';
+            }
+            $students=App\Student::join('student_trajectorie as st', 'st.student_id', '=', 'students.id')
+            ->join('trajectories as t', 't.id', '=', 'st.trajectorie_id')
+            ->select('students.*')->where($query,'LIKE',"%{$search}%")->paginate(5);
         }else{
-            $students=App\Student::where('career_id','LIKE',"%{$career_id}%")->paginate(5);
+            $students=App\Student::join('student_trajectorie as st', 'st.student_id', '=', 'students.id')
+            ->join('trajectories as t', 't.id', '=', 'st.trajectorie_id')
+            ->select('students.*')->paginate(5);        
         }
-         return view('students.list_students', compact('students'));
+        
+        return view('students.list_students', compact('students'));
      }
 
     public function studentprogress($id){
