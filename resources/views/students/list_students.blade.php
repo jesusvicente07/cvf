@@ -143,7 +143,6 @@
     @if(session('message'))
         $('.alert-success').fadeIn();
         $('.alert-success').fadeOut(5000);
-
     @endif
 </script>
 @endsection

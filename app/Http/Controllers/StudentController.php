@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\DB;
 use App;
 
 class StudentController extends Controller
@@ -31,8 +34,9 @@ class StudentController extends Controller
      }
 
     public function studentprogress($id){
+        $file = '';
         $student = App\Student::findOrFail($id);
-        return view('students.students_progress', compact('student'));
+        return view('students.students_progress', compact('student','file'));
     }
 
     public function addstudents(){
@@ -85,6 +89,18 @@ class StudentController extends Controller
         $nameStudent = $student->name;
         $student->delete();
         return redirect('estudiantes')->with('message', "El estudiante $nameStudent ha sido eliminado exitosamente!");
+    }
+
+    public function downloadevidence($idS,$idC){
+        $evidence=DB::table('student_course')->where('student_id', '=', $idS)->where('course_id', '=', $idC)->get();
+        if(DB::table('student_course')->where('student_id', '=', $idS)->where('course_id', '=', $idC)->exists()){
+            foreach($evidence as $e){
+                return Storage::download($e->evidence);
+            }
+        }
+        else{
+            return back()->with('message', "No existe ningún archivo!");;
+        }
     }
 
 
