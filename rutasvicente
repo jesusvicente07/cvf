@@ -10,6 +10,7 @@ Route::post('/nuevo/estudiante', 'StudentController@store')->name('storestudents
 Route::get('/editar/estudiante/{student}', 'StudentController@editstudents')->name('editstudents');
 Route::put('/editar/estudiante/{student}', 'StudentController@updatestudents')->name('updatestudents');
 Route::delete('eliminar/estudiante/{id}', 'StudentController@deletestudents')->name('deletestudents');
+Route::post('descargar/evidencia/{idS}/{idC}', 'StudentController@downloadevidence')->name('downloadevidence');
 
 Route::get('/trayectorias/selecionadas', 'StudentController@studenttrajectories')->name('studenttrajectories');
 Route::get('/selecionar/trayectorias', 'StudentController@selecttrajectories')->name('selecttrajectories');

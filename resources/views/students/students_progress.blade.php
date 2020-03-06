@@ -34,8 +34,12 @@
                     </div>
                         
                         <div class="m-form m-form--fit m-form--label-align-right">
-                        @csrf
                             <div class="m-portlet__body">
+                                @if(session('message'))
+                                    <div class="alert alert-danger alert-dismissible">
+                                        {{session('message')}}                                        
+                                    </div>
+                                @endif
                                 <div class="form-group m-form__group" style="text-align:left">
                                     <label>Trayectorias profesionales iniciadas</label>     
                                 </div>
@@ -114,13 +118,16 @@
                 <div class="modal-body" style="text-align: center;">
                     <strong>Evidencias del estudiante:</strong>
                     <p class="ml-5" id="text">
-                    <ul style="text-align:left;list-style-type: none;" id="evidence"></ul>
+                    <ul style="text-align:left" id="evidence"></ul>
                     </p>
                 </div>
 
                     <!-- Modal footer -->
                 <div class="modal-footer">
-
+                <form id="formModal1" action="#" method="post">
+                @csrf
+                    <input type="submit" class="btn btn-default" value="Descargar">
+                </form>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 
                 </div>
@@ -133,31 +140,39 @@
 
 @section('customScripts')
 <script>
+    @if(session('message'))
+        $('.alert-danger').fadeIn();
+        $('.alert-danger').fadeOut(5000);
+    @endif
+
     function Mymodal(student){
       $('#formModal').attr('action', '/eliminar/estudiante/'+student.id);
       $('#myModal').modal();
-    };
+    }
 
     function myModal(idS,idC){
         $('#evidence').html('');
         $.ajax({
-        url:'/obtener/evidencia/'+idS+'/'+idC,
-        type:'get',
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-        },
-        success:function(response){
-            $.each(response, function(index, value){
-            $('#evidence').append('<li>'+value.evidence+'</li>');
-        });
-            console.log(response);
-        },
-        error:function(err1,err2){
-            console.log(err1,err2);
+            url:'/obtener/evidencia/'+idS+'/'+idC,
+            type:'get',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            success:function(response){
+            
+                console.log(response);
+                $.each(response, function(index, value){
+                    $('#evidence').append('<li>'+value.evidence+'</li>');
+                });
+            
+            },
+            error:function(err1,err2){
+                console.log(err1,err2);
 
-        }
-    });
+            }
+        });
+        $('#formModal1').attr('action', '/descargar/evidencia/'+idS+'/'+idC);
         $('#myModal2').modal();
-    };
+    }
 </script>
 @endsection
