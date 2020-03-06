@@ -6,11 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
-<<<<<<< HEAD
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
-=======
->>>>>>> 8c00ba284fa982007a89603dc4af6156047dce3c
 use Illuminate\Support\Facades\DB;
 use App;
 
