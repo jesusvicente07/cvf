@@ -87,7 +87,7 @@
 		<!--RTL version:<link href="assets/vendors/custom/fullcalendar/fullcalendar.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
 
 		<!--end::Page Vendors Styles -->
-		<link rel="shortcut icon" href="/img/logo/favicon.ico" />
+		<link rel="shortcut icon" src="https://apps2.itson.edu.mx/controlasistencia/Aviso/ITSONMARCA2.png" />
 
 		@yield('customStyles')
 	</head>

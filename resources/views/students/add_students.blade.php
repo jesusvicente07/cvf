@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Cvf')
+@section('title', 'Curriculum Flexible')
 
 @section('customStyles')
 
