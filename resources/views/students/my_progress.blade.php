@@ -64,16 +64,18 @@
                                     @foreach($trajectorie->competitions as $competition)
                                         <thead class="thead-dark">
                                             <tr>
-                                                <th scope="col" colspan="2">{{$competition->name}}</th>
+                                                <th scope="col" colspan="3">{{$competition->name}}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <td><strong>Cursos</strong></td>
+                                                <td><strong>Contenido</strong></td>
                                                 <td><strong>Evidencias</strong></td>
                                                 <tr></tr>
                                                 @foreach($competition->courses as $course)
                                                 <td>{{$course->name}}</td>
+                                                <td><a onclick='showModalCourse({{$course}})' class='text-body'><i class='fa fa-book' style='font-size:150%'></i></a></td>
                                                 <td>
                                                     <div class="m-form__group">
                                                         <div class="form-inline">
@@ -118,6 +120,26 @@
                     </div>
                 </div>
                 <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="courseModal">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+
+                <!-- Modal body -->
+                <div class="modal-body" style="text-align: justify;">
+                    <strong>Contenido del curso:</strong>
+                    <p>
+                    <textarea class="form-control m-input" autocomplete="off" id="text1" style="height:300px" disabled="true"></textarea>
+                    </p>
+                </div>
+
+                    <!-- Modal footer -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
@@ -200,5 +222,12 @@ function showModal(idS,idC){
     $('#message').fadeIn();
     $('#message').fadeOut(5000);
 @endif
+
+function showModalCourse(course){
+        $('#text1').html('');
+        console.log(course);
+        $('#text1').append(course.content);
+        $('#courseModal').modal();
+    }
 </script>
 @endsection
