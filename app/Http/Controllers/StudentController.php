@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\DB;
+use ZipArchive;
 use App;
 
 class StudentController extends Controller
@@ -22,15 +23,7 @@ class StudentController extends Controller
     
     public function students(){
         $students="";
-        $user = App\User::findOrFail(Auth::user()->id);
-       /* $array_name=array();
-        foreach($user->careers as $career){
-            $array_name[]=$career->name;
-
-        }
-        $career_string=implode("','",$array_name); //ensure quoted values
-        dd($career_string);
-        //$career_id=isset($user->careers->id) ? $user->careers->id : '';*/
+        //$user = App\User::findOrFail(Auth::user()->id);
 
         if(request('search')){
             $search=request('search');
@@ -55,7 +48,7 @@ class StudentController extends Controller
         }
         
         return view('students.list_students', compact('students'));
-     }
+    }
 
     public function studentprogress($id){
         $file = '';
@@ -118,12 +111,28 @@ class StudentController extends Controller
     public function downloadevidence($idS,$idC){
         $evidence=DB::table('student_course')->where('student_id', '=', $idS)->where('course_id', '=', $idC)->get();
         if(DB::table('student_course')->where('student_id', '=', $idS)->where('course_id', '=', $idC)->exists()){
-            foreach($evidence as $e){
-                return Storage::download($e->evidence);
+            // Checking files are selected  
+            $zip = new ZipArchive(); // Load zip library 
+            $zip_name = time().".zip"; // Zip name
+            $zip_path=public_path().'/'.$zip_name;
+            if($zip->open($zip_path, ZIPARCHIVE::CREATE)!==TRUE){   
+                
+                return back()->with('message', "Lo siento, los archivos no se pueden descargar en este momento!");
             }
-        }
-        else{
-            return back()->with('message', "No existe ningún archivo!");;
+            foreach($evidence as $e){
+                $zip->addFile($e->evidence); // Adding files into zip
+            }
+            $zip->close();  
+            if(file_exists($zip_path)) {  
+                // push to download the zip  
+                header('Content-type: application/zip');  
+                header('Content-Disposition: attachment; filename="'.$zip_name.'"');  
+                readfile($zip_path);  
+                // remove zip file is exists in temp path  
+                unlink($zip_path);  
+            }  
+        }else{
+            return back()->with('message', "No existe ningún archivo!");
         }
     }
 

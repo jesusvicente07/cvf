@@ -149,6 +149,7 @@
       $('#formModal').attr('action', '/eliminar/estudiante/'+student.id);
       $('#myModal').modal();
     }
+    
 
     function myModal(idS,idC){
         $('#evidence').html('');
