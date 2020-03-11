@@ -34,20 +34,6 @@
                                 @endif
                                     <a class="btn btn-primary" href="{{route('addstudents')}}"><i class="fa fa-plus"></i>Agregar estudiantes</a>
                                     <div class="form-inline">
-                                    
-                                        <select name="filter" class="form-control m-input" >
-                                           
-                                            <option value="" {{ old('filter') ==  '' ? 'selected' : '' }}>
-                                                Seleccionar filtro
-                                            </option>
-                                            <option value="trajectorie" {{ old('') ==  'trajectorie' ? 'selected' : '' }}>
-                                                Por trayectoria
-                                            </option>
-                                            <option value="student" {{ old('filter') ==  'student' ? 'selected' : '' }}>
-                                                Por estudiante
-                                            </option>
-                                           
-                                        </select> 
                                         <input type="text" name="search" class="form-control m-input" style="width:50%" placeholder="Filtar .." minlength="1" autocomplete="off">      
                                     </div>
                                 </div>

@@ -27,24 +27,9 @@ class StudentController extends Controller
 
         if(request('search')){
             $search=request('search');
-            $query='';
-            switch(request('filter')){
-                case 'trajectorie':
-                    $query='t.name';
-                break;
-                case 'student': 
-                    $query='students.name';
-                break;
-                default:
-                    $query='students.name';
-            }
-            $students=App\Student::join('student_trajectorie as st', 'st.student_id', '=', 'students.id')
-            ->join('trajectories as t', 't.id', '=', 'st.trajectorie_id')
-            ->select('students.*')->where($query,'LIKE',"%{$search}%")->paginate(5);
+            $students=App\Student::where('name','LIKE',"%{$search}%")->paginate(5);
         }else{
-            $students=App\Student::join('student_trajectorie as st', 'st.student_id', '=', 'students.id')
-            ->join('trajectories as t', 't.id', '=', 'st.trajectorie_id')
-            ->select('students.*')->paginate(5);        
+            $students=App\Student::paginate(5);        
         }
         
         return view('students.list_students', compact('students'));
