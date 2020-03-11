@@ -135,7 +135,7 @@
                 <div class="modal-body" style="text-align: justify;">
                     <strong>Contenido del curso:</strong>
                     <p>
-                    <textarea class="form-control m-input" autocomplete="off" id="text1" style="height:300px"></textarea>
+                    <textarea class="form-control m-input" autocomplete="off" id="text1" style="height:300px" disabled="true"></textarea>
                     </p>
                 </div>
 
