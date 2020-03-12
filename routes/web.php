@@ -41,7 +41,7 @@ Route::post('evidencias', 'StudentTrajectories@studentsevidences')->name('studen
 Route::post('descargar/evidencia/{idS}/{idC}', 'StudentController@downloadevidence')->name('downloadevidence');
 
 
-Route::get('/mi/progreso/{student}', 'StudentTrajectories@myprogress')->name('myprogress');
+Route::get('/mi/progreso/{trajectorie_id}', 'StudentTrajectories@myprogress')->name('myprogress');
 Route::post('/selecionar/trayectorias', 'StudentTrajectories@storetrajectories')->name('storeStudentTrajectories');
 Route::get('/trayectorias/selecionadas', 'StudentTrajectories@studenttrajectories')->name('studenttrajectories');
 Route::get('/selecionar/trayectorias', 'StudentTrajectories@selecttrajectories')->name('selecttrajectories');

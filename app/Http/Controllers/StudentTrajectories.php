@@ -19,7 +19,7 @@ class StudentTrajectories extends Controller
 
     public function selecttrajectories(){
         $student = App\Student::findOrFail(Auth::guard('student')->user()->id);
-        $trajectories=App\Trajectorie::all();
+        $trajectories=isset($student->careers->trajectories[0]) ? $student->careers->trajectories :  '';
         return view('students.select_trajectories', compact('student','trajectories'));
     }
 
@@ -38,9 +38,10 @@ class StudentTrajectories extends Controller
 
     }
 
-    public function myprogress($id){
+    public function myprogress($trajectorie_id){
         $student = App\Student::findOrFail(Auth::guard('student')->user()->id);
-        return view('students.my_progress', compact('student'));
+        $trajectorie = App\Trajectorie::findOrFail($trajectorie_id);
+        return view('students.my_progress', compact('student','trajectorie'));
     }
 
     public function studenttrajectories(){

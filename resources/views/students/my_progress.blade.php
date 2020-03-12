@@ -52,7 +52,6 @@
                                 <div class="form-group m-form__group" style="text-align:left">
                                     <label>Trayectorias profesionales iniciadas</label>     
                                 </div>
-                                @foreach($student->trajectories as $trajectorie)
                                 <div class="form-group m-form__group" style="text-align:left">
                                     <strong><h3>{{$trajectorie->name}}</h3></strong>
                                     <div class="progress">
@@ -74,21 +73,21 @@
                                                 <td><strong>Evidencias</strong></td>
                                                 <tr></tr>
                                                 @foreach($competition->courses as $course)
-                                                <td>{{$course->name}}</td>
-                                                <td><a onclick='showModalCourse({{$course}})' class='text-body'><i class='fa fa-book' style='font-size:150%'></i></a></td>
-                                                <td>
-                                                    <div class="m-form__group">
-                                                        <div class="form-inline">
-                                                            <div class="form-inline mt-2">
-                                                                <button class="btn btn-primary" onclick='showModal({{$student->id}},{{$course->id}})' >Enviar</button>&nbsp; &nbsp;
-                                                                <input class="btn btn-success" value="Iniciar" type="submit">  &nbsp; &nbsp;
-                                                                <input class="btn btn-warning" value="Pausear" type="submit">
-                                                            </div>
-                                                        </div> 
-                                                    </div>
-                                                </td>
-                                                <tr></tr>
-                                                <tr>
+                                                    <td>{{$course->name}}</td>
+                                                    <td><a onclick='showModalCourse({{$course}})' class='text-body'><i class='fa fa-book' style='font-size:150%'></i></a></td>
+                                                    <td>
+                                                        <div class="m-form__group">
+                                                            <div class="form-inline">
+                                                                <div class="form-inline mt-2">
+                                                                    <button class="btn btn-primary" onclick='showModal({{$student->id}},{{$course->id}})' >Enviar</button>&nbsp; &nbsp;
+                                                                    <input class="btn btn-success" value="Iniciar" type="submit">  &nbsp; &nbsp;
+                                                                    <input class="btn btn-warning" value="Pausear" type="submit">
+                                                                </div>
+                                                            </div> 
+                                                        </div>
+                                                    </td>
+                                                    <tr></tr>
+                                                    <tr>
                                                 @endforeach
                                                 </tr>
                                             </tr>   
@@ -96,7 +95,6 @@
                                         </tbody>
                                     </table>   
                                 </div>
-                                @endforeach
                             </div>
                         </div>
                 </div>

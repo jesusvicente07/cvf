@@ -39,11 +39,17 @@
                                 <div class="m-form__group"> <h5>{{  isset($student->careers->name) ? $student->careers->name : '' }}</h5>
                                 <div class="form-inline" style="margin-top:4%">
                                         <select name="trajectorie" class="form-control m-input {{ $errors->has('trajectories') ? 'is-danger' : '' }} ">
-                                            @foreach($trajectories as $trajectorie)
-                                                <option value="{{ isset($trajectorie->competitions[0]) ? $trajectorie->competitions : $trajectorie }}">
-                                                    {{$trajectorie->name}}
+                                            @if($trajectories)
+                                                @foreach($trajectories as $trajectorie)
+                                                    <option value="{{ isset($trajectorie->competitions[0]) ? $trajectorie->competitions : $trajectorie }}">
+                                                        {{$trajectorie->name}}
+                                                    </option>
+                                                @endforeach
+                                                @else
+                                                <option value="">
+                                                    No hay trayectorias asociadas a su carrera
                                                 </option>
-                                            @endforeach
+                                            @endif
                                         </select> 
                                         <div id="addtrajectories" class="btn btn-primary mr-4" ><i class="fa fa-plus"></i></div>
                                     </div>
