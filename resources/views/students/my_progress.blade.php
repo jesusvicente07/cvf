@@ -70,7 +70,7 @@
                                         <tbody>
                                             <tr>
                                                 <td><strong>Cursos</strong></td>
-                                                <td><strong>Contenido</strong></td>
+                                                <td><strong>Información</strong></td>
                                                 <td><strong>Evidencias</strong></td>
                                                 <tr></tr>
                                                 @foreach($competition->courses as $course)
@@ -133,9 +133,13 @@
 
                 <!-- Modal body -->
                 <div class="modal-body" style="text-align: justify;">
-                    <strong>Contenido del curso:</strong>
+                    <strong>Información del curso:</strong> <br> <br>
                     <p>
-                    <textarea class="form-control m-input" autocomplete="off" id="text1" style="height:300px" disabled="true"></textarea>
+                    <strong>Tipo:</strong> <label id="type"></label> <br>
+                    <strong>Link:</strong> <label id="link"></label> <br>
+                    <strong>Objetivo:</strong> <label id="objective"></label> <br>
+                    <strong>Contenido:</strong>
+                    <textarea class="form-control m-input" autocomplete="off" id="content" style="height:300px" disabled="true"></textarea>
                     </p>
                 </div>
 
@@ -224,10 +228,26 @@ function showModal(idS,idC){
 @endif
 
 function showModalCourse(course){
-        $('#text1').html('');
-        console.log(course);
-        $('#text1').append(course.content);
+        $('#type').html('');
+        $('#objective').html('');
+        $('#content').html('');
+        $('#objective').append(course.objective);
+        $('#content').append(course.content);
         $('#courseModal').modal();
+        if(course.link){
+            $('#link').html('');
+            $('#link').append(course.link);
+        }
+        else{
+            $('#link').html('');
+            $('#link').append("");
+        }
+        if(course.type=="face-to-face"){
+            $('#type').append("presencial");
+        }
+        else{
+            $('#type').append("virtual");
+        }
     }
 </script>
 @endsection
